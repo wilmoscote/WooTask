@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Woo Task</string>
+    <string name="version_info">Woo Task v1.0.0</string>
+    <string name="btnCancel">CANCELAR</string>
+    <string name="btnSave">GUARDAR</string>
+    <string name="image_description">WooTask Image</string>
+    <string name="new_task_hint">Describa los detalles de la tarea …</string>
+    <string name="title_list_todo">To Do List</string>
+    <string name="title_list_doing">Doing List</string>
+    <string name="title_list_done">Done List</string>
+    <string name="task_count">%1$s Tasks</string>
+    <string name="email_hint">Correo electrónico</string>
+    <string name="pass_hint">Contraseña</string>
+    <string name="login_buttton">Iniciar Sesión</string>
+    <string name="register_button">Registrarse</string>
+    <string name="google_button">Iniciar con Google</string>
+    <string name="register_info">Ó</string>
+    <string name="no_login">Continuar sin iniciar sesión</string>
+</resources>

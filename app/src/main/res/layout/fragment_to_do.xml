@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragments.ToDoFragment">
+    <FrameLayout
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bannertodo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:id="@+id/titleBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:fontFamily="@font/kaushan_regular"
+            android:scaleType="fitXY"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center_horizontal"
+            />
+        <TextView
+            android:id="@+id/numTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="5 Task"
+            android:scaleType="fitXY"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/kaushan_regular"
+            android:layout_gravity="bottom|center_horizontal"
+            android:gravity="center_horizontal"
+            />
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvToDo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/banner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner"
+        app:shimmer_auto_start="true"
+        android:layout_height="wrap_content">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/viewLoading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/banner"
+        android:orientation="vertical"
+        >
+        <include layout="@layout/card_item_loading"/>
+        <include layout="@layout/card_item_loading"/>
+        <include layout="@layout/card_item_loading"/>
+        <include layout="@layout/card_item_loading"/>
+        <include layout="@layout/card_item_loading"/>
+        <include layout="@layout/card_item_loading"/>
+        <include layout="@layout/card_item_loading"/>
+        <include layout="@layout/card_item_loading"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:tint="@color/white"
+        android:backgroundTint="@color/red"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="15dp"
+        tools:layout_editor_absoluteY="868dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

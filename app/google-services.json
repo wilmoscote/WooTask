@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "302162430961",
+    "project_id": "woo-task",
+    "storage_bucket": "woo-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302162430961:android:a4064776a5e2f2d1f71250",
+        "android_client_info": {
+          "package_name": "com.woo.task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4oux_fS28ukrtaToL4Nvg2cGse_59_1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
