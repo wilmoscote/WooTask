@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v1.0.0</string>
+    <string name="love_message">Hecha con \u2665 por WOO.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">GUARDAR</string>
     <string name="image_description">WooTask Image</string>
@@ -16,4 +17,7 @@
     <string name="google_button">Iniciar con Google</string>
     <string name="register_info">Ó</string>
     <string name="no_login">Continuar sin iniciar sesión</string>
+    <string name="error_login_pass">Usuario o Contraseña incorrecto.</string>
+    <string name="email_error">Ingrese una dirección de correo válida.</string>
+    <string name="pass_error">Ingrese una contraseña válida.</string>
 </resources>
