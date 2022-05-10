@@ -36,7 +36,7 @@ class ToDoFragment : Fragment() {
         binding = FragmentToDoBinding.inflate(layoutInflater)
         val view = binding.root
         CoroutineScope(Dispatchers.Main).launch {
-            tasksViewModel.getTodoTasks("21")
+            tasksViewModel.getTodoTasks(21)
             binding.titleBanner.text = getString(R.string.title_list_todo)
             tasksViewModel.todoTasks.observe(viewLifecycleOwner) {
                     binding.rvToDo.layoutManager = LinearLayoutManager(view.context)
@@ -54,5 +54,10 @@ class ToDoFragment : Fragment() {
         }
         }
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tasksViewModel.getTodoTasks(21)
     }
 }

@@ -20,4 +20,8 @@
     <string name="error_login_pass">Usuario o Contraseña incorrecto.</string>
     <string name="email_error">Ingrese una dirección de correo válida.</string>
     <string name="pass_error">Ingrese una contraseña válida.</string>
+    <string name="title_delete_dialog">¿Seguro que desea eliminar?</string>
+    <string name="dialog_confirm">SI</string>
+    <string name="dialog_dismiss">NO</string>
+    <string name="google_web_client_id">302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
 </resources>

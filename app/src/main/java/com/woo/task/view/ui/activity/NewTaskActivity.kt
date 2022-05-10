@@ -3,10 +3,13 @@ package com.woo.task.view.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.woo.task.databinding.ActivityNewTaskBinding
+import com.woo.task.viewmodel.TasksViewModel
 
 class NewTaskActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewTaskBinding
+    private val tasksViewModel: TasksViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewTaskBinding.inflate(layoutInflater)
@@ -20,7 +23,12 @@ class NewTaskActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            Toast.makeText(this,"Nueva tarea agregada $state.", Toast.LENGTH_SHORT).show()
+            if(binding.newTask.text.isNotEmpty()){
+                tasksViewModel.addTask(binding.newTask.text.toString(),state)
+                onBackPressed()
+            }else{
+                binding.newTask.error = "Describa la tarea"
+            }
         }
     }
 }

@@ -10,6 +10,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.woo.task.R
 import com.woo.task.databinding.ActivityMainBinding
@@ -21,6 +24,7 @@ import kotlin.math.abs
 class MainActivity : AppCompatActivity() {
     val TAG = "FIREBASE"
     lateinit var binding: ActivityMainBinding
+    private lateinit var auth: FirebaseAuth
     private val tasksViewModel: TasksViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = Firebase.auth
 
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         binding.taskView.adapter = adapter
@@ -66,4 +71,5 @@ class MainActivity : AppCompatActivity() {
         })
 
     }
+
 }

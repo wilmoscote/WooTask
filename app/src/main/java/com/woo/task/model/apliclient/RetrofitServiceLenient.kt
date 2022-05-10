@@ -7,7 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitServiceLenient {
     companion object{
         //IP PRODUCCIÓN
-        private const val BASE_URL = "http://54.198.185.208/microserver/api/"
+        private const val BASE_URL = "https://wootask.herokuapp.com/"
+        //private const val BASE_URL = "http://54.198.185.208/microserver/api/"
         val gson = GsonBuilder().setLenient().create()
         fun getClient(): Retrofit {
             return Retrofit.Builder()

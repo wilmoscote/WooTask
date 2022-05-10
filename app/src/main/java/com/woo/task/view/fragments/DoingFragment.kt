@@ -57,4 +57,8 @@ class DoingFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        tasksViewModel.getDoingTasks("22")
+    }
 }
