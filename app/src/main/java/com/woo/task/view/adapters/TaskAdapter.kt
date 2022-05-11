@@ -25,6 +25,11 @@ class TaskAdapter(val tasks: List<TaskValues>):RecyclerView.Adapter<TaskViewHold
 
     }
 
+    fun removeItem(position: Int) {
+        tasks.drop(position)
+        notifyItemChanged(position)
+    }
+
     override fun getItemCount(): Int = tasks.size
 
 }

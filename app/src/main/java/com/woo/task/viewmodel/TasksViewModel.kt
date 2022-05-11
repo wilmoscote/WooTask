@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task
 import com.squareup.okhttp.OkHttpClient
 import com.woo.task.model.apliclient.RetrofitService
 import com.woo.task.model.apliclient.RetrofitServiceLenient
+import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.model.interfaces.TaskInterface
 import com.woo.task.model.responses.GenericResponse
 import com.woo.task.model.responses.TaskResponse
@@ -20,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class TasksViewModel : ViewModel() {
+class TasksViewModel : ViewModel(),RecyclerViewInterface {
     var progress = MutableLiveData<Boolean>()
     var todoTasks = MutableLiveData<List<TaskValues>>()
     var doingTasks = MutableLiveData<List<TaskValues>>()
@@ -30,8 +31,6 @@ class TasksViewModel : ViewModel() {
     fun getTodoTasks(status:Int?){
         progress.postValue(true)
         viewModelScope.launch {
-
-
         val retrofit = RetrofitService.getClient()
         val service = retrofit.create(TaskInterface::class.java)
         service.getTasks(status)
@@ -129,6 +128,14 @@ class TasksViewModel : ViewModel() {
 
                 })
         }
+    }
+
+    fun deleteTask(){
+
+    }
+
+    override fun onLongClick(position: Int) {
+        todoTasks.postValue(todoTasks.value?.drop(position))
     }
 
 }

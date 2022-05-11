@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.activity.LoginActivity">
-
+    tools:context=".view.ui.activity.RegisterActivity">
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -48,14 +47,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/pass_hint"
             android:layout_marginHorizontal="40dp"
             android:layout_marginVertical="8dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconDrawable="@drawable/ic_outline_lock"
             app:endIconMode="password_toggle"
             >
             <com.google.android.material.textfield.TextInputEditText
@@ -66,68 +64,33 @@
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
-        <TextView
-            android:id="@+id/txForgot"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/forgot_pass"
-            android:gravity="center_horizontal"
-            android:textColor="?attr/textAppearanceCaption"
-            android:textStyle="bold|italic"
-            android:visibility="gone"
-            />
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:hint="@string/pass_hint"
             android:layout_marginHorizontal="40dp"
-            android:paddingVertical="13dp"
-            android:layout_marginVertical="5dp"
-            android:textColor="@color/white"
-            android:text="@string/login_buttton"
-            />
+            android:layout_marginVertical="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:endIconMode="password_toggle"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtConfirmPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="40dp"
             android:paddingVertical="13dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginVertical="5dp"
             android:textColor="@color/white"
             android:text="@string/register_button"
-            app:backgroundTint="@color/blue"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/register_info"
-            android:gravity="center_horizontal"
-            android:textColor="?attr/textAppearanceCaption"
-            android:textStyle="bold"
-            />
-        <Button
-            android:id="@+id/btnGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:paddingVertical="13dp"
-
-            app:backgroundTint="?attr/textAppearanceCaption"
-            android:textColor="?attr/colorAccent"
-            android:textStyle="bold"
-            app:icon="@drawable/ic_google"
-            android:text="@string/google_button"
-            />
-        <Button
-            android:id="@+id/btnNologin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="40dp"
-            android:text="@string/no_login"
-            android:paddingVertical="13dp"
-            android:textColor="?attr/textAppearanceCaption"
-            style="?attr/materialButtonOutlinedStyle"
-            app:rippleColor="?attr/colorControlNormal"
             />
     </LinearLayout>
     <TextView
@@ -152,4 +115,5 @@
         android:visibility="invisible"
         android:indeterminateTint="?attr/textAppearanceCaption"
         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v1.0.0</string>
-    <string name="love_message">Hecha con \u2665 por WOO.</string>
+    <string name="love_message">Hecha con \u2665 por Woo Bless.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">GUARDAR</string>
     <string name="image_description">WooTask Image</string>
@@ -21,7 +21,21 @@
     <string name="email_error">Ingrese una dirección de correo válida.</string>
     <string name="pass_error">Ingrese una contraseña válida.</string>
     <string name="title_delete_dialog">¿Seguro que desea eliminar?</string>
-    <string name="dialog_confirm">SI</string>
+    <string name="dialog_yes">SI</string>
     <string name="dialog_dismiss">NO</string>
+    <string name="dialog_confirm">CONFIRMAR</string>
+    <string name="dialog_cancel">CANCELAR</string>
+    <string name="nologin_title">ATENCIÓN</string>
+    <string name="nologin_message">Si continúas sin iniciar sesión tus tareas no serán guardadas en la nube, lo que significa que no podrás recuperarlas si cierras sesión o cambias de dispositivo.</string>
+    <string name="forgot_title">Recuperar contraseña</string>
+    <string name="forgot_message">Se enviará un vínculo para recuperar su contraseña al correo: %1$s</string>
+    <string name="forgot_email_sent">Correo de recuperación enviado</string>
+    <string name="forgot_email_error">Error al enviar correo de recuperación</string>
+    <string name="forgot_pass">¿Has olvidado tu contraseña?</string>
+    <string name="login_google_error">Error al iniciar sesión con Google.</string>
+    <string name="error_register">Error al realizar el registro.</string>
+    <string name="error_confirm_pass">Las contraseñas no coinciden.</string>
+    <string name="logout_title">Cerrar sesión</string>
+    <string name="logout_message">¿Estas seguro que deseas salir?</string>
     <string name="google_web_client_id">302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
 </resources>

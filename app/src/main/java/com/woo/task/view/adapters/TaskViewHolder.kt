@@ -5,17 +5,21 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.woo.task.R
 import com.woo.task.databinding.CardItemBinding
-import com.woo.task.databinding.ItemTodoBinding
+import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.model.responses.TaskValues
 import com.woo.task.view.ui.activity.EditActivity
+import com.woo.task.viewmodel.TasksViewModel
 
 class TaskViewHolder (view: View): RecyclerView.ViewHolder(view){
     private val binding = CardItemBinding.bind(view)
     private val context: Context? = view.context
+
+    private val tasksViewModel = TasksViewModel()
 
     fun bind(task: TaskValues){
         binding.title.text = task.title
@@ -36,16 +40,16 @@ class TaskViewHolder (view: View): RecyclerView.ViewHolder(view){
             MaterialAlertDialogBuilder(context!!)
                 .setTitle(context.resources.getString(R.string.title_delete_dialog))
                 .setMessage(task.title)
-                .setPositiveButton(context.resources.getString(R.string.dialog_confirm)){dialog,which->
+                .setPositiveButton(context.resources.getString(R.string.dialog_confirm)){_,_->
                     Log.d("TaskDebug","Delete task ${task.id}")
+
                 }
-                .setNegativeButton(context.resources.getString(R.string.dialog_dismiss)){dialog,which->
+                .setNegativeButton(context.resources.getString(R.string.dialog_cancel)){dialog,_->
                     dialog.dismiss()
                 }
                 .show()
                 // Add customization options here
             return@setOnLongClickListener true
         }
-
     }
 }

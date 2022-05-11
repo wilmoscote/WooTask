@@ -13,6 +13,7 @@
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_add.xml" value="0.305" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_done.xml" value="0.305" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_google.xml" value="0.292" />
+        <entry key="..\:/WooTask/app/src/main/res/drawable/ic_logout.xml" value="0.307" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_menu_list.xml" value="0.305" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_pin.xml" value="0.305" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_task.xml" value="0.305" />
@@ -22,6 +23,7 @@
         <entry key="..\:/WooTask/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/WooTask/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/WooTask/app/src/main/res/layout/activity_new_task.xml" value="0.22" />
+        <entry key="..\:/WooTask/app/src/main/res/layout/activity_register.xml" value="0.3625" />
         <entry key="..\:/WooTask/app/src/main/res/layout/card_item.xml" value="0.33" />
         <entry key="..\:/WooTask/app/src/main/res/layout/card_item_loading.xml" value="0.33" />
         <entry key="..\:/WooTask/app/src/main/res/layout/fragment_doing.xml" value="0.25" />

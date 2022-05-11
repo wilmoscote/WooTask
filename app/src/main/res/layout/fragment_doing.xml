@@ -71,6 +71,11 @@
             <include layout="@layout/card_item_loading"/>
             <include layout="@layout/card_item_loading"/>
             <include layout="@layout/card_item_loading"/>
+            <include layout="@layout/card_item_loading"/>
+            <include layout="@layout/card_item_loading"/>
+            <include layout="@layout/card_item_loading"/>
+            <include layout="@layout/card_item_loading"/>
+            <include layout="@layout/card_item_loading"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </com.facebook.shimmer.ShimmerFrameLayout>

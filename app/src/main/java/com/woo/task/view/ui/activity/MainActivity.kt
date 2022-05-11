@@ -1,5 +1,6 @@
 package com.woo.task.view.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.woo.task.R
 import com.woo.task.databinding.ActivityMainBinding
+import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.view.adapters.ViewPagerAdapter
 import com.woo.task.view.utils.HorizontalMarginItemDecoration
 import com.woo.task.viewmodel.TasksViewModel
@@ -59,6 +62,21 @@ class MainActivity : AppCompatActivity() {
             R.dimen.viewpager_next_item_visible
         )
         binding.taskView.addItemDecoration(itemDecoration)
+
+        binding.btnLogout.setOnClickListener {
+            MaterialAlertDialogBuilder(this)
+                .setTitle(resources.getString(R.string.logout_title))
+                .setMessage(getString(R.string.logout_message))
+                .setPositiveButton(resources.getString(R.string.dialog_confirm)){_,_->
+                    Firebase.auth.signOut()
+                    startActivity(Intent(this,LoginActivity::class.java))
+                    finish()
+                }
+                .setNegativeButton(resources.getString(R.string.dialog_cancel)){dialog,_->
+                    dialog.dismiss()
+                }
+                .show()
+        }
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
