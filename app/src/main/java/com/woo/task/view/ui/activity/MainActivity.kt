@@ -1,12 +1,16 @@
 package com.woo.task.view.ui.activity
 
+import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -19,16 +23,27 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.woo.task.R
 import com.woo.task.databinding.ActivityMainBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
+import com.woo.task.model.room.Task
+import com.woo.task.model.room.TaskApp
+import com.woo.task.model.room.TaskDb
+import com.woo.task.view.adapters.TaskAdapter
 import com.woo.task.view.adapters.ViewPagerAdapter
 import com.woo.task.view.utils.HorizontalMarginItemDecoration
 import com.woo.task.viewmodel.TasksViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     val TAG = "FIREBASE"
     lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private val tasksViewModel: TasksViewModel by viewModels()
+    lateinit var app : TaskDb
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,16 +51,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = Firebase.auth
+        app = Room
+            .databaseBuilder(this, TaskDb::class.java,"task")
+            .build()
+
+        tasksViewModel.onCreate()
 
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         binding.taskView.adapter = adapter
 
-        binding.tabIndicator.setViewPager2(binding.taskView)
+        binding.tabIndicator.attachTo(binding.taskView)
 
         binding.taskView.clipToPadding = false
         binding.taskView.clipChildren = false
         binding.taskView.offscreenPageLimit = 1
-        binding.taskView.setPadding(20, 0, 20, 0);
+        binding.taskView.setPadding(20, 0, 20, 0)
         binding.taskView.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
         val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
@@ -87,7 +107,11 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "Token Firebase: $token")
             }
         })
+    }
 
+    override fun onResume() {
+        super.onResume()
+        tasksViewModel.onCreate()
     }
 
 }

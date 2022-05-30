@@ -14,4 +14,7 @@ interface TaskInterface {
     @POST("tasks")
     fun addTask(@Query("title") title:String?,@Query("state") state:Int?): Call<GenericResponse>
 
+    @DELETE("tasks/{id}")
+    fun deleteTask(@Path("id") id:Int?): Call<GenericResponse>
+
 }

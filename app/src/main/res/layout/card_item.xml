@@ -29,18 +29,18 @@
                 android:layout_margin="8dp"
                 android:visibility="visible"
                 android:translationZ="10dp"
+                android:layout_gravity="center_horizontal|center_vertical"
                 tools:src="@drawable/ic_pin"
                 android:contentDescription="@string/image_description" />
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingVertical="8dp"
                 android:textColor="?attr/textAppearanceCaption"
-                tools:text="Tarea de ejemplo"
+                tools:text="Enviar correos masivos a todos los usuarios de la ips."
+                android:layout_marginEnd="35dp"
                 android:textSize="18sp" />
-
-
         </LinearLayout>
         <ImageView
             android:id="@+id/menu"
@@ -50,6 +50,6 @@
             android:layout_margin="8dp"
             android:visibility="visible"
             android:contentDescription="@string/image_description"
-            android:src="@drawable/ic_menu_list" />
+            android:src="@drawable/ic_op" />
     </androidx.cardview.widget.CardView>
 </LinearLayout>

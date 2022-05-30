@@ -15,6 +15,7 @@ import com.woo.task.model.responses.TaskValues
 import com.woo.task.view.ui.activity.EditActivity
 import com.woo.task.viewmodel.TasksViewModel
 
+/*
 class TaskViewHolder (view: View): RecyclerView.ViewHolder(view){
     private val binding = CardItemBinding.bind(view)
     private val context: Context? = view.context
@@ -22,6 +23,7 @@ class TaskViewHolder (view: View): RecyclerView.ViewHolder(view){
     private val tasksViewModel = TasksViewModel()
 
     fun bind(task: TaskValues){
+
         binding.title.text = task.title
         binding.icon.setImageResource(when(task.state){
             21 -> R.drawable.ic_pin
@@ -42,7 +44,7 @@ class TaskViewHolder (view: View): RecyclerView.ViewHolder(view){
                 .setMessage(task.title)
                 .setPositiveButton(context.resources.getString(R.string.dialog_confirm)){_,_->
                     Log.d("TaskDebug","Delete task ${task.id}")
-
+                    //onLongClick(task.id!!.toInt())
                 }
                 .setNegativeButton(context.resources.getString(R.string.dialog_cancel)){dialog,_->
                     dialog.dismiss()
@@ -52,4 +54,4 @@ class TaskViewHolder (view: View): RecyclerView.ViewHolder(view){
             return@setOnLongClickListener true
         }
     }
-}
+}*/

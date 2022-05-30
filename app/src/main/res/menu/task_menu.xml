@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/opEditar"
+        android:icon="@drawable/ic_add"
+        android:title="@string/menu_option_0"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/opMVDOING"
+        android:icon="@drawable/ic_add"
+        android:title="@string/menu_option_2"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/opMVDONE"
+        android:icon="@drawable/ic_add"
+        android:title="@string/menu_option_3"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/opBorrar"
+        android:icon="@drawable/ic_add"
+        android:title="@string/menu_option_4"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/cancel"
+        android:icon="@drawable/ic_add"
+        android:title="@string/dialog_cancel"
+        app:showAsAction="ifRoom" />
+</menu>

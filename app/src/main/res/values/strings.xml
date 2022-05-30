@@ -37,5 +37,11 @@
     <string name="error_confirm_pass">Las contraseñas no coinciden.</string>
     <string name="logout_title">Cerrar sesión</string>
     <string name="logout_message">¿Estas seguro que deseas salir?</string>
-    <string name="google_web_client_id">302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
+    <string name="google_web_client_id">302162430961–699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
+    <string name="menu_option_0">EDITAR</string>
+    <string name="menu_option_1">Mover a HACER</string>
+    <string name="menu_option_2">Mover a HACIENDO</string>
+    <string name="menu_option_3">Mover a HECHO</string>
+    <string name="menu_option_4">ELIMINAR</string>
+
 </resources>
