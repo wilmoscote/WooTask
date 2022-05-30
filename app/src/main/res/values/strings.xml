@@ -9,7 +9,8 @@
     <string name="title_list_todo">To Do List</string>
     <string name="title_list_doing">Doing List</string>
     <string name="title_list_done">Done List</string>
-    <string name="task_count">%1$s Tasks</string>
+    <string name="task_count_0">%1$s Tarea</string>
+    <string name="task_count">%1$s Tareas</string>
     <string name="email_hint">Correo electrónico</string>
     <string name="pass_hint">Contraseña</string>
     <string name="login_buttton">Iniciar Sesión</string>
@@ -37,7 +38,7 @@
     <string name="error_confirm_pass">Las contraseñas no coinciden.</string>
     <string name="logout_title">Cerrar sesión</string>
     <string name="logout_message">¿Estas seguro que deseas salir?</string>
-    <string name="google_web_client_id">302162430961–699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
+    <string name="google_web_client_id">302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
     <string name="menu_option_0">EDITAR</string>
     <string name="menu_option_1">Mover a HACER</string>
     <string name="menu_option_2">Mover a HACIENDO</string>

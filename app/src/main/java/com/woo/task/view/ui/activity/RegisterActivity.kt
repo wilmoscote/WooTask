@@ -47,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 binding.pgBar.visibility = View.INVISIBLE
                                 Log.d(TAG, "CreateUser:success")
-                                val user = auth.currentUser
+                                //val user = auth.currentUser
                                 startActivity(Intent(this@RegisterActivity,MainActivity::class.java))
                                 finishAffinity()
                             }else{
@@ -59,6 +59,11 @@ class RegisterActivity : AppCompatActivity() {
                         }
                 }
             }
+        }
+
+        binding.versionInfo.setOnLongClickListener {
+            Toast.makeText(this, getString(R.string.love_message), Toast.LENGTH_LONG).show()
+            return@setOnLongClickListener true
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.woo.task.R
 import com.woo.task.databinding.FragmentDoingBinding
@@ -21,6 +22,8 @@ import dagger.hilt.android.scopes.FragmentScoped
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 @FragmentScoped
 class DoingFragment : Fragment(),RecyclerViewInterface{
     private lateinit var binding: FragmentDoingBinding
@@ -37,8 +40,7 @@ class DoingFragment : Fragment(),RecyclerViewInterface{
 
         binding = FragmentDoingBinding.inflate(layoutInflater)
         val view = binding.root
-        CoroutineScope(Dispatchers.Main).launch {
-
+        lifecycleScope.launch {
             binding.titleBanner.text = getString(R.string.title_list_doing)
             tasksViewModel.doingTasks.observe(viewLifecycleOwner) {
                 binding.rvToDo.layoutManager = LinearLayoutManager(view.context)
@@ -48,7 +50,7 @@ class DoingFragment : Fragment(),RecyclerViewInterface{
 
                 binding.viewLoading.visibility = View.GONE
 
-                binding.numTask.text = getString(R.string.task_count,it.size.toString())
+                binding.numTask.text = if(it.size in 1..1) getString(R.string.task_count_0,it.size.toString()) else getString(R.string.task_count,it.size.toString())
             }
             binding.addTask.setOnClickListener {
                 val intent = Intent(view.context, NewTaskActivity::class.java)

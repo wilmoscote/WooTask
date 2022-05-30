@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.woo.task.R
 import com.woo.task.databinding.FragmentDoneBinding
@@ -36,8 +37,7 @@ class DoneFragment : Fragment(),RecyclerViewInterface {
     ): View {
         binding = FragmentDoneBinding.inflate(layoutInflater)
         val view = binding.root
-        CoroutineScope(Dispatchers.Main).launch {
-
+        lifecycleScope.launch {
             binding.titleBanner.text = getString(R.string.title_list_done)
             tasksViewModel.doneTasks.observe(viewLifecycleOwner) {
                 binding.rvToDo.layoutManager = LinearLayoutManager(view.context)
@@ -46,7 +46,7 @@ class DoneFragment : Fragment(),RecyclerViewInterface {
                 binding.viewLoading.visibility = View.GONE
                 binding.viewLoading.visibility = View.GONE
 
-                binding.numTask.text = getString(R.string.task_count,it.size.toString())
+                binding.numTask.text = if(it.size in 1..1) getString(R.string.task_count_0,it.size.toString()) else getString(R.string.task_count,it.size.toString())
             }
             binding.addTask.setOnClickListener {
                 val intent = Intent(view.context, NewTaskActivity::class.java)

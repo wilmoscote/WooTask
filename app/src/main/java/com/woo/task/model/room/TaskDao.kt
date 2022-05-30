@@ -6,6 +6,9 @@ import com.woo.task.model.responses.TaskValues
 @Dao
 interface TaskDao {
 
+    @Query("DELETE FROM Task")
+    fun clean()
+
     @Query("SELECT * FROM Task")
     suspend fun getAll():List<Task>
 

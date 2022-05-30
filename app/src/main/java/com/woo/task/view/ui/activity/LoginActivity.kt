@@ -59,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
                             if (task.isSuccessful) {
                                 binding.pgBar.visibility = View.INVISIBLE
                                 Log.d(TAG, "signInEmail:success")
-                                val user = auth.currentUser
+                                //val user = auth.currentUser
                                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                 overridePendingTransition(
                                     R.anim.slide_in_right,
@@ -119,8 +119,6 @@ class LoginActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
                 .show()
-
-
             Log.d(TAG, "Recuperar pass")
         }
 
@@ -138,7 +136,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnNologin.setOnClickListener {
-
             MaterialAlertDialogBuilder(this)
                 .setTitle(resources.getString(R.string.nologin_title))
                 .setMessage(getString(R.string.nologin_message))
@@ -150,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
                                 if (task.isSuccessful) {
                                     binding.pgBar.visibility = View.INVISIBLE
                                     Log.d(TAG, "signInAnonymously:success")
-                                    val user = auth.currentUser
+                                    //val user = auth.currentUser
                                     startActivity(
                                         Intent(
                                             this@LoginActivity,
@@ -199,7 +196,7 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithCredential(credential).addOnCompleteListener {
                         binding.pgBar.visibility = View.INVISIBLE
                         if (it.isSuccessful) {
-                            val user = auth.currentUser
+                            //val user = auth.currentUser
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                             finish()

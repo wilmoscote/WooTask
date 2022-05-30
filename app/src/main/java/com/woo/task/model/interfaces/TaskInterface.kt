@@ -16,5 +16,4 @@ interface TaskInterface {
 
     @DELETE("tasks/{id}")
     fun deleteTask(@Path("id") id:Int?): Call<GenericResponse>
-
 }

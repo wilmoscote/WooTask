@@ -55,33 +55,34 @@ class MainActivity : AppCompatActivity() {
             .databaseBuilder(this, TaskDb::class.java,"task")
             .build()
 
-        tasksViewModel.onCreate()
+        lifecycleScope.launch {
+            tasksViewModel.onCreate()
+            val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
+            binding.taskView.adapter = adapter
 
-        val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
-        binding.taskView.adapter = adapter
+            binding.tabIndicator.attachTo(binding.taskView)
 
-        binding.tabIndicator.attachTo(binding.taskView)
+            binding.taskView.clipToPadding = false
+            binding.taskView.clipChildren = false
+            binding.taskView.offscreenPageLimit = 1
+            binding.taskView.setPadding(20, 0, 20, 0)
+            binding.taskView.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-        binding.taskView.clipToPadding = false
-        binding.taskView.clipChildren = false
-        binding.taskView.offscreenPageLimit = 1
-        binding.taskView.setPadding(20, 0, 20, 0)
-        binding.taskView.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
+            val currentItemHorizontalMarginPx = resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
+            val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
+            val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
+                page.translationX = -pageTranslationX * position
+                page.scaleY = 1 - (0.15f * abs(position))
+            }
+            binding.taskView.setPageTransformer(pageTransformer)
 
-        val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
-        val currentItemHorizontalMarginPx = resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
-        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
-        val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
-            page.translationX = -pageTranslationX * position
-            page.scaleY = 1 - (0.15f * abs(position))
+            val itemDecoration = HorizontalMarginItemDecoration(
+                this@MainActivity,
+                R.dimen.viewpager_next_item_visible
+            )
+            binding.taskView.addItemDecoration(itemDecoration)
         }
-        binding.taskView.setPageTransformer(pageTransformer)
-
-        val itemDecoration = HorizontalMarginItemDecoration(
-            this,
-            R.dimen.viewpager_next_item_visible
-        )
-        binding.taskView.addItemDecoration(itemDecoration)
 
         binding.btnLogout.setOnClickListener {
             MaterialAlertDialogBuilder(this)

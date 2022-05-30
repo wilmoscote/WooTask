@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.view.size
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.dynamic.IFragmentWrapper
 import com.woo.task.R
@@ -49,15 +50,14 @@ class ToDoFragment : Fragment(),RecyclerViewInterface {
     ): View {
         binding = FragmentToDoBinding.inflate(layoutInflater)
         val view = binding.root
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             binding.titleBanner.text = getString(R.string.title_list_todo)
             tasksViewModel.todoTasks.observe(viewLifecycleOwner) {
                     binding.rvToDo.layoutManager = LinearLayoutManager(view.context)
                     binding.rvToDo.adapter = TaskAdapter(it,this@ToDoFragment)
                     binding.rvToDo.visibility = View.VISIBLE
                     binding.viewLoading.visibility = View.GONE
-
-                    binding.numTask.text = getString(R.string.task_count,it.size.toString())
+                    binding.numTask.text = if(it.size in 1..1) getString(R.string.task_count_0,it.size.toString()) else getString(R.string.task_count,it.size.toString())
             }
         binding.addTask.setOnClickListener {
             val intent = Intent(view.context, NewTaskActivity::class.java)
@@ -67,15 +67,6 @@ class ToDoFragment : Fragment(),RecyclerViewInterface {
             //Log.d("TASKDEBUG","RoomTask: ${taskDao.getAll()}")
         }
         return view
-    }
-
-    fun deleteItem(index:Int){
-        Log.d("TaskDebug","Delete send to ViewModel")
-       tasksViewModel.removeTask(index)
-    }
-
-    fun moveTo(tid:Int){
-        Log.d("TaskDebug", "Move! $tid")
     }
 
     override fun onResume() {
@@ -96,6 +87,4 @@ class ToDoFragment : Fragment(),RecyclerViewInterface {
         tasksViewModel.removeTask(id)
         Log.d("TASKDEBUG","DELETE $id")
     }
-
-
 }
