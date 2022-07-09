@@ -2,35 +2,25 @@ package com.woo.task.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.size
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.dynamic.IFragmentWrapper
+import androidx.recyclerview.widget.RecyclerView
 import com.woo.task.R
 import com.woo.task.databinding.FragmentToDoBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.model.responses.TaskValues
-import com.woo.task.model.room.TaskApp
-import com.woo.task.model.room.TaskDao
-import com.woo.task.model.room.TaskDb
 import com.woo.task.view.adapters.TaskAdapter
-import com.woo.task.view.ui.activity.EditActivity
 import com.woo.task.view.ui.activity.NewTaskActivity
 import com.woo.task.viewmodel.TasksViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.scopes.FragmentScoped
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 @FragmentScoped
@@ -53,25 +43,36 @@ class ToDoFragment : Fragment(),RecyclerViewInterface {
         lifecycleScope.launch {
             binding.titleBanner.text = getString(R.string.title_list_todo)
             tasksViewModel.todoTasks.observe(viewLifecycleOwner) {
-                    binding.rvToDo.layoutManager = LinearLayoutManager(view.context)
-                    binding.rvToDo.adapter = TaskAdapter(it,this@ToDoFragment)
-                    binding.rvToDo.visibility = View.VISIBLE
-                    binding.viewLoading.visibility = View.GONE
-                    binding.numTask.text = if(it.size in 1..1) getString(R.string.task_count_0,it.size.toString()) else getString(R.string.task_count,it.size.toString())
+                binding.rvToDo.layoutManager = LinearLayoutManager(view.context)
+                binding.rvToDo.adapter = TaskAdapter(it, this@ToDoFragment)
+                binding.rvToDo.visibility = View.VISIBLE
+                binding.viewLoading.visibility = View.GONE
+                binding.numTask.text = if (it.size in 1..1) getString(
+                    R.string.task_count_0,
+                    it.size.toString()
+                ) else getString(R.string.task_count, it.size.toString())
             }
-        binding.addTask.setOnClickListener {
+            binding.rvToDo.adapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT
+            binding.addTask.setOnClickListener {
             val intent = Intent(view.context, NewTaskActivity::class.java)
             intent.putExtra("state",1)
             startActivity(intent)
         }
             //Log.d("TASKDEBUG","RoomTask: ${taskDao.getAll()}")
         }
+
         return view
     }
 
     override fun onResume() {
         super.onResume()
         tasksViewModel.onCreate()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
     }
 
     override fun onLongClick(position: Int) {

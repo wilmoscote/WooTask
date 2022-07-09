@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -30,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private val TAG = "LoginDebug"
     private val GOOGLE_SIGN_IN = 100
     lateinit var account: GoogleSignInAccount
+    private val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,6 +59,9 @@ class LoginActivity : AppCompatActivity() {
                     )
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
+                                val bundle = Bundle()
+                                bundle.putString(FirebaseAnalytics.Param.METHOD, "LOGIN_NORMAL")
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
                                 binding.pgBar.visibility = View.INVISIBLE
                                 Log.d(TAG, "signInEmail:success")
                                 //val user = auth.currentUser
@@ -145,6 +150,9 @@ class LoginActivity : AppCompatActivity() {
                         auth.signInAnonymously()
                             .addOnCompleteListener(this@LoginActivity) { task ->
                                 if (task.isSuccessful) {
+                                    val bundle = Bundle()
+                                    bundle.putString(FirebaseAnalytics.Param.METHOD, "LOGIN_NOSESSION")
+                                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
                                     binding.pgBar.visibility = View.INVISIBLE
                                     Log.d(TAG, "signInAnonymously:success")
                                     //val user = auth.currentUser
@@ -196,6 +204,9 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithCredential(credential).addOnCompleteListener {
                         binding.pgBar.visibility = View.INVISIBLE
                         if (it.isSuccessful) {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.METHOD, "LOGIN_GOOGLE")
+                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
                             //val user = auth.currentUser
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

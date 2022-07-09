@@ -44,5 +44,7 @@
     <string name="menu_option_2">Mover a HACIENDO</string>
     <string name="menu_option_3">Mover a HECHO</string>
     <string name="menu_option_4">ELIMINAR</string>
-
+    <string name="abrir">ABRIR</string>
+    <string name="cerrar">CERRAR</string>
+    <string name="no_session_user">Usuario</string>
 </resources>

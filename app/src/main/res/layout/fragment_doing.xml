@@ -52,6 +52,7 @@
         android:nestedScrollingEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/banner"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <com.facebook.shimmer.ShimmerFrameLayout

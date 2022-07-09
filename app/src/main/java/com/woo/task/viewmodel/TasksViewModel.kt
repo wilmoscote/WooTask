@@ -35,6 +35,7 @@ class TasksViewModel @Inject constructor(
     private val api: TaskInterface
 ) : ViewModel() {
     var progress = MutableLiveData<Boolean>()
+    var allTasks = MutableLiveData<List<Task>>()
     var todoTasks = MutableLiveData<List<TaskValues>>()
     var doingTasks = MutableLiveData<List<TaskValues>>()
     var doneTasks = MutableLiveData<List<TaskValues>>()
@@ -48,6 +49,14 @@ class TasksViewModel @Inject constructor(
                 todoTasks.postValue(taskDao.getTodoTasks())
                 doingTasks.postValue(taskDao.getDoingTasks())
                 doneTasks.postValue(taskDao.getDoneTasks())
+            }
+        }
+    }
+
+    fun getAllTasks(){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                allTasks.postValue(taskDao.getAll())
             }
         }
     }

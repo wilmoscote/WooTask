@@ -48,6 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/banner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
          />
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -88,6 +89,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="15dp"
-        tools:layout_editor_absoluteY="868dp" />
+        tools:layout_editor_absoluteY="868dp"
+        android:contentDescription="@string/dialog_yes"
+        android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

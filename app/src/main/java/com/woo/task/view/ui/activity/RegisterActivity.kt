@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.util.StatsLog.logEvent
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -20,6 +22,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
     private val TAG = "RegisterDebug"
+    val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -45,6 +48,9 @@ class RegisterActivity : AppCompatActivity() {
                     auth.createUserWithEmailAndPassword(binding.txtEmail.text.toString(), binding.txtPass.text.toString())
                         .addOnCompleteListener { task->
                             if (task.isSuccessful) {
+                                val bundle = Bundle()
+                                bundle.putString(FirebaseAnalytics.Param.METHOD, "REGISTER_NORMAL")
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
                                 binding.pgBar.visibility = View.INVISIBLE
                                 Log.d(TAG, "CreateUser:success")
                                 //val user = auth.currentUser

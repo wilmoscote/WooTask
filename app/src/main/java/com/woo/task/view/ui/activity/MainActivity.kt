@@ -5,13 +5,19 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
@@ -35,6 +41,7 @@ import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.w3c.dom.Text
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -44,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val tasksViewModel: TasksViewModel by viewModels()
     lateinit var app : TaskDb
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,8 +62,36 @@ class MainActivity : AppCompatActivity() {
         app = Room
             .databaseBuilder(this, TaskDb::class.java,"task")
             .build()
+        val hView = binding.navView.getHeaderView(0)
+        val foto = hView.findViewById<ImageView>(R.id.foto)
+        val user = hView.findViewById<TextView>(R.id.user)
+        val email = hView.findViewById<TextView>(R.id.email)
+        Glide.with(applicationContext).load(auth.currentUser?.photoUrl).placeholder(R.drawable.default_profile).circleCrop().into(foto)
+        user.text = if(!auth.currentUser?.displayName.isNullOrEmpty()) auth.currentUser?.displayName else getString(R.string.no_session_user)
+        email.text = auth.currentUser?.email
+
+        tasksViewModel.getAllTasks()
+        tasksViewModel.allTasks.observe(this){
+            if (it.isNotEmpty()) Log.d("TASKDEBUG","Hay Tareas") else Log.d("TASKDEBUG","NO Hay Tareas")
+        }
 
         lifecycleScope.launch {
+            toggle = ActionBarDrawerToggle(this@MainActivity,binding.drawerLayout,R.string.abrir,R.string.cerrar)
+            binding.drawerLayout.addDrawerListener(toggle)
+
+            toggle.syncState()
+
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+            binding.navView.setNavigationItemSelectedListener {
+                when(it.itemId){
+                    R.id.home -> {
+                        Toast.makeText(this@MainActivity, "Home",Toast.LENGTH_SHORT).show()
+                    }
+                }
+                true
+            }
+
             tasksViewModel.onCreate()
             val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
             binding.taskView.adapter = adapter
@@ -98,6 +134,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 .show()
         }
+        binding.btnMenu.setOnClickListener {
+            binding.drawerLayout.open()
+        }
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -108,6 +147,14 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "Token Firebase: $token")
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (toggle.onOptionsItemSelected(item)){
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
