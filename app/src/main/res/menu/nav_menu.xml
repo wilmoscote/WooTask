@@ -5,9 +5,10 @@
     >
 <item
     android:id="@+id/home"
-    android:title="Home"
+    android:title="@string/home"
     android:icon="@drawable/ic_home"
     />
+    <!--
     <item
         android:id="@+id/home1"
         android:title="Item"
@@ -23,9 +24,10 @@
         android:title="Item"
         android:icon="@drawable/ic_add"
         />
+        -->
     <item
-        android:id="@+id/home4"
-        android:title="Item"
-        android:icon="@drawable/ic_add"
+        android:id="@+id/config"
+        android:title="@string/configuration"
+        android:icon="@drawable/ic_settings"
         />
 </menu>

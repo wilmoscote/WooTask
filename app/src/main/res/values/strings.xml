@@ -47,4 +47,15 @@
     <string name="abrir">ABRIR</string>
     <string name="cerrar">CERRAR</string>
     <string name="no_session_user">Usuario</string>
+    <!-- Key para el Shared Preferences -->
+    <string name="preferences_key">UserPrefs</string>
+    <!-- Titulos de Botones del Navigation Drawer -->
+    <string name="home">INICIO</string>
+    <string name="configuration">CONFIGURACIÓN</string>
+    <!-- Texto para Actividad de Configuración -->
+    <string name="theme_title">TEMA</string>
+    <string name="theme_select_0">Seguir el sistema</string>
+    <string name="theme_select_1">Claro</string>
+    <string name="theme_select_2">Oscuro</string>
+
 </resources>

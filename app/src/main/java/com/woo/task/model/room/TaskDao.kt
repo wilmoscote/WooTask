@@ -1,5 +1,6 @@
 package com.woo.task.model.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.woo.task.model.responses.TaskValues
 
@@ -10,19 +11,19 @@ interface TaskDao {
     fun clean()
 
     @Query("SELECT * FROM Task")
-    suspend fun getAll():List<Task>
+    suspend fun getAll(): List<Task>
 
     @Query("SELECT * FROM Task WHERE id = :id")
-    suspend fun getById(id:Int):Task
+    suspend fun getById(id:Int): Task
 
     @Query("SELECT * FROM Task WHERE state = 1")
-    suspend fun getTodoTasks():List<TaskValues>
+    suspend fun getTodoTasks(): List<TaskValues>
 
     @Query("SELECT * FROM Task WHERE state = 2")
-    suspend fun getDoingTasks():List<TaskValues>
+    suspend fun getDoingTasks(): List<TaskValues>
 
     @Query("SELECT * FROM Task WHERE state = 3")
-    suspend fun getDoneTasks():List<TaskValues>
+    suspend fun getDoneTasks(): List<TaskValues>
 
     @Update
     suspend fun updateTask(task: Task)

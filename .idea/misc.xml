@@ -19,9 +19,11 @@
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_menu_list.xml" value="0.305" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_op.xml" value="0.153" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_pin.xml" value="0.305" />
+        <entry key="..\:/WooTask/app/src/main/res/drawable/ic_settings.xml" value="0.1585" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/ic_task.xml" value="0.305" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/shape_rect.xml" value="0.1" />
         <entry key="..\:/WooTask/app/src/main/res/drawable/splash_background.xml" value="0.1" />
+        <entry key="..\:/WooTask/app/src/main/res/layout/activity_config.xml" value="0.33" />
         <entry key="..\:/WooTask/app/src/main/res/layout/activity_edit.xml" value="0.33" />
         <entry key="..\:/WooTask/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/WooTask/app/src/main/res/layout/activity_main.xml" value="0.33" />
@@ -39,6 +41,8 @@
         <entry key="..\:/WooTask/app/src/main/res/menu/task_menu.xml" value="0.1" />
         <entry key="..\:/WooTask/app/src/main/res/menu/task_menu_1.xml" value="0.20625" />
         <entry key="..\:/WooTask/app/src/main/res/menu/task_menu_2.xml" value="0.20729166666666668" />
+        <entry key="..\:/WooTask/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/WooTask/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>
     </option>
   </component>

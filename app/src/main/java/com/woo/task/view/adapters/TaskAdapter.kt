@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -42,11 +43,6 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
     override fun onBindViewHolder(holder: TaskAdapter.TaskViewHolder, position: Int) {
         val item = tasks[position]
         holder.bind(item)
-    }
-
-    fun removeItem(position: Int) {
-        tasks.drop(position)
-        notifyItemChanged(position)
     }
 
     override fun getItemCount(): Int = tasks.size

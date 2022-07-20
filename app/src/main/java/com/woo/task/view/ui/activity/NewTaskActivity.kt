@@ -58,6 +58,7 @@ class NewTaskActivity : AppCompatActivity() {
                 onBackPressed()
             } else {
                 binding.newTask.error = "Describa la tarea"
+                binding.newTask.requestFocus()
             }
         }
     }

@@ -2,9 +2,16 @@ package com.woo.task.viewmodel
 
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.ktx.Firebase
 import com.squareup.okhttp.OkHttpClient
 import com.woo.task.model.apliclient.RetrofitService
 import com.woo.task.model.apliclient.RetrofitServiceLenient
@@ -26,6 +33,7 @@ import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 import com.woo.task.model.room.Task
+import com.woo.task.model.utils.TaskModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -34,6 +42,9 @@ class TasksViewModel @Inject constructor(
     private val taskDao: TaskDao,
     private val api: TaskInterface
 ) : ViewModel() {
+    private val db = Firebase.firestore
+    private val auth = Firebase.auth
+    private val user = auth.currentUser?.uid.toString()
     var progress = MutableLiveData<Boolean>()
     var allTasks = MutableLiveData<List<Task>>()
     var todoTasks = MutableLiveData<List<TaskValues>>()
@@ -53,7 +64,7 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    fun getAllTasks(){
+    fun getAllTasks() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 allTasks.postValue(taskDao.getAll())
@@ -168,7 +179,7 @@ class TasksViewModel @Inject constructor(
                             response: Response<TaskResponse>
                         ) {
                             if (response.isSuccessful) {
-                               //doingTasks.postValue(response.body()?.data)
+                                //doingTasks.postValue(response.body()?.data)
                                 Log.d("TASKDEBUG", "DOING: ${response.body()!!}")
                             }
                         }
@@ -224,6 +235,57 @@ class TasksViewModel @Inject constructor(
                             Log.d("TASKDEBUG", "Error al agregar tarea")
                         }
                     })
+            }
+        }
+    }
+
+    //---------------------- FUNCIONES EN LA NUBE CON FIRESTORE -----------------------------//
+    private val TAGF = "FirestoreDebug"
+    fun checkCloudTasks() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                db.collection("Task").document(user).get()
+                    .addOnSuccessListener { tasks ->
+                        if (tasks.exists()) {
+                            Log.d(TAGF, "Document exists $tasks")
+                            getCloudTasks()
+                        } else {
+                            Log.d(TAGF, "Document doesn't exists $tasks")
+                            createTaskCloud()
+                        }
+                    }
+            }
+        }
+    }
+
+    private fun getCloudTasks() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                Log.d(TAGF, "Fetching Data")
+                val taskRef = db.collection("Task").document(user)
+                taskRef.collection("tasks").orderBy("createdAt", Query.Direction.ASCENDING).get()
+                    .addOnSuccessListener { tasks ->
+                        val taskList = tasks.toObjects(TaskModel::class.java)
+                        Log.d(TAGF, "TASKS FETCHED: $taskList")
+                    }
+                    .addOnFailureListener {
+                        Log.d(TAGF, "FAIL! ${it.message.toString()}")
+                    }
+            }
+        }
+    }
+
+    private fun createTaskCloud() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val task = TaskModel(
+                    createdAt = Timestamp.now(),
+                    text = "",
+                    uid = user,
+                )
+                val taskRef = db.collection("Task").document(user)
+                taskRef.collection("tasks").document().set(task)
+                Log.d(TAGF, "New Task Cloud Created!")
             }
         }
     }

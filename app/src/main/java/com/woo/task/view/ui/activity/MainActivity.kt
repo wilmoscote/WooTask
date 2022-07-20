@@ -70,10 +70,7 @@ class MainActivity : AppCompatActivity() {
         user.text = if(!auth.currentUser?.displayName.isNullOrEmpty()) auth.currentUser?.displayName else getString(R.string.no_session_user)
         email.text = auth.currentUser?.email
 
-        tasksViewModel.getAllTasks()
-        tasksViewModel.allTasks.observe(this){
-            if (it.isNotEmpty()) Log.d("TASKDEBUG","Hay Tareas") else Log.d("TASKDEBUG","NO Hay Tareas")
-        }
+        tasksViewModel.checkCloudTasks()
 
         lifecycleScope.launch {
             toggle = ActionBarDrawerToggle(this@MainActivity,binding.drawerLayout,R.string.abrir,R.string.cerrar)
@@ -87,6 +84,9 @@ class MainActivity : AppCompatActivity() {
                 when(it.itemId){
                     R.id.home -> {
                         Toast.makeText(this@MainActivity, "Home",Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.config -> {
+                        startActivity(Intent(this@MainActivity,ConfigActivity::class.java))
                     }
                 }
                 true
