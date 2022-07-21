@@ -38,7 +38,7 @@
     <string name="error_confirm_pass">Las contraseñas no coinciden.</string>
     <string name="logout_title">Cerrar sesión</string>
     <string name="logout_message">¿Estas seguro que deseas salir?</string>
-    <string name="google_web_client_id">302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
+    <string name="google_web_client_id" translatable="false">302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
     <string name="menu_option_0">EDITAR</string>
     <string name="menu_option_1">Mover a HACER</string>
     <string name="menu_option_2">Mover a HACIENDO</string>
@@ -48,14 +48,18 @@
     <string name="cerrar">CERRAR</string>
     <string name="no_session_user">Usuario</string>
     <!-- Key para el Shared Preferences -->
-    <string name="preferences_key">UserPrefs</string>
+    <string name="preferences_key" translatable="false">UserPrefs</string>
     <!-- Titulos de Botones del Navigation Drawer -->
-    <string name="home">INICIO</string>
-    <string name="configuration">CONFIGURACIÓN</string>
+    <string name="home">Inicio</string>
+    <string name="configuration">Configuración</string>
     <!-- Texto para Actividad de Configuración -->
     <string name="theme_title">TEMA</string>
-    <string name="theme_select_0">Seguir el sistema</string>
-    <string name="theme_select_1">Claro</string>
-    <string name="theme_select_2">Oscuro</string>
-
+    <string name="switch_theme_text">Modo Oscuro</string>
+    <string name="notifications_title">NOTIFICACIONES</string>
+    <string name="switch_notifications_text">Notificaciones</string>
+    <string name="regional_title">REGIONAL</string>
+    <string name="switch_language">Idioma</string>
+    <string name="language_option_0">Ingles</string>
+    <string name="language_option_1">Español</string>
+    <string name="language_option_2">Portugués</string>
 </resources>

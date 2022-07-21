@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.woo.task.R
+import java.util.*
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -26,6 +27,19 @@ class SplashActivity : AppCompatActivity() {
             2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
+        when(sharedPref.getInt("language",0)){
+            0 -> {
+                setLocale("en")
+            }
+            1 -> {
+                setLocale("es")
+            }
+            2 -> {
+                setLocale("pt")
+            }
+        }
+
+
         //Verifico si el usuario tiene una sesión activa para mandarlo al login o al main
         auth = Firebase.auth
         if (auth.currentUser != null){
@@ -35,5 +49,14 @@ class SplashActivity : AppCompatActivity() {
             startActivity(Intent(this,LoginActivity::class.java))
             finish()
         }
+    }
+
+    fun setLocale(language:String){
+        val resources = resources
+        val metrics = resources.displayMetrics
+        val configuration = resources.configuration
+        configuration.locale = Locale(language)
+        resources.updateConfiguration(configuration,metrics)
+        onConfigurationChanged(configuration)
     }
 }

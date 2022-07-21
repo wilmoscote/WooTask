@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             binding.navView.setNavigationItemSelectedListener {
                 when(it.itemId){
                     R.id.home -> {
-                        Toast.makeText(this@MainActivity, "Home",Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this@MainActivity, "Home",Toast.LENGTH_SHORT).show()
                     }
                     R.id.config -> {
                         startActivity(Intent(this@MainActivity,ConfigActivity::class.java))

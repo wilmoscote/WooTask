@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_drag"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/image_description" />
+    <FrameLayout
+        android:id="@+id/standard_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp"
+        app:behavior_draggable="true"
+        android:layout_marginTop="35dp"
+        style="?attr/bottomSheetStyle"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+       >
+        <RadioGroup
+            android:id="@+id/languageRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <RadioButton
+                android:id="@+id/language_0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                app:buttonTint="?attr/textAppearanceCaption"
+                android:text="@string/language_option_0"/>
+            <RadioButton
+                android:id="@+id/language_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                app:buttonTint="?attr/textAppearanceCaption"
+                android:text="@string/language_option_1"/>
+            <RadioButton
+                android:id="@+id/language_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="5dp"
+                app:buttonTint="?attr/textAppearanceCaption"
+                android:text="@string/language_option_2"/>
+        </RadioGroup>
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>
