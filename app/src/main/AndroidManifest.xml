@@ -35,12 +35,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.ui.activity.NewTaskActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.ui.activity.EditActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.ui.activity.MainActivity"
             android:exported="false" />
 
@@ -51,10 +45,9 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_launcher_foreground" />
+            android:resource="@mipmap/ic_launcher_round" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/purple_200" />
@@ -67,6 +60,9 @@
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
+        <receiver
+            android:name=".model.utils.AlarmReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>

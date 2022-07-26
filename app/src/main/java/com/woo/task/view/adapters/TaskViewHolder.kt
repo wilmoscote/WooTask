@@ -1,20 +1,5 @@
 package com.woo.task.view.adapters
 
-import android.app.AlertDialog
-import android.content.Context
-import android.content.Intent
-import android.util.Log
-import android.view.View
-import androidx.activity.viewModels
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.woo.task.R
-import com.woo.task.databinding.CardItemBinding
-import com.woo.task.model.interfaces.RecyclerViewInterface
-import com.woo.task.model.responses.TaskValues
-import com.woo.task.view.ui.activity.EditActivity
-import com.woo.task.viewmodel.TasksViewModel
-
 /*
 class TaskViewHolder (view: View): RecyclerView.ViewHolder(view){
     private val binding = CardItemBinding.bind(view)

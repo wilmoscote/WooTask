@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.woo.task.BuildConfig
 
 import com.woo.task.R
 import com.woo.task.databinding.ActivityLoginBinding
@@ -34,12 +35,11 @@ class LoginActivity : AppCompatActivity() {
     private val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        auth = Firebase.auth
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = Firebase.auth
+        binding.txtVersion.text = getString(R.string.version_info) + BuildConfig.VERSION_NAME
         binding.btnLogin.setOnClickListener {
             if (binding.txtEmail.text.toString().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(
                     binding.txtEmail.text.toString()
@@ -185,7 +185,7 @@ class LoginActivity : AppCompatActivity() {
                 .show()
         }
 
-        binding.versionInfo.setOnLongClickListener {
+        binding.txtVersion.setOnLongClickListener {
             Toast.makeText(this, getString(R.string.love_message), Toast.LENGTH_LONG).show()
             return@setOnLongClickListener true
         }

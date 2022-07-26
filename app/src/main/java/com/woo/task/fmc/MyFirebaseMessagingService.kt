@@ -6,7 +6,7 @@ import com.google.firebase.messaging.RemoteMessage
 
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
-    val TAG = "FIREBASE"
+    val TAG = "FIREBASENOTIFY"
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.from);
 

@@ -12,6 +12,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.woo.task.BuildConfig
 import com.woo.task.R
 import com.woo.task.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.CoroutineScope
@@ -28,7 +29,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         auth = Firebase.auth
-
+        binding.txtVersion.text = getString(R.string.version_info) + BuildConfig.VERSION_NAME
         binding.btnRegister.setOnClickListener {
             if(binding.txtEmail.text.toString().isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(binding.txtEmail.text.toString()).matches()){
                 binding.txtEmail.error = getString(R.string.email_error)
@@ -67,7 +68,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        binding.versionInfo.setOnLongClickListener {
+        binding.txtVersion.setOnLongClickListener {
             Toast.makeText(this, getString(R.string.love_message), Toast.LENGTH_LONG).show()
             return@setOnLongClickListener true
         }

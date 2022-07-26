@@ -58,4 +58,12 @@
     <string name="language_option_0">Inglês</string>
     <string name="language_option_1">Espanhol</string>
     <string name="language_option_2">" Português"</string>
+    <string name="language_changed_text">Reinicie o aplicativo para aplicar as alterações.</string>
+    <string name="account_title">CONTA</string>
+    <string name="policiy_text">" Termos e Condições"</string>
+    <string name="help">Ajuda</string>
+    <string name="share_app">Compartilhe o aplicativo</string>
+    <string name="alarm_text">Tem uma tarefa para hoje!</string>
+    <string name="set_alarm_title">DATA LIMITE</string>
+    <string name="title_hour_switch">ADICIONAR HORA</string>
 </resources>

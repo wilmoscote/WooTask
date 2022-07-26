@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view"
-    >
-<item
-    android:id="@+id/home"
-    android:title="@string/home"
-    android:icon="@drawable/ic_home"
-    />
+    tools:showIn="navigation_view">
+    <group
+        android:id="@+id/navGroup1"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/shareApp"
+            android:title="@string/share_app"
+            android:icon="@drawable/ic_share"
+            />
+        <item
+            android:id="@+id/help"
+            android:icon="@drawable/ic_help"
+            android:title="@string/help" />
+    </group>
     <!--
-    <item
-        android:id="@+id/home1"
-        android:title="Item"
-        android:icon="@drawable/ic_add"
-        />
+
     <item
         android:id="@+id/home2"
         android:title="Item"
         android:icon="@drawable/ic_add"
         />
-    <item
-        android:id="@+id/home3"
-        android:title="Item"
-        android:icon="@drawable/ic_add"
-        />
+
         -->
-    <item
-        android:id="@+id/config"
-        android:title="@string/configuration"
-        android:icon="@drawable/ic_settings"
-        />
+    <group
+        android:id="@+id/navGroup2"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/config"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/configuration" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout_title" />
+    </group>
 </menu>

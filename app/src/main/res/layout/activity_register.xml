@@ -94,14 +94,17 @@
             />
     </LinearLayout>
     <TextView
-        android:id="@+id/versionInfo"
+        android:id="@+id/txtVersion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/version_info"
         android:gravity="center_horizontal"
-        android:textStyle="italic"
-        android:paddingVertical="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="italic"
+        android:fontFamily="@font/kaushan_regular"
+        android:paddingVertical="5dp"
         />
     <ProgressBar
         android:id="@+id/pgBar"

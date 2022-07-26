@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">Woo Task</string>
-    <string name="version_info">Woo Task v1.0.0</string>
+    <string name="version_info">Woo Task v</string>
     <string name="love_message">Hecha con \u2665 por Woo Bless.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">GUARDAR</string>
     <string name="image_description">WooTask Image</string>
     <string name="new_task_hint">Describa los detalles de la tarea …</string>
-    <string name="title_list_todo">To Do List</string>
-    <string name="title_list_doing">Doing List</string>
-    <string name="title_list_done">Done List</string>
+    <string name="title_list_todo">Lista de Hacer</string>
+    <string name="title_list_doing">Lista de Haciendo</string>
+    <string name="title_list_done">Lista de Hecho</string>
     <string name="task_count_0">%1$s Tarea</string>
     <string name="task_count">%1$s Tareas</string>
     <string name="email_hint">Correo electrónico</string>
@@ -47,11 +47,18 @@
     <string name="abrir">ABRIR</string>
     <string name="cerrar">CERRAR</string>
     <string name="no_session_user">Usuario</string>
+    <string name="alarm_text">Tienes una Tarea para hoy!</string>
+    <string name="set_alarm_title">FECHA LIMITE</string>
+    <string name="title_hour_switch">AGREGAR HORA</string>
+    <string name="default_date" translatable="false">26–06–1998</string>
+    <string name="default_hour" translatable="false">12:00 AM</string>
     <!-- Key para el Shared Preferences -->
     <string name="preferences_key" translatable="false">UserPrefs</string>
     <!-- Titulos de Botones del Navigation Drawer -->
     <string name="home">Inicio</string>
     <string name="configuration">Configuración</string>
+    <string name="help">Ayuda</string>
+    <string name="share_app">Comparte la app</string>
     <!-- Texto para Actividad de Configuración -->
     <string name="theme_title">TEMA</string>
     <string name="switch_theme_text">Modo Oscuro</string>
@@ -62,4 +69,7 @@
     <string name="language_option_0">Ingles</string>
     <string name="language_option_1">Español</string>
     <string name="language_option_2">Portugués</string>
+    <string name="language_changed_text">Reinicie la aplicación para aplicar los cambios.</string>
+    <string name="account_title">CUENTA</string>
+    <string name="policiy_text">Términos y Condiciones</string>
 </resources>

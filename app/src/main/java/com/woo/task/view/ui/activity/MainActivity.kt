@@ -46,7 +46,7 @@ import kotlin.math.abs
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    val TAG = "FIREBASE"
+    val TAG = "TASKDEBUG"
     lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private val tasksViewModel: TasksViewModel by viewModels()
@@ -88,6 +88,20 @@ class MainActivity : AppCompatActivity() {
                     R.id.config -> {
                         startActivity(Intent(this@MainActivity,ConfigActivity::class.java))
                     }
+                    R.id.logout -> {
+                        MaterialAlertDialogBuilder(this@MainActivity)
+                            .setTitle(resources.getString(R.string.logout_title))
+                            .setMessage(getString(R.string.logout_message))
+                            .setPositiveButton(resources.getString(R.string.dialog_confirm)){_,_->
+                                Firebase.auth.signOut()
+                                startActivity(Intent(this@MainActivity,LoginActivity::class.java))
+                                finish()
+                            }
+                            .setNegativeButton(resources.getString(R.string.dialog_cancel)){dialog,_->
+                                dialog.dismiss()
+                            }
+                            .show()
+                    }
                 }
                 true
             }
@@ -119,21 +133,6 @@ class MainActivity : AppCompatActivity() {
             )
             binding.taskView.addItemDecoration(itemDecoration)
         }
-
-        binding.btnLogout.setOnClickListener {
-            MaterialAlertDialogBuilder(this)
-                .setTitle(resources.getString(R.string.logout_title))
-                .setMessage(getString(R.string.logout_message))
-                .setPositiveButton(resources.getString(R.string.dialog_confirm)){_,_->
-                    Firebase.auth.signOut()
-                    startActivity(Intent(this,LoginActivity::class.java))
-                    finish()
-                }
-                .setNegativeButton(resources.getString(R.string.dialog_cancel)){dialog,_->
-                    dialog.dismiss()
-                }
-                .show()
-        }
         binding.btnMenu.setOnClickListener {
             binding.drawerLayout.open()
         }
@@ -147,6 +146,20 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "Token Firebase: $token")
             }
         })
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.app_name, token)
+            Log.d(TAG, token)
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -157,9 +170,9 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        super.onResume()
-        tasksViewModel.onCreate()
-    }
+    //override fun onResume() {
+    //    super.onResume()
+    //    tasksViewModel.onCreate()
+    //}
 
 }

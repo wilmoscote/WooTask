@@ -16,13 +16,13 @@ interface TaskDao {
     @Query("SELECT * FROM Task WHERE id = :id")
     suspend fun getById(id:Int): Task
 
-    @Query("SELECT * FROM Task WHERE state = 1")
+    @Query("SELECT * FROM Task WHERE state = 1 ORDER BY createdAt ASC")
     suspend fun getTodoTasks(): List<TaskValues>
 
-    @Query("SELECT * FROM Task WHERE state = 2")
+    @Query("SELECT * FROM Task WHERE state = 2 ORDER BY createdAt ASC")
     suspend fun getDoingTasks(): List<TaskValues>
 
-    @Query("SELECT * FROM Task WHERE state = 3")
+    @Query("SELECT * FROM Task WHERE state = 3 ORDER BY createdAt ASC")
     suspend fun getDoneTasks(): List<TaskValues>
 
     @Update

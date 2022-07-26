@@ -12,4 +12,10 @@
     <color name="blue">#187498</color>
     <color name="red">#EB5353</color>
     <color name="green">#36AE7C</color>
+    <!-- Selectable backgrounds color for tasks -->
+    <color name="bg_0">#F38181</color>
+    <color name="bg_1">#D3CEDF</color>
+    <color name="bg_2">#F9EBC8</color>
+    <color name="bg_3">#95E1D3</color>
+    <color name="bg_4">#B2C8DF</color>
 </resources>

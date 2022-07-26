@@ -39,7 +39,6 @@ class SplashActivity : AppCompatActivity() {
             }
         }
 
-
         //Verifico si el usuario tiene una sesión activa para mandarlo al login o al main
         auth = Firebase.auth
         if (auth.currentUser != null){
@@ -51,8 +50,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    fun setLocale(language:String){
-        val resources = resources
+    private fun setLocale(language:String){
         val metrics = resources.displayMetrics
         val configuration = resources.configuration
         configuration.locale = Locale(language)

@@ -74,8 +74,14 @@ class TasksViewModel @Inject constructor(
 
     fun newTask(task: Task) {
         viewModelScope.launch {
-            withContext(Dispatchers.Default) {
+            withContext(Dispatchers.IO) {
+                Log.d("TASKDEBUG", "TASK! ${task.state}")
                 taskDao.newTask(task)
+                when(task.state){
+                    1 -> todoTasks.postValue(taskDao.getTodoTasks())
+                    2 -> doingTasks.postValue(taskDao.getDoingTasks())
+                    3 -> doneTasks.postValue(taskDao.getDoneTasks())
+                }
             }
             Log.d("TASKDEBUG", "ADD TASK! ")
         }
@@ -83,8 +89,13 @@ class TasksViewModel @Inject constructor(
 
     fun updateTask(task: Task) {
         viewModelScope.launch {
-            withContext(Dispatchers.Default) {
+            withContext(Dispatchers.IO) {
                 taskDao.updateTask(task)
+                when(task.state){
+                    1 -> todoTasks.postValue(taskDao.getTodoTasks())
+                    2 -> doingTasks.postValue(taskDao.getDoingTasks())
+                    3 -> doneTasks.postValue(taskDao.getDoneTasks())
+                }
             }
             Log.d("TASKDEBUG", "Task Updated! ")
         }
@@ -92,26 +103,34 @@ class TasksViewModel @Inject constructor(
 
     fun getTaskById(id: Int?) {
         viewModelScope.launch {
-            withContext(Dispatchers.Default) {
+            withContext(Dispatchers.IO) {
                 editTask.postValue(taskDao.getById(id!!))
             }
             Log.d("TASKDEBUG", "Task by Id! $editTask")
         }
     }
 
-    fun removeTask(id: Int) {
+    fun removeTask(id: Int,state: Int) {
         viewModelScope.launch {
-            withContext(Dispatchers.Default) {
+            withContext(Dispatchers.IO) {
                 taskDao.deleteTask(id)
+                when(state){
+                    1 -> {
+                        Log.d("TASKDEBUG", "OBTAINING TODO TASK!")
+                        todoTasks.postValue(taskDao.getTodoTasks())
+                    }
+                    2 -> doingTasks.postValue(taskDao.getDoingTasks())
+                    3 -> doneTasks.postValue(taskDao.getDoneTasks())
+                }
             }
             Log.d("TASKDEBUG", "Deleted Task Id! $id")
-            onCreate()
+            //onCreate()
         }
     }
 
     fun moveTask(id: Int, state: Int) {
         viewModelScope.launch {
-            withContext(Dispatchers.Default) {
+            withContext(Dispatchers.IO) {
                 taskDao.moveTask(id, state)
             }
             Log.d("TASKDEBUG", "Moved Task Id! $id")

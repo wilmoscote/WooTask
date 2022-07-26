@@ -113,9 +113,10 @@
             android:paddingVertical="13dp"
 
             app:backgroundTint="?attr/textAppearanceCaption"
-            android:textColor="?attr/colorAccent"
+            android:textColor="?attr/colorOnSecondary"
             android:textStyle="bold"
             app:icon="@drawable/ic_google"
+            app:iconTint="?attr/colorOnSecondary"
             android:text="@string/google_button"
             />
         <Button
@@ -131,14 +132,17 @@
             />
     </LinearLayout>
     <TextView
-        android:id="@+id/versionInfo"
+        android:id="@+id/txtVersion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/version_info"
         android:gravity="center_horizontal"
-        android:textStyle="italic"
-        android:paddingVertical="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:textStyle="italic"
+        android:fontFamily="@font/kaushan_regular"
+        android:paddingVertical="5dp"
         />
     <ProgressBar
         android:id="@+id/pgBar"

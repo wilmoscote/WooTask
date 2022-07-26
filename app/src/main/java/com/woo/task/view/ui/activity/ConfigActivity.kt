@@ -1,6 +1,7 @@
 package com.woo.task.view.ui.activity
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,9 +15,11 @@ import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.woo.task.BuildConfig
 import com.woo.task.R
 import com.woo.task.databinding.ActivityConfigBinding
 import com.woo.task.databinding.ActivityMainBinding
@@ -26,7 +29,7 @@ import com.woo.task.model.utils.ModalBottomSheet
 class ConfigActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfigBinding
     private lateinit var auth: FirebaseAuth
-    val modalBottomSheet = ModalBottomSheet()
+    private val modalBottomSheet = ModalBottomSheet()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,7 @@ class ConfigActivity : AppCompatActivity() {
                 R.string.no_session_user
             )
         binding.emailProfile.text = auth.currentUser?.email
-
+        binding.txtVersion.text = getString(R.string.version_info) + BuildConfig.VERSION_NAME
         binding.txtCurrentLanguage.text = resources.configuration.locale.displayName.toString()
 
         //Obtengo las preferencias del usuario.
@@ -62,6 +65,21 @@ class ConfigActivity : AppCompatActivity() {
         }
         binding.swithLanguage.setOnClickListener {
             modalBottomSheet.show(supportFragmentManager, ModalBottomSheet.TAG)
+        }
+
+        binding.layoutLogout.setOnClickListener {
+            MaterialAlertDialogBuilder(this@ConfigActivity)
+                .setTitle(resources.getString(R.string.logout_title))
+                .setMessage(getString(R.string.logout_message))
+                .setPositiveButton(resources.getString(R.string.dialog_confirm)){_,_->
+                    Firebase.auth.signOut()
+                    startActivity(Intent(this@ConfigActivity,LoginActivity::class.java))
+                    finish()
+                }
+                .setNegativeButton(resources.getString(R.string.dialog_cancel)){dialog,_->
+                    dialog.dismiss()
+                }
+                .show()
         }
 
         binding.btnBack.setOnClickListener {

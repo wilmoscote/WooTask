@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.activity.EditActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_drag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/image_description" />
     <Button
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btnCancel"
         app:rippleColor="?attr/colorControlNormal"
+        android:textColor="?attr/textAppearanceCaption"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btnSave"
+        android:textColor="?attr/textAppearanceCaption"
         app:rippleColor="?attr/colorControlNormal"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,19 +37,17 @@
         android:layout_margin="5dp"
         />
     <EditText
-        android:id="@+id/edit"
-        android:inputType="textMultiLine"
+        android:id="@+id/newTask"
+        android:inputType="textCapSentences|textMultiLine"
         android:gravity="top|start"
         android:scrollbars="vertical"
+        android:hint="@string/new_task_hint"
         android:maxLines="10"
         android:lines="8"
         android:layout_marginHorizontal="15dp"
         android:minLines="6"
         android:layout_width="0dp"
-        android:textColorHighlight="?attr/colorControlNormal"
         android:layout_height="0dp"
-        android:hint="@string/new_task_hint"
-        android:textCursorDrawable="@drawable/cursor"
         android:background="@color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
