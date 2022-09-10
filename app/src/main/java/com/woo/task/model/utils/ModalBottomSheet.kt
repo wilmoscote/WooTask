@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woo.task.R
+import com.woo.task.view.utils.AppPreferences
 import com.woo.task.viewmodel.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.scopes.ActivityScoped
@@ -35,7 +36,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
 
         Log.d("SheetDebug","Current Language: $primaryLocale")
-        val sharedPref = context?.getSharedPreferences(getString(R.string.preferences_key), Context.MODE_PRIVATE)
+        AppPreferences.setup(context)
         val view = inflater.inflate(R.layout.language_sheet, container, false)
         val radioGroup = view.findViewById<RadioGroup>(R.id.languageRadioGroup)
         val language1 = view.findViewById<RadioButton>(R.id.language_0)
@@ -50,24 +51,21 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
 
         radioGroup.setOnCheckedChangeListener { _, _ ->
-            val editor = sharedPref?.edit()
+
             Log.d("SheetDebug","LANGUAGE CHANGED!")
             if(language1.isChecked) {
                 //setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
-                editor?.putInt("language",0)
-                editor?.apply()
+                AppPreferences.language = 0
                 setLocale("en")
                 Log.d("SheetDebug","ENGLISH")
             }else if (language2.isChecked){
                 //setDefaultNightMode(MODE_NIGHT_NO)
-                editor?.putInt("language",1)
-                editor?.apply()
+                AppPreferences.language = 1
                 setLocale("es")
                 Log.d("SheetDebug","SPANISH")
             }else if(language3.isChecked){
                 //setDefaultNightMode(MODE_NIGHT_YES)
-                editor?.putInt("language",2)
-                editor?.apply()
+                AppPreferences.language = 2
                 setLocale("pt")
                 Log.d("SheetDebug","PORTUGUESE")
             }

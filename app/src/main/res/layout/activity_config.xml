@@ -100,6 +100,7 @@
                     android:id="@+id/btnEditProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
                     android:layout_gravity="center_vertical"
                     android:contentDescription="@string/image_description"
                     app:srcCompat="@drawable/arrow_forward" />
@@ -138,6 +139,44 @@
                     android:textStyle="bold"
                     app:thumbTint="@color/yellow"
                     app:trackTint="?attr/textAppearanceCaption" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/switchFont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:contentDescription="@string/image_description"
+                    app:srcCompat="@drawable/ic_font" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="@string/switch_font"
+                    android:textColor="?attr/textAppearanceCaption"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtCurrentFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textColor="?attr/colorControlNormal"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    tools:text="Nunito" />
             </LinearLayout>
 
             <TextView

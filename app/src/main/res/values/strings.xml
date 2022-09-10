@@ -66,10 +66,20 @@
     <string name="switch_notifications_text">Notificaciones</string>
     <string name="regional_title">REGIONAL</string>
     <string name="switch_language">Idioma</string>
+    <string name="switch_font">Fuente</string>
     <string name="language_option_0">Ingles</string>
     <string name="language_option_1">Español</string>
     <string name="language_option_2">Portugués</string>
     <string name="language_changed_text">Reinicie la aplicación para aplicar los cambios.</string>
     <string name="account_title">CUENTA</string>
     <string name="policiy_text">Términos y Condiciones</string>
+    <string name="font_option_0" translatable="false">Nunito</string>
+    <string name="font_option_1" translatable="false">Newsreader</string>
+    <string name="font_option_2" translatable="false">Lora</string>
+    <string name="font_option_3" translatable="false">Poppins</string>
+    <string name="font_option_4" translatable="false">Roboto</string>
+    <string name="share_app_text">Déjame recomendarte esta aplicación</string>
+    <string name="choose_one_option">Elige una opción</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

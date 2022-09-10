@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:fontFamily="@font/kaushan_regular"
             android:textColor="@color/white"
+            android:fontFamily="@font/kaushan_regular"
             android:scaleType="fitXY"
             android:textSize="24sp"
             android:layout_gravity="center_vertical|center_horizontal"
@@ -32,10 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="5 Task"
-            android:scaleType="fitXY"
-            android:textSize="15sp"
             android:textColor="@color/white"
             android:fontFamily="@font/kaushan_regular"
+            android:scaleType="fitXY"
+            android:textSize="15sp"
             android:layout_gravity="bottom|center_horizontal"
             android:gravity="center_horizontal"
             />
@@ -47,10 +47,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:nestedScrollingEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/banner"
         android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
     <com.facebook.shimmer.ShimmerFrameLayout

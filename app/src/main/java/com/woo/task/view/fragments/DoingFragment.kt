@@ -37,7 +37,6 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -50,11 +49,9 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
         lifecycleScope.launch {
             binding.titleBanner.text = getString(R.string.title_list_doing)
             tasksViewModel.doingTasks.observe(viewLifecycleOwner) {
-                binding.rvToDo.layoutManager = LinearLayoutManager(view.context)
+                binding.rvToDo.layoutManager = LinearLayoutManager(this@DoingFragment.requireContext())
                 binding.rvToDo.adapter = TaskAdapter(it, this@DoingFragment)
                 binding.rvToDo.visibility = View.VISIBLE
-                binding.viewLoading.visibility = View.GONE
-
                 binding.viewLoading.visibility = View.GONE
 
                 binding.numTask.text = if (it.size in 1..1) getString(
@@ -64,7 +61,7 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
             }
             binding.addTask.setOnClickListener {
                 val dialog =
-                    BottomSheetDialog(this@DoingFragment.context!!, R.style.CustomBottomSheetDialog)
+                    BottomSheetDialog(this@DoingFragment.requireContext(), R.style.CustomBottomSheetDialog)
 
                 val viewSheet = layoutInflater.inflate(R.layout.new_task_sheet, null)
                 dialog.setOnShowListener {
@@ -72,8 +69,8 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
                     val parentLayout =
                         bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
                     parentLayout?.let { layout ->
-                        val behaviour = BottomSheetBehavior.from(layout)
-                        setupFullHeight(layout)
+                        //val behaviour = BottomSheetBehavior.from(layout)
+                        //setupFullHeight(layout)
                         // behaviour.state = BottomSheetBehavior.STATE_EXPANDED
                     }
                 }

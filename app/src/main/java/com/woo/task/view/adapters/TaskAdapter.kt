@@ -56,6 +56,7 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
        //private val tasksViewModel = TasksViewModel()
 
         fun bind(task: TaskValues){
+            binding.layoutTool.isVisible = false
 
             binding.title.text = task.title
             /*binding.icon.setImageResource(when(task.state){
@@ -75,10 +76,11 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
 
             binding.taskBody.setOnFocusChangeListener { _, b ->
                 binding.layoutTool.isVisible = b
+                Log.d("ToolsDebug",b.toString())
             }
 
             binding.btnEdit.setOnClickListener {
-                val dialog = BottomSheetDialog(context!!, R.style.CustomBottomSheetDialog)
+                val dialog = BottomSheetDialog(context, R.style.CustomBottomSheetDialog)
                 val viewSheet = LayoutInflater.from(context).inflate(R.layout.new_task_sheet, null)
                 dialog.setOnShowListener {
                     val bottomSheetDialog = it as BottomSheetDialog
@@ -124,7 +126,7 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
             }
 
             binding.btnDelete.setOnClickListener {
-                MaterialAlertDialogBuilder(context!!)
+                MaterialAlertDialogBuilder(context)
                     .setTitle(context.resources.getString(R.string.title_delete_dialog))
                     .setMessage(task.title)
                     .setPositiveButton(context.resources.getString(R.string.dialog_confirm)){_,_->
@@ -139,7 +141,7 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
             }
 
             binding.btnCheck.setOnClickListener {
-                val popup = PopupMenu(context!!,binding.btnCheck)
+                val popup = PopupMenu(context,binding.btnCheck)
                 when(task.state){
                     1 -> popup.inflate(R.menu.task_menu)
                     2 -> popup.inflate(R.menu.task_menu_1)
@@ -168,7 +170,7 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
             }
 
             binding.btnColor.setOnClickListener {
-                val dialog = BottomSheetDialog(context!!, R.style.CustomBottomSheetDialog)
+                val dialog = BottomSheetDialog(context, R.style.CustomBottomSheetDialog)
                 val viewSheet = LayoutInflater.from(context).inflate(R.layout.color_sheet, null)
                 dialog.setOnShowListener {
                     val bottomSheetDialog = it as BottomSheetDialog
@@ -184,11 +186,11 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
                 val btnColor3 = viewSheet.findViewById<Button>(R.id.btnColor3)
                 val btnColor4 = viewSheet.findViewById<Button>(R.id.btnColor4)
 
-                btnColor0.setOnClickListener{changeItemColor(task,"1")}
-                btnColor1.setOnClickListener{changeItemColor(task,"2")}
-                btnColor2.setOnClickListener{changeItemColor(task,"3")}
-                btnColor3.setOnClickListener{changeItemColor(task,"4")}
-                btnColor4.setOnClickListener{changeItemColor(task,"5")}
+                btnColor0.setOnClickListener{changeItemColor(task,"1"); dialog.dismiss()}
+                btnColor1.setOnClickListener{changeItemColor(task,"2"); dialog.dismiss()}
+                btnColor2.setOnClickListener{changeItemColor(task,"3"); dialog.dismiss()}
+                btnColor3.setOnClickListener{changeItemColor(task,"4"); dialog.dismiss()}
+                btnColor4.setOnClickListener{changeItemColor(task,"5"); dialog.dismiss()}
 
                 dialog.setCancelable(true)
                 dialog.setContentView(viewSheet)

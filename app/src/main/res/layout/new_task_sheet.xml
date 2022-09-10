@@ -5,13 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_drag"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/dragIcon"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/image_description"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/image_description" />
+        app:srcCompat="@drawable/ic_drag" />
     <Button
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
@@ -38,20 +40,19 @@
         />
     <EditText
         android:id="@+id/newTask"
-        android:inputType="textCapSentences|textMultiLine"
+        android:inputType="textMultiLine|textCapSentences"
         android:gravity="top|start"
         android:scrollbars="vertical"
         android:hint="@string/new_task_hint"
-        android:maxLines="10"
-        android:lines="8"
         android:layout_marginHorizontal="15dp"
-        android:minLines="6"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="500dp"
+        android:maxHeight="800dp"
         android:background="@color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSave"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         android:importantForAutofill="no" />
 </androidx.constraintlayout.widget.ConstraintLayout>

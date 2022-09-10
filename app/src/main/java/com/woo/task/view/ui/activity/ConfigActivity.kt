@@ -1,19 +1,17 @@
 package com.woo.task.view.ui.activity
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
+import android.widget.Button
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate.*
-import androidx.room.Room
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
@@ -22,9 +20,10 @@ import com.google.firebase.ktx.Firebase
 import com.woo.task.BuildConfig
 import com.woo.task.R
 import com.woo.task.databinding.ActivityConfigBinding
-import com.woo.task.databinding.ActivityMainBinding
-import com.woo.task.model.room.TaskDb
 import com.woo.task.model.utils.ModalBottomSheet
+import com.woo.task.view.utils.AppPreferences
+import com.woo.task.view.utils.TypefaceUtil
+
 
 class ConfigActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfigBinding
@@ -35,6 +34,9 @@ class ConfigActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Obtengo las preferencias del usuario.
+        AppPreferences.setup(this)
+
         auth = Firebase.auth
         Glide.with(applicationContext).load(auth.currentUser?.photoUrl)
             .placeholder(R.drawable.default_profile).circleCrop().into(binding.imgProfile)
@@ -46,25 +48,96 @@ class ConfigActivity : AppCompatActivity() {
         binding.txtVersion.text = getString(R.string.version_info) + BuildConfig.VERSION_NAME
         binding.txtCurrentLanguage.text = resources.configuration.locale.displayName.toString()
 
-        //Obtengo las preferencias del usuario.
-        val sharedPref = this.getSharedPreferences(getString(R.string.preferences_key), Context.MODE_PRIVATE)
+
         //Veo que tema tiene seleccionado para reflejarlo en switch
-        if (sharedPref.getInt("theme", 0) == 2) binding.switchTheme.isChecked = true
+        if (AppPreferences.theme == 2) binding.switchTheme.isChecked = true
 
         //Evento para leer estado del switch y cambiar el tema de la app, asi mismo guardarlo en las preferencias del usuario.
         binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
-            val editor = sharedPref.edit()
             if (isChecked) {
-                editor.putInt("theme", 2)
+                AppPreferences.theme = 2
                 setDefaultNightMode(MODE_NIGHT_YES)
             } else {
-                editor.putInt("theme", 1)
+                AppPreferences.theme = 1
                 setDefaultNightMode(MODE_NIGHT_NO)
             }
-            editor.apply()
         }
+
+        binding.txtCurrentFont.text = when(AppPreferences.font){
+            0 -> "Nunito"
+            1 -> "Newsreader"
+            2 -> "Lora"
+            3 -> "Poppins"
+            4 -> "Roboto"
+            else -> "Nunito"
+        }
+
         binding.swithLanguage.setOnClickListener {
             modalBottomSheet.show(supportFragmentManager, ModalBottomSheet.TAG)
+        }
+
+        binding.switchFont.setOnClickListener {
+            val dialog = BottomSheetDialog(this, R.style.CustomBottomSheetDialog)
+            val viewSheet = LayoutInflater.from(this).inflate(R.layout.font_sheet, null)
+            dialog.setOnShowListener {
+                val bottomSheetDialog = it as BottomSheetDialog
+                val parentLayout =
+                    bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                parentLayout?.let { layout ->
+                    //setupFullHeight(layout)
+                }
+            }
+            val radioGroup = viewSheet.findViewById<RadioGroup>(R.id.fontRadioGroup)
+            val font0 = viewSheet.findViewById<RadioButton>(R.id.font_0)
+            val font1 = viewSheet.findViewById<RadioButton>(R.id.font_1)
+            val font2 = viewSheet.findViewById<RadioButton>(R.id.font_2)
+            val font3 = viewSheet.findViewById<RadioButton>(R.id.font_3)
+            val font4 = viewSheet.findViewById<RadioButton>(R.id.font_4)
+
+            when(AppPreferences.font){
+                0 -> font0.isChecked = true
+                1 -> font1.isChecked = true
+                2 -> font2.isChecked = true
+                3 -> font3.isChecked = true
+                4 -> font4.isChecked = true
+                else -> font0.isChecked = true
+            }
+
+            radioGroup.setOnCheckedChangeListener { _, _ ->
+                if(font0.isChecked) {
+                    //setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+                    AppPreferences.font = 0
+
+                }else if (font1.isChecked){
+                    //setDefaultNightMode(MODE_NIGHT_NO)
+                    AppPreferences.font = 1
+
+                }else if(font2.isChecked){
+                    //setDefaultNightMode(MODE_NIGHT_YES)
+                    AppPreferences.font = 2
+
+                }else if(font3.isChecked){
+                    //setDefaultNightMode(MODE_NIGHT_YES)
+                    AppPreferences.font = 3
+
+                }else if(font4.isChecked){
+                    //setDefaultNightMode(MODE_NIGHT_YES)
+                    AppPreferences.font = 5
+
+                }
+                Toast.makeText(this,getString(R.string.language_changed_text),
+                    Toast.LENGTH_LONG).show()
+            }
+
+            dialog.setCancelable(true)
+            dialog.setContentView(viewSheet)
+            dialog.show()
+        }
+
+        binding.switchNotifications.isChecked = AppPreferences.notifications!!
+
+        binding.switchNotifications.setOnCheckedChangeListener { _, b ->
+            AppPreferences.notifications = b
         }
 
         binding.layoutLogout.setOnClickListener {

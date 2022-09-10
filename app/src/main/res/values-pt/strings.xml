@@ -66,4 +66,7 @@
     <string name="alarm_text">Tem uma tarefa para hoje!</string>
     <string name="set_alarm_title">DATA LIMITE</string>
     <string name="title_hour_switch">ADICIONAR HORA</string>
+    <string name="switch_font">Fonte</string>
+    <string name="share_app_text">Vou te recomendar esse aplicativo.</string>
+    <string name="choose_one_option">Escolha uma opção.</string>
 </resources>

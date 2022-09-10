@@ -1,47 +1,38 @@
 package com.woo.task.view.ui.activity
 
-import android.app.Application
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.woo.task.BuildConfig
 import com.woo.task.R
 import com.woo.task.databinding.ActivityMainBinding
-import com.woo.task.model.interfaces.RecyclerViewInterface
-import com.woo.task.model.room.Task
-import com.woo.task.model.room.TaskApp
-import com.woo.task.model.room.TaskDb
-import com.woo.task.view.adapters.TaskAdapter
 import com.woo.task.view.adapters.ViewPagerAdapter
+import com.woo.task.view.utils.AppPreferences
 import com.woo.task.view.utils.HorizontalMarginItemDecoration
 import com.woo.task.viewmodel.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -50,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private val tasksViewModel: TasksViewModel by viewModels()
-    lateinit var app : TaskDb
+
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,10 +49,48 @@ class MainActivity : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AppPreferences.setup(this)
+
+        val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 3600
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val appVersion = Firebase.remoteConfig.getDouble("appversion")
+
+                    if (appVersion.toInt() == BuildConfig.VERSION_CODE){
+                       // Toast.makeText(this, "App updated",
+                         //   Toast.LENGTH_SHORT).show()
+                    }else{
+                        //Toast.makeText(this, "Force Update",
+                          //  Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            AppPreferences.msg_token_fmt = token
+            Log.d(TAG, AppPreferences.msg_token_fmt.toString())
+            //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
+
         auth = Firebase.auth
-        app = Room
-            .databaseBuilder(this, TaskDb::class.java,"task")
-            .build()
+
         val hView = binding.navView.getHeaderView(0)
         val foto = hView.findViewById<ImageView>(R.id.foto)
         val user = hView.findViewById<TextView>(R.id.user)
@@ -84,9 +113,28 @@ class MainActivity : AppCompatActivity() {
                 when(it.itemId){
                     R.id.home -> {
                         //Toast.makeText(this@MainActivity, "Home",Toast.LENGTH_SHORT).show()
+                        binding.drawerLayout.close()
                     }
                     R.id.config -> {
                         startActivity(Intent(this@MainActivity,ConfigActivity::class.java))
+                    }
+                    R.id.shareApp -> {
+                        try {
+                            val shareIntent = Intent(Intent.ACTION_SEND)
+                            shareIntent.type = "text/plain"
+                            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+                            var shareMessage = "\n ${getString(R.string.share_app_text)} \n\n"
+                            shareMessage =
+                                """
+                                ${shareMessage}https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}
+                                
+                                
+                                """.trimIndent()
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+                            startActivity(Intent.createChooser(shareIntent, getString(R.string.choose_one_option)))
+                        } catch (e: Exception) {
+                            //e.toString();
+                        }
                     }
                     R.id.logout -> {
                         MaterialAlertDialogBuilder(this@MainActivity)
@@ -114,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
             binding.taskView.clipToPadding = false
             binding.taskView.clipChildren = false
-            binding.taskView.offscreenPageLimit = 1
+            binding.taskView.offscreenPageLimit = 2
             binding.taskView.setPadding(20, 0, 20, 0)
             binding.taskView.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
@@ -136,30 +184,6 @@ class MainActivity : AppCompatActivity() {
         binding.btnMenu.setOnClickListener {
             binding.drawerLayout.open()
         }
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.d(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            } else {
-                val token = task.result
-                Log.d(TAG, "Token Firebase: $token")
-            }
-        })
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            // Log and toast
-            val msg = getString(R.string.app_name, token)
-            Log.d(TAG, token)
-        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

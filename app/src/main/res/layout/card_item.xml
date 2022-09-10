@@ -27,11 +27,10 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textColor="@color/black"
-                tools:text="Enviar correos masivos a todos los usuarios de la ips."
+                tools:text="Enviar correos masivos a todos los usuarios."
                 android:textSize="18sp" />
             <LinearLayout
                 android:id="@+id/layoutTool"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

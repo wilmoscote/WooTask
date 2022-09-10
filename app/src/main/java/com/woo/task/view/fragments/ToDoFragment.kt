@@ -53,7 +53,7 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
         lifecycleScope.launch {
             binding.titleBanner.text = getString(R.string.title_list_todo)
             tasksViewModel.todoTasks.observe(viewLifecycleOwner) {
-                binding.rvToDo.layoutManager = LinearLayoutManager(view.context)
+                binding.rvToDo.layoutManager = LinearLayoutManager(this@ToDoFragment.requireContext())
                 binding.rvToDo.adapter = TaskAdapter(it, this@ToDoFragment)
                 binding.rvToDo.visibility = View.VISIBLE
                 binding.viewLoading.visibility = View.GONE
@@ -65,7 +65,7 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
 
             binding.addTask.setOnClickListener {
 
-                val dialog = BottomSheetDialog(this@ToDoFragment.context!!, R.style.CustomBottomSheetDialog)
+                val dialog = BottomSheetDialog(this@ToDoFragment.requireContext(), R.style.CustomBottomSheetDialog)
 
                 val viewSheet = layoutInflater.inflate(R.layout.new_task_sheet, null)
                 dialog.setOnShowListener {
@@ -73,9 +73,9 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
                     val parentLayout =
                         bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
                     parentLayout?.let { layout ->
-                        val behaviour = BottomSheetBehavior.from(layout)
-                        setupFullHeight(layout)
-                        // behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                        //val behaviour = BottomSheetBehavior.from(layout)
+                       // setupFullHeight(layout)
+                       //behaviour.state = BottomSheetBehavior.STATE_HALF_EXPANDED
                     }
                 }
 
