@@ -1,4 +1,4 @@
-package com.woo.task.view.ui.activity
+package com.woo.task.view.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

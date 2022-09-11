@@ -1,11 +1,10 @@
-package com.woo.task.view.ui.activity
+package com.woo.task.view.ui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
-import android.util.StatsLog.logEvent
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.analytics.FirebaseAnalytics

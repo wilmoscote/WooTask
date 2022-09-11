@@ -46,12 +46,16 @@ object AppPreferences{
         get() = Key.msg_token_fmt.getString()
         set(value) = Key.msg_token_fmt.setString(value)
 
+    var tutorial: String?
+        get() = Key.tutorial.getString()
+        set(value) = Key.tutorial.setString(value)
+
     var notifications: Boolean?
         get() = Key.notifications.getBoolean()
         set(value) = Key.notifications.setBoolean(value)
 
     private enum class Key {
-        notifications,msg_token_fmt,theme,font,language;
+        notifications,msg_token_fmt,theme,font,language,tutorial;
         fun getBoolean(): Boolean? = if (shared.contains(name)) shared.getBoolean(name, true) else true
         fun getFloat(): Float? = if (shared.contains(name)) shared.getFloat(name, 0.0f) else 0.0f
         fun getInt(): Int = if (shared.contains(name)) shared.getInt(name, 0) else 0

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v1.0.0</string>
-    <string name="love_message">Feita com \\u2665 por Woo Bless.</string>
+    <string name="love_message">Feita com \u2665 por Woo Bless.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">SALVAR</string>
     <string name="image_description">WooTask Imagen</string>
@@ -69,4 +69,10 @@
     <string name="switch_font">Fonte</string>
     <string name="share_app_text">Vou te recomendar esse aplicativo.</string>
     <string name="choose_one_option">Escolha uma opção.</string>
+    <string name="but_next">PRÓXIMO</string>
+    <string name="but_prev">ANTERIOR</string>
+    <string name="but_finish">FINALIZAR</string>
+    <string name="but_skip">PULAR</string>
+    <string name="text_terms">Al crear una cuenta, acepta nuestros Términos y Condiciones así como nuestra Política de Privacidad.</string>
+    <string name="slide_0_text">É uma ferramenta de gerenciamento de tarefas que permite aos usuários visualizar seus fluxos de trabalho para aumentar a produtividade.</string>
 </resources>

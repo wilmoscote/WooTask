@@ -80,6 +80,10 @@
     <string name="font_option_4" translatable="false">Roboto</string>
     <string name="share_app_text">Déjame recomendarte esta aplicación</string>
     <string name="choose_one_option">Elige una opción</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="but_next">SIGUIENTE</string>
+    <string name="but_prev">ANTERIOR</string>
+    <string name="but_finish">FINALIZAR</string>
+    <string name="but_skip">SALTAR</string>
+    <string name="text_terms">Al crear una cuenta, acepta nuestros Términos y Condiciones así como nuestra Política de Privacidad.</string>
+    <string name="slide_0_text">Es una herramienta de gestión de tareas que permite a los usuarios visualizar sus flujos de trabajo con el fin de aumentar la productividad.</string>
 </resources>

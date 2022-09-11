@@ -18,4 +18,5 @@
     <color name="bg_2">#F9EBC8</color>
     <color name="bg_3">#95E1D3</color>
     <color name="bg_4">#B2C8DF</color>
+    <color name="ripple">#99505557</color>
 </resources>

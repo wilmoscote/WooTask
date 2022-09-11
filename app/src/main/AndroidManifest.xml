@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.woo.task">
+    package="com.woo.task" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,20 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WooTask"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m">
+        tools:targetApi="m" >
         <activity
-            android:name=".view.ui.activity.ConfigActivity"
+            android:name=".view.ui.activities.SlideActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ui.activity.RegisterActivity"
+            android:name=".view.ui.activities.ConfigActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ui.activity.LoginActivity"
+            android:name=".view.ui.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ui.activity.SplashActivity"
+            android:name=".view.ui.activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ui.activities.SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.App.Starting">
+            android:theme="@style/Theme.App.Starting" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,16 +38,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.ui.activity.MainActivity"
+            android:name=".view.ui.activities.MainActivity"
             android:exported="false" />
 
         <service
             android:name=".fmc.MyFirebaseMessagingService"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher_round" />
@@ -60,6 +64,7 @@
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
+
         <receiver
             android:name=".model.utils.AlarmReceiver"
             android:exported="false" />

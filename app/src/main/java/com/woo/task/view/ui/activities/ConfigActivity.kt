@@ -1,11 +1,9 @@
-package com.woo.task.view.ui.activity
+package com.woo.task.view.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -22,7 +20,6 @@ import com.woo.task.R
 import com.woo.task.databinding.ActivityConfigBinding
 import com.woo.task.model.utils.ModalBottomSheet
 import com.woo.task.view.utils.AppPreferences
-import com.woo.task.view.utils.TypefaceUtil
 
 
 class ConfigActivity : AppCompatActivity() {

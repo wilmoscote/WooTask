@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.activity.RegisterActivity">
+    tools:context=".view.ui.activities.RegisterActivity">
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -91,6 +91,20 @@
             android:layout_marginVertical="5dp"
             android:textColor="@color/white"
             android:text="@string/register_button"
+            />
+        <TextView
+            android:id="@+id/txtTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_terms"
+            android:gravity="center_horizontal"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            android:textStyle="italic"
+            android:paddingVertical="5dp"
             />
     </LinearLayout>
     <TextView

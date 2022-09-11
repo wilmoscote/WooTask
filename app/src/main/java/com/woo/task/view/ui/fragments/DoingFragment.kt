@@ -1,4 +1,4 @@
-package com.woo.task.view.fragments
+package com.woo.task.view.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -21,7 +20,6 @@ import com.google.firebase.ktx.Firebase
 import com.woo.task.R
 import com.woo.task.databinding.FragmentDoingBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
-import com.woo.task.model.responses.TaskValues
 import com.woo.task.model.room.Task
 import com.woo.task.view.adapters.TaskAdapter
 import com.woo.task.viewmodel.TasksViewModel

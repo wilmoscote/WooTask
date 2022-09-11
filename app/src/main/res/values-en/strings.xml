@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v</string>
-    <string name="love_message">Made with \\u2665 by Woo Bless.</string>
+    <string name="love_message">Made with \u2665 by Woo Bless.</string>
     <string name="btnCancel">CANCEL</string>
     <string name="btnSave">SAVE</string>
     <string name="image_description">WooTask Image</string>
@@ -69,4 +69,10 @@
     <string name="switch_font">Font</string>
     <string name="share_app_text">Let me recommend you this app.</string>
     <string name="choose_one_option">Choose an option.</string>
+    <string name="but_next">NEXT</string>
+    <string name="but_prev">PREVIOUS</string>
+    <string name="but_finish">FINISH</string>
+    <string name="but_skip">SKIP</string>
+    <string name="slide_0_text">It is a task management tool that allows users to visualize their workflows in order to increase productivity.</string>
+    <string name="text_terms">" By creating an account, you agree to our Terms and Conditions as well as our Privacy Policy."</string>
 </resources>

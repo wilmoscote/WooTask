@@ -75,30 +75,15 @@ class FragmentSlide : Fragment() {
             "1" -> {
                 textFragment[0].text = resources.getString(R.string.alarm_text)
                 textFragment[1].text = resources.getString(R.string.share_app_text)
-                binding.mecoAnimation.isVisible = false
                 binding.animationMedicall.isVisible = true
                 binding.imageFragment.isVisible = false
                 binding.medicallImg.isVisible = true
             }
             else -> {
-                // binding.imageFragment.isVisible = true
-                try {
-                    val display: Display? = activity?.windowManager?.defaultDisplay
-                    val size = Point()
-                    display?.getSize(size)
-                    val width: Int = size.x  //540
-                    val height: Int = size.y //960
-                    if (width > 540 && height > 960) {
-                        binding.mecoAnimation.isVisible = true
-                    }else{
-                        binding.imageFragment.isVisible = true
-                    }
-                } catch (e: Exception) {
-                    Log.e("ScreenDebug", "Error detecting screen")
-                }
+                binding.imageFragment.isVisible = true
 
-                textFragment[0].text = resources.getString(R.string.share_app_text)
-                textFragment[1].text = resources.getString(R.string.alarm_text)
+                textFragment[0].text = resources.getString(R.string.app_name)
+                textFragment[1].text = resources.getString(R.string.slide_0_text)
             }
         }
     }

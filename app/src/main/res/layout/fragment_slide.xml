@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue">
+    android:background="@color/green">
 
 
     <ImageView
@@ -15,7 +15,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/text_up"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/image_description" />
 
     <ImageView
         android:id="@+id/medicallImg"
@@ -38,7 +39,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/text_up"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/image_description" />
 
     <ImageView
         android:id="@+id/vozImg"
@@ -59,7 +61,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/text_up"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/image_description" />
 
     <ImageView
         android:id="@+id/askImg"
@@ -74,26 +77,14 @@
 
     <ImageView
         android:id="@+id/imageFragment"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="200dp"
         android:visibility="gone"
-        app:srcCompat="@drawable/logo_wootask"
+        app:srcCompat="@drawable/splash_logopng"
         android:contentDescription="@string/image_description"
         app:layout_constraintBottom_toTopOf="@id/text_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/mecoAnimation"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@id/text_up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/text_up"
@@ -106,6 +97,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

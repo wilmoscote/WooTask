@@ -1,7 +1,6 @@
-package com.woo.task.view.ui.activity
+package com.woo.task.view.ui.activities
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -65,11 +64,16 @@ class SplashActivity : AppCompatActivity() {
 
         //Verifico si el usuario tiene una sesión activa para mandarlo al login o al main
         auth = Firebase.auth
-        if (auth.currentUser != null){
-            startActivity(Intent(this,MainActivity::class.java))
-            finish()
+        if (AppPreferences.tutorial!!.isNotEmpty()){
+            if (auth.currentUser != null){
+                startActivity(Intent(this,MainActivity::class.java))
+                finish()
+            }else{
+                startActivity(Intent(this,LoginActivity::class.java))
+                finish()
+            }
         }else{
-            startActivity(Intent(this,LoginActivity::class.java))
+            startActivity(Intent(this,SlideActivity::class.java))
             finish()
         }
     }
