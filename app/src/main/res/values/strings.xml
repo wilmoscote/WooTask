@@ -27,6 +27,7 @@
     <string name="dialog_confirm">CONFIRMAR</string>
     <string name="dialog_cancel">CANCELAR</string>
     <string name="nologin_title">ATENCIÓN</string>
+    <string name="nologin_alternative_message">Recomendamos iniciar sesión para tener una mejor experiencia en la aplicación.</string>
     <string name="nologin_message">Si continúas sin iniciar sesión tus tareas no serán guardadas en la nube, lo que significa que no podrás recuperarlas si cierras sesión o cambias de dispositivo.</string>
     <string name="forgot_title">Recuperar contraseña</string>
     <string name="forgot_message">Se enviará un vínculo para recuperar su contraseña al correo: %1$s</string>
@@ -86,4 +87,9 @@
     <string name="but_skip">SALTAR</string>
     <string name="text_terms">Al crear una cuenta, acepta nuestros Términos y Condiciones así como nuestra Política de Privacidad.</string>
     <string name="slide_0_text">Es una herramienta de gestión de tareas que permite a los usuarios visualizar sus flujos de trabajo con el fin de aumentar la productividad.</string>
+    <string name="slide_1_text">Crea tareas de forma rápida y sencilla, selecciona una fecha de entrega, tambien puedes personalizar tu tablero.</string>
+    <string name="slide_2_title">Organiza tu flujo de trabajo</string>
+    <string name="slide_2_text">Mueve las tareas que estas realizando ó las que ya has realizado.</string>
+    <string name="slide_3_title">Comienza ahora</string>
+    <string name="slide_3_text">Vamos a crear tu primera tarea!</string>
 </resources>

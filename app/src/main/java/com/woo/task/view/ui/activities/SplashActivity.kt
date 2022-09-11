@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.room.Room
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -26,6 +27,8 @@ class SplashActivity : AppCompatActivity() {
         screenSplash.setKeepOnScreenCondition{true}
         //Obtengo las preferencias del usuario.
         AppPreferences.setup(this)
+
+        MobileAds.initialize(this)
 
         val typeface = when(AppPreferences.font){
             0 -> resources.getFont(R.font.nunito)
@@ -65,13 +68,8 @@ class SplashActivity : AppCompatActivity() {
         //Verifico si el usuario tiene una sesión activa para mandarlo al login o al main
         auth = Firebase.auth
         if (AppPreferences.tutorial!!.isNotEmpty()){
-            if (auth.currentUser != null){
                 startActivity(Intent(this,MainActivity::class.java))
                 finish()
-            }else{
-                startActivity(Intent(this,LoginActivity::class.java))
-                finish()
-            }
         }else{
             startActivity(Intent(this,SlideActivity::class.java))
             finish()

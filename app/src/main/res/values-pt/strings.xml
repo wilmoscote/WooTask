@@ -75,4 +75,10 @@
     <string name="but_skip">PULAR</string>
     <string name="text_terms">Al crear una cuenta, acepta nuestros Términos y Condiciones así como nuestra Política de Privacidad.</string>
     <string name="slide_0_text">É uma ferramenta de gerenciamento de tarefas que permite aos usuários visualizar seus fluxos de trabalho para aumentar a produtividade.</string>
+    <string name="slide_1_text">Crie tarefas de forma rápida e fácil, selecione uma data de vencimento, você também pode personalizar seu quadro.</string>
+    <string name="slide_2_title">Organize seu fluxo de trabalho.</string>
+    <string name="slide_2_text">Mova as tarefas que você está fazendo ou aquelas que você já fez.</string>
+    <string name="slide_3_title">Comece agora</string>
+    <string name="slide_3_text">Vamos criar sua primeira tarefa!</string>
+    <string name="nologin_alternative_message">" Recomendamos fazer login para uma melhor experiência com o aplicativo."</string>
 </resources>

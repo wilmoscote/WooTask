@@ -13,7 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="textAppearanceCaption">?attr/colorSecondaryVariant</item>
-        <item name="android:typeface">serif</item>
+        <item name="android:fontFamily">serif</item>
     </style>
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">

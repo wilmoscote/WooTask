@@ -10,13 +10,16 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -32,6 +35,8 @@ import com.woo.task.view.utils.AppPreferences
 import com.woo.task.view.utils.HorizontalMarginItemDecoration
 import com.woo.task.viewmodel.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -41,15 +46,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private val tasksViewModel: TasksViewModel by viewModels()
-
     lateinit var toggle: ActionBarDrawerToggle
-
+    private val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         AppPreferences.setup(this)
+
+        initAds()
 
         val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
         val configSettings = remoteConfigSettings {
@@ -90,6 +96,12 @@ class MainActivity : AppCompatActivity() {
         })
 
         auth = Firebase.auth
+        if (auth.currentUser == null){
+            newUserLogin()
+            Log.d(TAG,"NO SESSION")
+        }else{
+            Log.d(TAG,"GOT SESSION")
+        }
 
         val hView = binding.navView.getHeaderView(0)
         val foto = hView.findViewById<ImageView>(R.id.foto)
@@ -136,6 +148,13 @@ class MainActivity : AppCompatActivity() {
                             //e.toString();
                         }
                     }
+
+                    R.id.help -> {
+                        startActivity(Intent(this@MainActivity,SlideActivity::class.java))
+                        finish()
+                        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_in_right)
+                    }
+
                     R.id.logout -> {
                         MaterialAlertDialogBuilder(this@MainActivity)
                             .setTitle(resources.getString(R.string.logout_title))
@@ -186,12 +205,70 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initAds() {
+        MobileAds.initialize(this) {}
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
+        binding.adView.adListener = object: AdListener() {
+            override fun onAdClicked() {
+
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdImpression() {
+                // Code to be executed when an impression is recorded
+                // for an ad.
+            }
+
+            override fun onAdLoaded() {
+                binding.adView.isVisible = true
+                // Code to be executed when an ad finishes loading.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)){
             return true
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun newUserLogin(){
+        CoroutineScope(Dispatchers.IO).launch {
+            auth.signInAnonymously()
+                .addOnCompleteListener(this@MainActivity) { task ->
+                    if (task.isSuccessful) {
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.METHOD, "NEW_USER_LOGIN")
+                        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
+                        // binding.pgBar.visibility = View.INVISIBLE
+                        Log.d(TAG, "signInAnonymously:success")
+                        //val user = auth.currentUser
+                        //finish()
+                    } else {
+                        //binding.pgBar.visibility = View.INVISIBLE
+                        Log.w(TAG, "signInAnonymously:failure", task.exception)
+                    }
+                }
+        }
     }
 
     //override fun onResume() {

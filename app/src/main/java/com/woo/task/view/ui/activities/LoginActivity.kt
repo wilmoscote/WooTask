@@ -143,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnNologin.setOnClickListener {
             MaterialAlertDialogBuilder(this)
                 .setTitle(resources.getString(R.string.nologin_title))
-                .setMessage(getString(R.string.nologin_message))
+                .setMessage(getString(R.string.nologin_alternative_message))
                 .setPositiveButton(resources.getString(R.string.dialog_confirm)) { _, _ ->
                     binding.pgBar.visibility = View.VISIBLE
                     CoroutineScope(Dispatchers.IO).launch {

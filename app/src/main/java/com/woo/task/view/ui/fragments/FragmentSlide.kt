@@ -57,27 +57,22 @@ class FragmentSlide : Fragment() {
 
         when (param1) {
             "3" -> {
-                textFragment[1].text = resources.getString(R.string.alarm_text)
-                textFragment[0].text = resources.getString(R.string.alarm_text)
-                binding.vozImg.isVisible = false
-                binding.animationVoz.isVisible = false
-                binding.askImg.isVisible = true
-                binding.animationAsk.isVisible = true
+                textFragment[0].text = resources.getString(R.string.slide_3_title)
+                textFragment[1].text = resources.getString(R.string.slide_3_text)
+                binding.slide2.isVisible = false
+                binding.slide3.isVisible = true
             }
             "2" -> {
-                textFragment[0].text = resources.getString(R.string.share_app_text)
-                textFragment[1].text = resources.getString(R.string.alarm_text)
-                binding.medicallImg.isVisible = false
-                binding.animationMedicall.isVisible = false
-                binding.vozImg.isVisible = true
-                binding.animationVoz.isVisible = true
+                textFragment[0].text = resources.getString(R.string.slide_2_title)
+                textFragment[1].text = resources.getString(R.string.slide_2_text)
+                binding.slide1.isVisible = false
+                binding.slide2.isVisible = true
             }
             "1" -> {
                 textFragment[0].text = resources.getString(R.string.alarm_text)
-                textFragment[1].text = resources.getString(R.string.share_app_text)
-                binding.animationMedicall.isVisible = true
-                binding.imageFragment.isVisible = false
-                binding.medicallImg.isVisible = true
+                textFragment[1].text = resources.getString(R.string.slide_1_text)
+                binding.slide1.isVisible = true
+                binding.imageFragment.visibility = View.INVISIBLE
             }
             else -> {
                 binding.imageFragment.isVisible = true
