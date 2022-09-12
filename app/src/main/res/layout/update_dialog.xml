@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/updateImg"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        app:lottie_speed="1"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:lottie_rawRes="@raw/update"
+        android:scaleY="2"
+        android:scaleX="2"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="25dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:layout_width="150dp"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/updateImg"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/updateImg"
+        android:text="@string/update_string"
+        android:textAlignment="center"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

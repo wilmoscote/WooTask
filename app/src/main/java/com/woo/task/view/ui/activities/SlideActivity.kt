@@ -26,6 +26,7 @@ class SlideActivity : AppCompatActivity() {
     private val vp by lazy {
         findViewById<ViewPager2>(R.id.slideVP)
     }
+    val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     private lateinit var switchButton: ViewPager2.OnPageChangeCallback
     private lateinit var binding: ActivitySlideBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +34,7 @@ class SlideActivity : AppCompatActivity() {
         binding = ActivitySlideBinding.inflate(layoutInflater)
         setContentView(binding.root)
         AppPreferences.setup(this)
-
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.TUTORIAL_BEGIN, null)
         window.statusBarColor = ContextCompat.getColor(this, R.color.green)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE
         auth = Firebase.auth

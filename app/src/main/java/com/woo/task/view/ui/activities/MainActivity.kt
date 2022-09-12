@@ -1,8 +1,11 @@
 package com.woo.task.view.ui.activities
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
         val configSettings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 3600
+            minimumFetchIntervalInSeconds = 1
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
 
@@ -69,13 +72,9 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val appVersion = Firebase.remoteConfig.getDouble("appversion")
-
-                    if (appVersion.toInt() == BuildConfig.VERSION_CODE){
-                       // Toast.makeText(this, "App updated",
-                         //   Toast.LENGTH_SHORT).show()
-                    }else{
-                        //Toast.makeText(this, "Force Update",
-                          //  Toast.LENGTH_SHORT).show()
+                    Log.d(TAG,appVersion.toString())
+                    if (appVersion.toInt() != BuildConfig.VERSION_CODE){
+                       forceUpdate()
                     }
                 }
             }
@@ -132,6 +131,9 @@ class MainActivity : AppCompatActivity() {
                     }
                     R.id.shareApp -> {
                         try {
+                            val bundle = Bundle()
+                            bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "SHARE_APP")
+                            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
                             val shareIntent = Intent(Intent.ACTION_SEND)
                             shareIntent.type = "text/plain"
                             shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
@@ -203,6 +205,35 @@ class MainActivity : AppCompatActivity() {
         binding.btnMenu.setOnClickListener {
             binding.drawerLayout.open()
         }
+    }
+
+    private fun forceUpdate() {
+        val alertadd = androidx.appcompat.app.AlertDialog.Builder(this)
+        val factory = LayoutInflater.from(this)
+        val view: View = factory.inflate(R.layout.update_dialog, null)
+        alertadd.setView(view)
+        alertadd.setCancelable(true)
+        alertadd.setPositiveButton(
+            getString(R.string.but_update)
+        ) { dlg, _ ->
+            try {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$packageName")
+                    )
+                )
+            } catch (e: ActivityNotFoundException) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                    )
+                )
+            }
+            finish()
+        }
+        alertadd.show()
     }
 
     private fun initAds() {

@@ -80,5 +80,7 @@
     <string name="slide_2_title">Organize your workflow.</string>
     <string name="slide_3_title">Get Started</string>
     <string name="slide_3_text">Let\'s add your first task!</string>
-    <string name="nologin_alternative_message">" We recommend logging in for a better app experience."</string>
+    <string name="nologin_alternative_message">We recommend login for a better app experience.</string>
+    <string name="but_update">UPDATE</string>
+    <string name="update_string"><b>A new version is available.</b>\nWe invite you to update the application.</string>
 </resources>

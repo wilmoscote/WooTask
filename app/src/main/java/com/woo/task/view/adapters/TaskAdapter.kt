@@ -1,10 +1,6 @@
 package com.woo.task.view.adapters
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Context.ALARM_SERVICE
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -28,12 +22,12 @@ import com.woo.task.databinding.CardItemBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.model.responses.TaskValues
 import com.woo.task.model.room.Task
-import com.woo.task.model.utils.AlarmReceiver
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: RecyclerViewInterface
+class TaskAdapter (
+    private val tasks: List<TaskValues>, val recyclerViewInterface: RecyclerViewInterface
                    ) :RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskAdapter.TaskViewHolder {
@@ -176,7 +170,7 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
                     val bottomSheetDialog = it as BottomSheetDialog
                     val parentLayout =
                         bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-                    parentLayout?.let { layout ->
+                    parentLayout?.let { _ ->
                         //setupFullHeight(layout)
                     }
                 }
@@ -205,19 +199,27 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
                     val bottomSheetDialog = it as BottomSheetDialog
                     val parentLayout =
                         bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-                    parentLayout?.let { layout ->
-                        setupFullHeight(layout)
-
+                    parentLayout?.let { _ ->
+                        //setupFullHeight(layout)
                     }
                 }
                 val datePicker = viewSheet.findViewById<DatePicker>(R.id.datePicker)
                 val switchHour = viewSheet.findViewById<SwitchMaterial>(R.id.switchHour)
                 val txtHour = viewSheet.findViewById<Button>(R.id.txtHour)
+                val btnCancel = viewSheet.findViewById<Button>(R.id.btnCancel)
+                val btnSave = viewSheet.findViewById<Button>(R.id.btnSave)
+                btnSave.setOnClickListener {
+                    //
+                }
 
-                datePicker.setOnDateChangedListener { datePicker, i, i2, i3 ->
-                    val day = datePicker.dayOfMonth
-                    val month = datePicker.month
-                    val year = datePicker.year
+                btnCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                datePicker.setOnDateChangedListener { date, _, _, _ ->
+                    /*val day = date.dayOfMonth
+                    val month = date.month
+                    val year = date.year
 
                     val mes = if (month + 1 < 10) {
                         "0${month + 1}"
@@ -229,7 +231,7 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
                     }else{
                         day.toString()
                     }
-                    //dateText.text = "$year-${mes}-$dia"
+                    dateText.text = "$year-${mes}-$dia"*/
                 }
 
                 switchHour.setOnCheckedChangeListener { _, isChecked ->
@@ -237,16 +239,16 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
                 }
 
                 txtHour.setOnClickListener {
-                    txtHour.text = showTimePicker()
+                    showTimePicker(txtHour)
                 }
 
-                dialog.setCancelable(true)
+                dialog.setCancelable(false)
                 dialog.setContentView(viewSheet)
                 dialog.show()
             }
 
             binding.taskBody.setOnLongClickListener {
-                MaterialAlertDialogBuilder(context!!)
+                MaterialAlertDialogBuilder(context)
                     .setTitle(context.resources.getString(R.string.title_delete_dialog))
                     .setMessage(task.title)
                     .setPositiveButton(context.resources.getString(R.string.dialog_confirm)){_,_->
@@ -292,7 +294,7 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
             )
         }
 
-        private fun showTimePicker():String {
+        private fun showTimePicker(view:TextView) {
             picker = MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_12H)
                 .setHour(12)
@@ -325,9 +327,8 @@ class TaskAdapter (val tasks: List<TaskValues>, val recyclerViewInterface: Recyc
                     AlarmManager.INTERVAL_DAY,pendingIntent
                 )
                 Toast.makeText(context,"Recordatorio Agregado",Toast.LENGTH_SHORT).show()*/
-
+                view.text = selectedTime
             }
-            return selectedTime
         }
     }
 
