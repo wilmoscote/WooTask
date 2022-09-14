@@ -81,6 +81,10 @@
     <string name="font_option_2" translatable="false">Lora</string>
     <string name="font_option_3" translatable="false">Poppins</string>
     <string name="font_option_4" translatable="false">Roboto</string>
+    <string name="font_option_5" translatable="false">Abeezee</string>
+    <string name="font_option_6" translatable="false">Courgette</string>
+    <string name="font_option_7" translatable="false">Handlee</string>
+    <string name="font_option_8" translatable="false">Playball</string>
     <string name="share_app_text">Déjame recomendarte esta aplicación</string>
     <string name="choose_one_option">Elige una opción</string>
     <string name="but_next">SIGUIENTE</string>

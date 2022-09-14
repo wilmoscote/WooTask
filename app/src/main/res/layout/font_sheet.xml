@@ -79,6 +79,43 @@
                 android:paddingHorizontal="5dp"
                 android:text="@string/font_option_4"
                 app:buttonTint="?attr/textAppearanceCaption" />
+
+            <RadioButton
+                android:id="@+id/font_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/abeezee"
+                android:paddingHorizontal="5dp"
+                android:text="@string/font_option_5"
+                app:buttonTint="?attr/textAppearanceCaption" />
+
+            <RadioButton
+                android:id="@+id/font_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/courgette"
+                android:paddingHorizontal="5dp"
+                android:text="@string/font_option_6"
+                app:buttonTint="?attr/textAppearanceCaption" />
+
+            <RadioButton
+                android:id="@+id/font_7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/handlee"
+                android:paddingHorizontal="5dp"
+                android:text="@string/font_option_7"
+                app:buttonTint="?attr/textAppearanceCaption" />
+
+            <RadioButton
+                android:id="@+id/font_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/playball"
+                android:paddingHorizontal="5dp"
+
+                android:text="@string/font_option_8"
+                app:buttonTint="?attr/textAppearanceCaption" />
         </RadioGroup>
     </FrameLayout>
 

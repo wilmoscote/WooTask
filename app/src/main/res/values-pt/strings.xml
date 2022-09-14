@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Woo Task</string>
-    <string name="version_info">Woo Task v1.0.0</string>
+    <string name="version_info">Woo Task v</string>
     <string name="love_message">Feita com \u2665 por Woo Bless.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">SALVAR</string>

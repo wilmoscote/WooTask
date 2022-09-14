@@ -36,6 +36,10 @@ class SplashActivity : AppCompatActivity() {
             2 -> resources.getFont(R.font.lora)
             3 -> resources.getFont(R.font.poppins)
             4 -> resources.getFont(R.font.roboto)
+            5 -> resources.getFont(R.font.abeezee)
+            6 -> resources.getFont(R.font.courgette)
+            7 -> resources.getFont(R.font.handlee)
+            8 -> resources.getFont(R.font.playball)
             else -> resources.getFont(R.font.nunito)
         }
 

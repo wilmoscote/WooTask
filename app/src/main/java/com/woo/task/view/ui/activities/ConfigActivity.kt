@@ -66,6 +66,10 @@ class ConfigActivity : AppCompatActivity() {
             2 -> "Lora"
             3 -> "Poppins"
             4 -> "Roboto"
+            5 -> "Abeezee"
+            6 -> "Courguette"
+            7 -> "Handlee"
+            8 -> "Playball"
             else -> "Nunito"
         }
 
@@ -90,6 +94,10 @@ class ConfigActivity : AppCompatActivity() {
             val font2 = viewSheet.findViewById<RadioButton>(R.id.font_2)
             val font3 = viewSheet.findViewById<RadioButton>(R.id.font_3)
             val font4 = viewSheet.findViewById<RadioButton>(R.id.font_4)
+            val font5 = viewSheet.findViewById<RadioButton>(R.id.font_5)
+            val font6 = viewSheet.findViewById<RadioButton>(R.id.font_6)
+            val font7 = viewSheet.findViewById<RadioButton>(R.id.font_7)
+            val font8 = viewSheet.findViewById<RadioButton>(R.id.font_8)
 
             when(AppPreferences.font){
                 0 -> font0.isChecked = true
@@ -97,6 +105,10 @@ class ConfigActivity : AppCompatActivity() {
                 2 -> font2.isChecked = true
                 3 -> font3.isChecked = true
                 4 -> font4.isChecked = true
+                5 -> font5.isChecked = true
+                6 -> font6.isChecked = true
+                7 -> font7.isChecked = true
+                8 -> font8.isChecked = true
                 else -> font0.isChecked = true
             }
 
@@ -104,28 +116,34 @@ class ConfigActivity : AppCompatActivity() {
                 if(font0.isChecked) {
                     //setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
                     AppPreferences.font = 0
-
                 }else if (font1.isChecked){
                     //setDefaultNightMode(MODE_NIGHT_NO)
                     AppPreferences.font = 1
-
                 }else if(font2.isChecked){
                     //setDefaultNightMode(MODE_NIGHT_YES)
                     AppPreferences.font = 2
-
                 }else if(font3.isChecked){
                     //setDefaultNightMode(MODE_NIGHT_YES)
                     AppPreferences.font = 3
-
                 }else if(font4.isChecked){
                     //setDefaultNightMode(MODE_NIGHT_YES)
+                    AppPreferences.font = 4
+                }else if(font5.isChecked){
+                    //setDefaultNightMode(MODE_NIGHT_YES)
                     AppPreferences.font = 5
-
+                }else if(font6.isChecked){
+                    //setDefaultNightMode(MODE_NIGHT_YES)
+                    AppPreferences.font = 6
+                }else if(font7.isChecked){
+                    //setDefaultNightMode(MODE_NIGHT_YES)
+                    AppPreferences.font = 7
+                }else if(font8.isChecked){
+                    //setDefaultNightMode(MODE_NIGHT_YES)
+                    AppPreferences.font = 8
                 }
                 Toast.makeText(this,getString(R.string.language_changed_text),
                     Toast.LENGTH_LONG).show()
             }
-
             dialog.setCancelable(true)
             dialog.setContentView(viewSheet)
             dialog.show()
