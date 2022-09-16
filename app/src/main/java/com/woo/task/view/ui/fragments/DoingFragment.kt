@@ -20,6 +20,7 @@ import com.google.firebase.ktx.Firebase
 import com.woo.task.R
 import com.woo.task.databinding.FragmentDoingBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
+import com.woo.task.model.room.Tag
 import com.woo.task.model.room.Task
 import com.woo.task.view.adapters.TaskAdapter
 import com.woo.task.viewmodel.TasksViewModel
@@ -45,6 +46,10 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
         binding = FragmentDoingBinding.inflate(layoutInflater)
         val view = binding.root
         lifecycleScope.launch {
+
+            tasksViewModel.tags.observe(viewLifecycleOwner){
+                Log.d("TASKDEBUG", "Tags Fetched! ${it.toString()}")
+            }
             binding.titleBanner.text = getString(R.string.title_list_doing)
             tasksViewModel.doingTasks.observe(viewLifecycleOwner) {
                 binding.rvToDo.layoutManager = LinearLayoutManager(this@DoingFragment.requireContext())
@@ -108,7 +113,8 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
                                 "yellow",
                                 date.toString(),
                                 date.toString(),
-                                ""
+                                "",
+                                listOf<String>()
                             )
                         )
                         dialog.dismiss()
@@ -152,5 +158,17 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
 
     override fun updateTask(task: Task) {
         if (task.state == 2) tasksViewModel.updateTask(task)
+    }
+
+    override fun addTag(tag: String) {
+        //
+    }
+
+    override fun removeTag(id: Int) {
+        //
+    }
+
+    override fun getTags(): List<Tag> {
+        return tasksViewModel.tags.value!!
     }
 }

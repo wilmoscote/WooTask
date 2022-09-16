@@ -39,4 +39,14 @@ interface TaskDao {
 
     @Query("UPDATE Task SET state = :state WHERE id = :id")
     suspend fun moveTask(id: Int,state:Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addTag(tag: Tag)
+
+    @Query("DELETE FROM Tag WHERE id = :id")
+    suspend fun removeTag(id: Int)
+
+    @Query("SELECT * FROM Tag")
+    suspend fun getTags(): List<Tag>
+
 }

@@ -83,4 +83,7 @@
     <string name="nologin_alternative_message">We recommend login for a better app experience.</string>
     <string name="but_update">UPDATE</string>
     <string name="update_string"><b>A new version is available.</b>\nWe invite you to update the application.</string>
+    <string name="name">Name</string>
+    <string name="create_new_tag">CREATE NEW TAG</string>
+    <string name="empty_field">Don\'t let the field empty.</string>
 </resources>

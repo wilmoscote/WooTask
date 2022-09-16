@@ -1,18 +1,29 @@
 package com.woo.task.view.adapters
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.*
+import android.widget.Button
+import android.widget.DatePicker
+import android.widget.EditText
+import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -21,6 +32,7 @@ import com.woo.task.R
 import com.woo.task.databinding.CardItemBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.model.responses.TaskValues
+import com.woo.task.model.room.Tag
 import com.woo.task.model.room.Task
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,6 +71,36 @@ class TaskAdapter (
                 3 -> R.drawable.ic_done
                 else -> R.drawable.ic_pin
             })*/
+            val myColorStateList = ColorStateList(
+                arrayOf(intArrayOf(android.R.attr.textAppearance), intArrayOf()), intArrayOf(
+                    context!!.resources.getColor(R.color.white),
+                    context!!.resources.getColor(R.color.black)
+                )
+            )
+
+            if (task.tags.isNotEmpty()){
+                for(tag in task.tags){
+                    val chip = Chip(context)
+                    chip.text = tag
+                    chip.setChipBackgroundColorResource(
+                        when(task.color){
+                            "1" -> R.color.bg_0
+                            "2" -> R.color.bg_1
+                            "3" -> R.color.bg_2
+                            "4" -> R.color.bg_3
+                            "5" -> R.color.bg_4
+                            else -> R.color.bg_2
+                        }
+                    )
+                    chip.isClickable = false
+                    chip.chipStrokeWidth = 2f
+                    chip.setChipStrokeColorResource(R.color.black)
+                   // chip.chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(context!!,ContextCompat.getColor(context!!, R.color.black)))
+                    chip.setTextColor(ContextCompat.getColor(context!!, R.color.black))
+                    binding.tagsGroup.addView(chip)
+                }
+            }
+
             when(task.color){
                 "1" -> binding.taskItemBody.setBackgroundColor(ContextCompat.getColor(context!!, R.color.bg_0))
                 "2" -> binding.taskItemBody.setBackgroundColor(ContextCompat.getColor(context!!, R.color.bg_1))
@@ -109,7 +151,8 @@ class TaskAdapter (
                             task.color,
                             task.createdAt,
                             date.toString(),
-                            ""
+                            "",
+                            listOf<String>()
                         )
                     )
                     dialog.dismiss()
@@ -161,6 +204,113 @@ class TaskAdapter (
                     true
                 }
                 popup.show()
+            }
+
+            binding.btnTag.setOnClickListener {
+                val tags = getTags()
+                val dialog = BottomSheetDialog(context, R.style.CustomBottomSheetDialog)
+                val viewSheet = LayoutInflater.from(context).inflate(R.layout.tag_sheet, null)
+                dialog.setOnShowListener {
+                    val bottomSheetDialog = it as BottomSheetDialog
+                    val parentLayout =
+                        bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                    parentLayout?.let { layout ->
+                        setupFullHeight(layout)
+                    }
+                }
+
+                val btnSave = viewSheet.findViewById<Button>(R.id.btnSave)
+                val btnCancel = viewSheet.findViewById<Button>(R.id.btnCancel)
+                val btnAdd = viewSheet.findViewById<Button>(R.id.btnAddTag)
+                val txtTag = viewSheet.findViewById<EditText>(R.id.txtTag)
+                val tagGroup = viewSheet.findViewById<ChipGroup>(R.id.tagGroup)
+                val taskTagGroup = viewSheet.findViewById<ChipGroup>(R.id.taskTagGroup)
+                val notTag = viewSheet.findViewById<TextView>(R.id.noTags)
+                val notTagGeneral = viewSheet.findViewById<TextView>(R.id.noTagsGeneral)
+
+                Log.d("TASKDEBUG","TAGS: ${task.tags.toString()}")
+                if (task.tags.isNotEmpty()){
+                    for(tag in task.tags){
+                        val chip = Chip(context)
+                        chip.text = tag
+                        chip.isCloseIconVisible = true
+                        chip.isCheckable = true
+                        chip.isClickable = true
+                        chip.setOnCloseIconClickListener {
+                            taskTagGroup.removeView(chip)
+                            if (taskTagGroup.size <= 0) notTag.isVisible = true
+                        }
+                        taskTagGroup.addView(chip)
+                    }
+                    taskTagGroup.isVisible = true
+                }else{
+                    notTag.isVisible = true
+                }
+
+                if (tags.isNotEmpty()){
+                    for(tag in tags){
+                        val chip = Chip(context)
+                        chip.text = tag.tagName
+                        chip.isCloseIconVisible = true
+                        chip.isCheckable = true
+                        chip.isClickable = true
+                        chip.setOnCloseIconClickListener {
+                            tagGroup.removeView(chip)
+                            tag.id?.let { id -> removeTag(id) }
+                            if (tagGroup.size <= 0) notTagGeneral.isVisible = true
+                        }
+                        tagGroup.addView(chip)
+                    }
+                    tagGroup.isVisible = true
+                }else{
+                    notTagGeneral.isVisible = true
+                }
+
+                btnCancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                btnSave.setOnClickListener {
+                    val tagsSelected = mutableListOf<String>()
+                    tagsSelected.clear()
+                    tagGroup.checkedChipIds.forEach {
+                        val chipSelected = viewSheet.findViewById<Chip>(it).text.toString()
+                        tagsSelected.add(chipSelected)
+                        Log.d("TASKDEBUG","TAG CHECKED! $chipSelected")
+                        updateTags(task, tagsSelected)
+                    }
+                    Log.d("TASKDEBUG","TAG CHECKED! $tagsSelected")
+                    dialog.dismiss()
+                }
+
+                btnAdd.setOnClickListener{
+                    if (txtTag.text.isNotEmpty()){
+                        addTag(txtTag.text.toString())
+                        val chip = Chip(context)
+                        chip.text = txtTag.text.toString()
+                        chip.isCloseIconVisible = true
+                        chip.isCheckable = true
+                        chip.isClickable = true
+                        chip.setOnCloseIconClickListener {
+                            tagGroup.removeView(chip)
+                            getTags()[getTags().size-1].id?.let { newId -> removeTag(newId) }
+                        }
+                        tagGroup.addView(chip)
+                        tagGroup.isVisible = true
+                        notTagGeneral.isVisible = false
+                        txtTag.text.clear()
+                    }else{
+                        txtTag.error = context.getString(R.string.empty_field)
+                        txtTag.requestFocus()
+                    }
+
+                }
+
+
+
+                dialog.setCancelable(true)
+                dialog.setContentView(viewSheet)
+                dialog.show()
             }
 
             binding.btnColor.setOnClickListener {
@@ -289,9 +439,50 @@ class TaskAdapter (
                     color,
                     task.createdAt,
                     date.toString(),
-                    ""
+                    "",
+                    listOf<String>()
                 )
             )
+        }
+
+        private fun updateTags(task:TaskValues, tags:List<String>){
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            val date = sdf.format(Date())
+            recyclerViewInterface.updateTask(
+                Task(
+                    task.id,
+                    task.text,
+                    task.text,
+                    null,
+                    task.initialDate,
+                    task.finalDate,
+                    task.userId,
+                    task.taskId,
+                    task.state,
+                    task.projectId,
+                    task.color,
+                    task.createdAt,
+                    date.toString(),
+                    "",
+                    tags
+                )
+            )
+        }
+
+        private fun addTag(tag:String){
+            recyclerViewInterface.addTag(
+                tag
+            )
+        }
+
+        private fun removeTag(id:Int){
+            recyclerViewInterface.removeTag(
+                id
+            )
+        }
+
+        private fun getTags():List<Tag>{
+            return recyclerViewInterface.getTags()
         }
 
         private fun showTimePicker(view:TextView) {

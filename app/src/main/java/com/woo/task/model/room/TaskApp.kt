@@ -18,6 +18,7 @@ object TaskApp {
     @Provides
     fun provideRoom(@ApplicationContext context:Context) = Room
         .databaseBuilder(context, TaskDb::class.java,"task")
+        .allowMainThreadQueries()
         .build()
 
     @Singleton

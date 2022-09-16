@@ -83,4 +83,7 @@
     <string name="nologin_alternative_message">Recomendamos fazer login para uma melhor experiência com o aplicativo.</string>
     <string name="but_update">ATUALIZAR</string>
     <string name="update_string"><b>Uma nova versão está disponível.</b>\nConvidamos você a atualizar o aplicativo.</string>
+    <string name="name">Nome</string>
+    <string name="create_new_tag">CRIAR NOVA ETIQUETA</string>
+    <string name="empty_field">Não deixe o campo vazio.</string>
 </resources>

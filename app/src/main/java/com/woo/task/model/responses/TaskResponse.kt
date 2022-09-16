@@ -22,6 +22,6 @@ data class TaskValues(
     @SerializedName("color") var color: String? = null,
     @SerializedName("createdAt") var createdAt: String? = null,
     @SerializedName("updatedAt") var updatedAt: String? = null,
-    @SerializedName("deletedAt") var deletedAt: String? = null
-
+    @SerializedName("deletedAt") var deletedAt: String? = null,
+    @SerializedName("tags") var tags: List<String?> = listOf<String>()
 )

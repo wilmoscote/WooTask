@@ -20,6 +20,7 @@ import com.google.firebase.ktx.Firebase
 import com.woo.task.R
 import com.woo.task.databinding.FragmentDoneBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
+import com.woo.task.model.room.Tag
 import com.woo.task.model.room.Task
 import com.woo.task.view.adapters.TaskAdapter
 import com.woo.task.viewmodel.TasksViewModel
@@ -109,7 +110,8 @@ class DoneFragment : Fragment(), RecyclerViewInterface {
                                 "yellow",
                                 date.toString(),
                                 date.toString(),
-                                ""
+                                "",
+                                listOf<String>()
                             )
                         )
                         dialog.dismiss()
@@ -158,5 +160,17 @@ class DoneFragment : Fragment(), RecyclerViewInterface {
 
     override fun updateTask(task: Task) {
         if (task.state == 3) tasksViewModel.updateTask(task)
+    }
+
+    override fun addTag(tag: String) {
+        //
+    }
+
+    override fun removeTag(id: Int) {
+        //
+    }
+
+    override fun getTags(): List<Tag> {
+        return tasksViewModel.tags.value!!
     }
 }

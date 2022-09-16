@@ -20,6 +20,7 @@ import com.woo.task.model.interfaces.TaskInterface
 import com.woo.task.model.responses.GenericResponse
 import com.woo.task.model.responses.TaskResponse
 import com.woo.task.model.responses.TaskValues
+import com.woo.task.model.room.Tag
 import com.woo.task.model.room.TaskApp
 import com.woo.task.model.room.TaskDao
 import dagger.assisted.AssistedInject
@@ -51,6 +52,7 @@ class TasksViewModel @Inject constructor(
     var doingTasks = MutableLiveData<List<TaskValues>>()
     var doneTasks = MutableLiveData<List<TaskValues>>()
     var editTask = MutableLiveData<Task>()
+    var tags = MutableLiveData<List<Tag>>()
 
     // ----------------------------- FUNCIONES LOCALES EN ROOM -------------------------------------//
     fun onCreate() {
@@ -98,6 +100,35 @@ class TasksViewModel @Inject constructor(
                 }
             }
             Log.d("TASKDEBUG", "Task Updated! ")
+        }
+    }
+
+    fun addTag(tag:String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                taskDao.addTag(Tag(null,tag))
+                getTags()
+            }
+            Log.d("TASKDEBUG", "Task Updated! ")
+        }
+    }
+
+    fun removeTag(id:Int) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                taskDao.removeTag(id)
+                getTags()
+            }
+            Log.d("TASKDEBUG", "Task Updated! ")
+        }
+    }
+
+    fun getTags(){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                tags.postValue(taskDao.getTags())
+            }
+            Log.d("TASKDEBUG", "Tags Fetched!")
         }
     }
 

@@ -22,6 +22,7 @@ import com.woo.task.model.room.Task
 import com.woo.task.databinding.FragmentToDoBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.model.responses.TaskValues
+import com.woo.task.model.room.Tag
 import com.woo.task.view.adapters.TaskAdapter
 import com.woo.task.viewmodel.TasksViewModel
 import dagger.hilt.android.scopes.FragmentScoped
@@ -33,6 +34,7 @@ import java.util.*
 @FragmentScoped
 class ToDoFragment : Fragment(), RecyclerViewInterface {
     lateinit var data: MutableList<TaskValues>
+    lateinit var tagList: List<Tag>
     private val tasksViewModel: TasksViewModel by activityViewModels()
     private lateinit var binding: FragmentToDoBinding
     private lateinit var auth: FirebaseAuth
@@ -50,6 +52,13 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
         binding = FragmentToDoBinding.inflate(layoutInflater)
         val view = binding.root
         lifecycleScope.launch {
+
+            tasksViewModel.getTags()
+
+            tasksViewModel.tags.observe(viewLifecycleOwner){
+                tagList = it
+            }
+
             binding.titleBanner.text = getString(R.string.title_list_todo)
             tasksViewModel.todoTasks.observe(viewLifecycleOwner) {
                 binding.rvToDo.layoutManager = LinearLayoutManager(this@ToDoFragment.requireContext())
@@ -114,7 +123,8 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
                                 "yellow",
                                 date.toString(),
                                 date.toString(),
-                                ""
+                                "",
+                                listOf<String>()
                             )
                         )
                         dialog.dismiss()
@@ -164,5 +174,17 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
 
     override fun updateTask(task: Task) {
         if (task.state == 1) tasksViewModel.updateTask(task)
+    }
+
+    override fun addTag(tag: String) {
+        tasksViewModel.addTag(tag)
+    }
+
+    override fun removeTag(id: Int) {
+        tasksViewModel.removeTag(id)
+    }
+
+    override fun getTags(): List<Tag> {
+        return tagList
     }
 }

@@ -29,6 +29,12 @@
                 android:textColor="@color/black"
                 tools:text="Enviar correos masivos a todos los usuarios."
                 android:textSize="18sp" />
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/tagsGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                app:singleLine="true"/>
             <LinearLayout
                 android:id="@+id/layoutTool"
                 android:layout_width="wrap_content"
@@ -68,6 +74,15 @@
                     android:layout_height="30dp"
                     android:background="?selectableItemBackgroundBorderless"
                     app:srcCompat="@drawable/ic_event"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:contentDescription="@string/image_description" />
+                <ImageButton
+                    android:id="@+id/btnTag"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    app:srcCompat="@drawable/ic_tags"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginBottom="2dp"
                     android:contentDescription="@string/image_description" />
