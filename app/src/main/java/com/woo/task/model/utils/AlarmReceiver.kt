@@ -2,13 +2,17 @@ package com.woo.task.model.utils
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.woo.task.R
+import com.woo.task.view.ui.activities.SplashActivity
+import java.util.*
 
 class AlarmReceiver: BroadcastReceiver() {
 
@@ -36,11 +40,30 @@ class AlarmReceiver: BroadcastReceiver() {
     }
 
     private fun notifyNotification(context: Context) {
+        val contentIntent = Intent(context, SplashActivity::class.java)
+
+        val contentPendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getActivity(
+                context,
+                UUID.randomUUID().hashCode(),
+                contentIntent,
+                PendingIntent.FLAG_MUTABLE
+            )
+        } else {
+            PendingIntent.getActivity(
+                context,
+                UUID.randomUUID().hashCode(),
+                contentIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+        }
+
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle("WooTask")
                 .setContentText(context.getString(R.string.alarm_text))
                 .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
             notify(NOTIFICATION_ID, build.build())
 

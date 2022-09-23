@@ -38,6 +38,8 @@
     <string name="error_register">Error al realizar el registro.</string>
     <string name="error_confirm_pass">Las contraseñas no coinciden.</string>
     <string name="logout_title">Cerrar sesión</string>
+    <string name="delete_tag_title">Eliminar Etiqueta</string>
+    <string name="delete_tag_message">¿Esta seguro que desea eliminar la Etiqueta?</string>
     <string name="logout_message">¿Estas seguro que deseas salir?</string>
     <string name="google_web_client_id" translatable="false">302162430961-699trugteagvmn245lknetbqckq05arc.apps.googleusercontent.com</string>
     <string name="menu_option_0">EDITAR</string>
@@ -86,6 +88,11 @@
     <string name="font_option_7" translatable="false">Handlee</string>
     <string name="font_option_8" translatable="false">Playball</string>
     <string name="name">Nombre</string>
+    <string name="max_tags_by_task">Sólo se permiten 3 etiquetas en una Tarea.</string>
+    <string name="task_tags_title">Etiquetas de la Tarea:</string>
+    <string name="my_tags">Mis Etiquetas:</string>
+    <string name="task_without_tags">Esta tarea no tiene ninguna etiqueta.</string>
+    <string name="no_tags">Aún no has creado una etiqueta.</string>
     <string name="empty_field">No deje el campo vacio.</string>
     <string name="create_new_tag">CREAR NUEVA ETIQUETA</string>
     <string name="share_app_text">Déjame recomendarte esta aplicación</string>

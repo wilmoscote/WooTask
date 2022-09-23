@@ -86,4 +86,11 @@
     <string name="name">Nome</string>
     <string name="create_new_tag">CRIAR NOVA ETIQUETA</string>
     <string name="empty_field">Não deixe o campo vazio.</string>
+    <string name="task_tags_title">Etiquetas da Tarefa:</string>
+    <string name="my_tags">Minhas Etiquetas:</string>
+    <string name="no_tags">Você ainda não criou uma etiqueta.</string>
+    <string name="task_without_tags">Esta tarefa não tem etiqueta.</string>
+    <string name="max_tags_by_task">Apenas 3 tags são permitidas em uma tarefa.</string>
+    <string name="delete_tag_title">Excluir Etiqueta</string>
+    <string name="delete_tag_message">Tem certeza de que deseja remover esta etiqueta?</string>
 </resources>

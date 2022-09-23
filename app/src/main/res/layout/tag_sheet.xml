@@ -47,15 +47,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/taskTagsTitle"
+            android:text="@string/task_tags_title"
+            android:gravity="center"
+            android:visibility="visible"
+            android:layout_marginVertical="10dp"
+            android:textColor="?attr/textAppearanceCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/taskTagGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:layout_marginHorizontal="10dp"
             />
         <TextView
             android:id="@+id/noTags"
-            android:text="This task have not Tags."
+            android:text="@string/task_without_tags"
             android:gravity="center"
             android:visibility="gone"
             android:layout_marginVertical="10dp"
@@ -69,8 +80,17 @@
             android:layout_marginVertical="5dp"
             android:layout_height="1dp"/>
         <TextView
+            android:id="@+id/myTagsTitle"
+            android:text="@string/my_tags"
+            android:gravity="center"
+            android:visibility="visible"
+            android:layout_marginVertical="10dp"
+            android:textColor="?attr/textAppearanceCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
             android:id="@+id/noTagsGeneral"
-            android:text="You didn't create a Tag yet."
+            android:text="@string/no_tags"
             android:gravity="center"
             android:visibility="gone"
             android:layout_marginVertical="10dp"
@@ -81,6 +101,7 @@
             android:id="@+id/tagGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:visibility="gone"
             />
 
@@ -92,6 +113,8 @@
             app:startIconDrawable="@drawable/ic_tag"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="8dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="15"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtTag"
@@ -99,6 +122,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:importantForAutofill="no"
+                android:maxLength="15"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <Button

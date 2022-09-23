@@ -86,4 +86,11 @@
     <string name="name">Name</string>
     <string name="create_new_tag">CREATE NEW TAG</string>
     <string name="empty_field">Don\'t let the field empty.</string>
+    <string name="task_tags_title">Task Tags:</string>
+    <string name="my_tags">My Tags:</string>
+    <string name="task_without_tags">This task has no tag.</string>
+    <string name="no_tags">" You haven't created a tag yet."</string>
+    <string name="max_tags_by_task">Only 3 tags are allowed in a Task.</string>
+    <string name="delete_tag_title">Delete Tag</string>
+    <string name="delete_tag_message">Are you sure do you want to delete this tag?</string>
 </resources>
