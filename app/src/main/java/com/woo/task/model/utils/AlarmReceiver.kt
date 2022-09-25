@@ -22,8 +22,13 @@ class AlarmReceiver: BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        createNotificationChannel(context)
-        notifyNotification(context)
+        if ((Intent.ACTION_BOOT_COMPLETED) == intent.action){
+
+        }else{
+            createNotificationChannel(context)
+            notifyNotification(context)
+        }
+
     }
 
     private fun createNotificationChannel(context: Context) {

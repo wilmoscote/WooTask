@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -435,6 +437,16 @@ class TaskAdapter(
 
 
             binding.btnTime.setOnClickListener {
+                val alarmManager = context.getSystemService(ALARM_SERVICE) as? AlarmManager?
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S){
+                    if(alarmManager?.canScheduleExactAlarms() == false){
+                        val intent = Intent().apply {
+                            action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
+                        }
+                        context.startActivity(intent)
+                    }
+                }
+
                 if (showingSheet) return@setOnClickListener
                 showingSheet = true
                 val calendar = Calendar.getInstance()
@@ -467,11 +479,13 @@ class TaskAdapter(
                         calendar[Calendar.DAY_OF_MONTH] = day
                         calendar[Calendar.YEAR] = year
 
-                        val alarmManager = context.getSystemService(ALARM_SERVICE) as AlarmManager
                         val intent = Intent(context, AlarmReceiver::class.java)
 
-                        val pendingIntent =
-                            PendingIntent.getBroadcast(context, task.id!!, intent, PendingIntent.FLAG_NO_CREATE)
+                        val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S){
+                            PendingIntent.getBroadcast(context, task.id!!, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                        }else{
+                            PendingIntent.getBroadcast(context, task.id!!, intent, PendingIntent.FLAG_MUTABLE)
+                        }
 
                         /*
                         CANCELAR ALARMA
@@ -482,23 +496,44 @@ class TaskAdapter(
                           alarmManager.cancel(pendingIntent)
                         }
 
+                        fun cancelAlarm(){
+                            val alarmManager = getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
+                            val intent = Intent(context, AlarmReceiver::class.java)
+                            val pendingIntent =
+                                PendingIntent.getService(
+                                    context,
+                                    requestCode,
+                                    intent,
+                                    PendingIntent.FLAG_NO_CREATE
+                                )
+                            pendingIntent?.let { _pendingIntent->
+                                alarmManager?.cancel(_pendingIntent)
+                            }
+                        }
+
+
                         HACER QUE LA ALARMA SE REPITA
                         alarmManager.setRepeating(
                             AlarmManager.RTC_WAKEUP,calendar.timeInMillis,
                             AlarmManager.INTERVAL_DAY,pendingIntent
                         )*/
+                        Log.d("DateDebug","Date: ${calendar.toString()}")
+                        try{
+                            alarmManager?.setExactAndAllowWhileIdle(
+                                AlarmManager.RTC_WAKEUP,
+                                calendar.timeInMillis,
+                                pendingIntent
+                            );
+                            Toast.makeText(context, "Recordatorio Agregado", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Fecha: $year-${month}-$day Tiempo: $hour : $minute",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }catch (e:Exception){
+                            Log.e("DateDebug",e.message.toString())
+                        }
 
-                        alarmManager.set(
-                            AlarmManager.RTC_WAKEUP,
-                            calendar.timeInMillis,
-                            pendingIntent
-                        );
-                        Toast.makeText(context, "Recordatorio Agregado", Toast.LENGTH_SHORT).show()
-                        Toast.makeText(
-                            context,
-                            "Fecha: $year-${month}-$day Tiempo: $hour : $minute",
-                            Toast.LENGTH_SHORT
-                        ).show()
                         dialog.dismiss()
                     } else {
                         Toast.makeText(context, "Fecha no Valida", Toast.LENGTH_SHORT).show()
