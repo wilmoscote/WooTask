@@ -53,6 +53,7 @@
     <string name="cerrar">CERRAR</string>
     <string name="no_session_user">Usuario</string>
     <string name="alarm_text">Tienes una Tarea para hoy!</string>
+    <string name="alarm_notification_title">Hey, no lo olvides!</string>
     <string name="set_alarm_title">FECHA LIMITE</string>
     <string name="title_hour_switch">AGREGAR HORA</string>
     <string name="default_date" translatable="false">26–06–1998</string>

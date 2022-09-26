@@ -65,7 +65,7 @@ class AlarmReceiver: BroadcastReceiver() {
 
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setContentTitle("WooTask")
+                .setContentTitle(context.getString(R.string.alarm_notification_title))
                 .setContentText(context.getString(R.string.alarm_text))
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentIntent(contentPendingIntent)
