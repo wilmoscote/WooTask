@@ -32,6 +32,7 @@ import java.util.*
 @FragmentScoped
 class DoneFragment : Fragment(), RecyclerViewInterface {
     private lateinit var binding: FragmentDoneBinding
+    lateinit var tagList: List<Tag>
     private val tasksViewModel: TasksViewModel by activityViewModels()
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +48,18 @@ class DoneFragment : Fragment(), RecyclerViewInterface {
         binding = FragmentDoneBinding.inflate(layoutInflater)
         val view = binding.root
         lifecycleScope.launch {
+
+            tasksViewModel.getTags()
+
+            tasksViewModel.tags.observe(viewLifecycleOwner){
+                tagList = it
+            }
+
             binding.titleBanner.text = getString(R.string.title_list_done)
             tasksViewModel.doneTasks.observe(viewLifecycleOwner) {
                 binding.rvToDo.layoutManager = LinearLayoutManager(this@DoneFragment.requireContext())
                 binding.rvToDo.adapter = TaskAdapter(it, this@DoneFragment)
+                binding.rvToDo.setItemViewCacheSize(it.size)
                 binding.rvToDo.visibility = View.VISIBLE
                 binding.viewLoading.visibility = View.GONE
 
@@ -171,6 +180,6 @@ class DoneFragment : Fragment(), RecyclerViewInterface {
     }
 
     override fun getTags(): List<Tag> {
-        return tasksViewModel.tags.value!!
+        return tagList
     }
 }

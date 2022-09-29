@@ -93,4 +93,6 @@
     <string name="max_tags_by_task">Only 3 tags are allowed in a Task.</string>
     <string name="delete_tag_title">Delete Tag</string>
     <string name="delete_tag_message">Are you sure do you want to delete this tag?</string>
+    <string name="alarm_notification_title">Hey, don\'t forget it!</string>
+    <string name="back_color_text">Background Color</string>
 </resources>

@@ -63,6 +63,7 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
             tasksViewModel.todoTasks.observe(viewLifecycleOwner) {
                 binding.rvToDo.layoutManager = LinearLayoutManager(this@ToDoFragment.requireContext())
                 binding.rvToDo.adapter = TaskAdapter(it, this@ToDoFragment)
+                binding.rvToDo.setItemViewCacheSize(it.size)
                 binding.rvToDo.visibility = View.VISIBLE
                 binding.viewLoading.visibility = View.GONE
                 binding.numTask.text = if (it.size in 1..1) getString(

@@ -93,4 +93,6 @@
     <string name="max_tags_by_task">Apenas 3 tags são permitidas em uma tarefa.</string>
     <string name="delete_tag_title">Excluir Etiqueta</string>
     <string name="delete_tag_message">Tem certeza de que deseja remover esta etiqueta?</string>
+    <string name="alarm_notification_title">Oi, não esqueça!</string>
+    <string name="back_color_text">Cor de Fundo</string>
 </resources>

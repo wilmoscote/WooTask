@@ -54,8 +54,12 @@ object AppPreferences{
         get() = Key.notifications.getBoolean()
         set(value) = Key.notifications.setBoolean(value)
 
+    var bgColor: Int?
+        get() = Key.bgColor.getInt()
+        set(value) = Key.bgColor.setInt(value)
+
     private enum class Key {
-        notifications,msg_token_fmt,theme,font,language,tutorial;
+        notifications,msg_token_fmt,theme,font,language,tutorial,bgColor;
         fun getBoolean(): Boolean? = if (shared.contains(name)) shared.getBoolean(name, true) else true
         fun getFloat(): Float? = if (shared.contains(name)) shared.getFloat(name, 0.0f) else 0.0f
         fun getInt(): Int = if (shared.contains(name)) shared.getInt(name, 0) else 0

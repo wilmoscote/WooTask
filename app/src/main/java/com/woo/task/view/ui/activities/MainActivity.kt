@@ -205,6 +205,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnMenu.setOnClickListener {
             binding.drawerLayout.open()
         }
+        if(AppPreferences.bgColor!! != 0)  binding.mainLayout.setBackgroundColor(AppPreferences.bgColor!!)
+
     }
 
     private fun forceUpdate() {
@@ -302,9 +304,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //override fun onResume() {
-    //    super.onResume()
-    //    tasksViewModel.onCreate()
-    //}
+    override fun onResume() {
+        super.onResume()
+        if(AppPreferences.bgColor!! != 0)  binding.mainLayout.setBackgroundColor(AppPreferences.bgColor!!)
+    }
 
 }

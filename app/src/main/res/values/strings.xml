@@ -73,6 +73,7 @@
     <string name="regional_title">REGIONAL</string>
     <string name="switch_language">Idioma</string>
     <string name="switch_font">Fuente</string>
+    <string name="back_color_text">Color de Fondo</string>
     <string name="language_option_0">Ingles</string>
     <string name="language_option_1">Español</string>
     <string name="language_option_2">Portugués</string>

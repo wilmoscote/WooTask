@@ -34,6 +34,7 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
     private lateinit var binding: FragmentDoingBinding
     private val tasksViewModel: TasksViewModel by activityViewModels()
     private lateinit var auth: FirebaseAuth
+    lateinit var tagList: List<Tag>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,13 +48,17 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
         val view = binding.root
         lifecycleScope.launch {
 
+            tasksViewModel.getTags()
+
             tasksViewModel.tags.observe(viewLifecycleOwner){
-                Log.d("TASKDEBUG", "Tags Fetched! ${it.toString()}")
+                tagList = it
             }
+
             binding.titleBanner.text = getString(R.string.title_list_doing)
             tasksViewModel.doingTasks.observe(viewLifecycleOwner) {
                 binding.rvToDo.layoutManager = LinearLayoutManager(this@DoingFragment.requireContext())
                 binding.rvToDo.adapter = TaskAdapter(it, this@DoingFragment)
+                binding.rvToDo.setItemViewCacheSize(it.size)
                 binding.rvToDo.visibility = View.VISIBLE
                 binding.viewLoading.visibility = View.GONE
 
@@ -169,6 +174,6 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
     }
 
     override fun getTags(): List<Tag> {
-        return tasksViewModel.tags.value!!
+        return tagList
     }
 }

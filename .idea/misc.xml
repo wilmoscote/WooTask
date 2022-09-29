@@ -11,6 +11,7 @@
         <entry key="..\:/Users/IPS Medigroup/AndroidStudioProjects/WooTask/app/src/main/res/layout/item_todo.xml" value="0.33" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/drawable/arrow_back.xml" value="0.138" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/drawable/arrow_forward.xml" value="0.138" />
+        <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/drawable/ic_bgcolor.xml" value="0.203" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/drawable/ic_check.xml" value="0.138" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/drawable/ic_done.xml" value="0.2105" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/drawable/ic_event.xml" value="0.221" />
@@ -20,7 +21,7 @@
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/drawable/ic_tag.xml" value="0.221" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/drawable/ic_tags.xml" value="0.221" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/layout-v26/new_task_sheet.xml" value="0.25" />
-        <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/layout/activity_config.xml" value="0.25" />
+        <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/layout/activity_config.xml" value="0.264" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/layout/activity_main.xml" value="0.19375" />
         <entry key="..\:/Users/WILFRED/Documents/WooTask/app/src/main/res/layout/activity_register.xml" value="0.25" />

@@ -1,7 +1,9 @@
 package com.woo.task.view.ui.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RadioButton
@@ -20,7 +22,7 @@ import com.woo.task.R
 import com.woo.task.databinding.ActivityConfigBinding
 import com.woo.task.model.utils.ModalBottomSheet
 import com.woo.task.view.utils.AppPreferences
-
+import yuku.ambilwarna.AmbilWarnaDialog
 
 class ConfigActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfigBinding
@@ -44,7 +46,7 @@ class ConfigActivity : AppCompatActivity() {
         binding.emailProfile.text = auth.currentUser?.email
         binding.txtVersion.text = getString(R.string.version_info) + BuildConfig.VERSION_NAME
         binding.txtCurrentLanguage.text = resources.configuration.locale.displayName.toString()
-
+        binding.txtCurrentColor.setBackgroundColor(if(AppPreferences.bgColor!! != 0) AppPreferences.bgColor!! else Color.WHITE)
 
         //Veo que tema tiene seleccionado para reflejarlo en switch
         if (AppPreferences.theme == 2) binding.switchTheme.isChecked = true
@@ -172,6 +174,23 @@ class ConfigActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.switchBackColor.setOnClickListener {
+            val dialog = AmbilWarnaDialog(this, if(AppPreferences.bgColor!! != 0) AppPreferences.bgColor!! else Color.WHITE,
+                object : AmbilWarnaDialog.OnAmbilWarnaListener {
+                    override fun onCancel(dialog: AmbilWarnaDialog?) {
+
+                    }
+
+                    override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
+                        binding.txtCurrentColor.setBackgroundColor(color)
+                        AppPreferences.bgColor = color
+                        Log.d("ColorDebug","ColorS Selected: ${AppPreferences.bgColor!!}")
+                    }
+
+                })
+            dialog.show()
         }
     }
 }
