@@ -3,9 +3,7 @@ package com.woo.task.view.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -16,9 +14,6 @@ import com.woo.task.R
 import com.woo.task.databinding.ActivitySlideBinding
 import com.woo.task.view.adapters.SlidePageAdapter
 import com.woo.task.view.utils.AppPreferences
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class SlideActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth

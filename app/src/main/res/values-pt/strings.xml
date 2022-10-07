@@ -95,4 +95,15 @@
     <string name="delete_tag_message">Tem certeza de que deseja remover esta etiqueta?</string>
     <string name="alarm_notification_title">Oi, não esqueça!</string>
     <string name="back_color_text">Cor de Fundo</string>
+    <string name="invalid_date">Data inválida</string>
+    <string name="cancel_limit_date">CANCELAR DATA LIMITE</string>
+    <string name="cancel_limit_date_dialog_title">Cancelar Data Limite</string>
+    <string name="cancel_limit_date_dialog_message">Tem certeza de que deseja cancelar a Data Limite?</string>
+    <string name="limit_date_to">Data Límite para:</string>
+    <string name="task_status">Status da tarefa:</string>
+    <string name="task_status_0">Pendente</string>
+    <string name="task_status_1">Completo</string>
+    <string name="task_status_2">Não Completo</string>
+    <string name="task_status_4">Em Progresso</string>
+    <string name="prev_date_error">Você não pode selecionar uma data antes de hoje.</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.woo.task.model.room
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters

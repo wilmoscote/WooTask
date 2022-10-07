@@ -172,6 +172,10 @@ class ConfigActivity : AppCompatActivity() {
                 .show()
         }
 
+        binding.layoutPolicy.setOnClickListener {
+            startActivity(Intent(this, PoliciesActivity::class.java))
+        }
+
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }

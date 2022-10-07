@@ -1,6 +1,5 @@
 package com.woo.task.model.utils
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,13 +8,9 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woo.task.R
 import com.woo.task.view.utils.AppPreferences
-import com.woo.task.viewmodel.TasksViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.scopes.ActivityScoped
 import java.util.*
 
 class ModalBottomSheet : BottomSheetDialogFragment() {

@@ -97,6 +97,16 @@
     <string name="no_tags">Aún no has creado una etiqueta.</string>
     <string name="empty_field">No deje el campo vacio.</string>
     <string name="create_new_tag">CREAR NUEVA ETIQUETA</string>
+    <string name="cancel_limit_date">CANCELAR FECHA DE ENTREGA</string>
+    <string name="cancel_limit_date_dialog_title">Cancelar Fecha de Entrega</string>
+    <string name="cancel_limit_date_dialog_message">¿Esta seguro que desea cancelar la Fecha de Entrega?</string>
+    <string name="limit_date_to">Fecha limite para:</string>
+    <string name="task_status">Estado de la Tarea:</string>
+    <string name="task_status_0">Pendiente</string>
+    <string name="task_status_1">Completada</string>
+    <string name="task_status_2">No Completada</string>
+    <string name="task_status_4">En progreso</string>
+    <string name="prev_date_error">No puedes seleccionar una fecha anterior a hoy.</string>
     <string name="share_app_text">Déjame recomendarte esta aplicación</string>
     <string name="choose_one_option">Elige una opción</string>
     <string name="but_next">SIGUIENTE</string>
@@ -110,4 +120,7 @@
     <string name="slide_2_text">Mueve las tareas que estas realizando ó las que ya has realizado.</string>
     <string name="slide_3_title">Comienza ahora</string>
     <string name="slide_3_text">Vamos a crear tu primera tarea!</string>
+    <string name="invalid_date">Fecha no válida</string>
+    <string name="privacy_policy_title" translatable="false">WOO TASK PRIVACY POLICY</string>
+    <string name="privacy_policy" translatable="false">This privacy policy governs your use of the software application Woo Task for Android mobile devices that was created by WMSoftware.\nWhat information we collect?\nWoo Task application does not collect personal information like name, surname, age, date of birth, etc.\nWe use Google supplied APP performance tracking information to improve Application. This application only makes use of the sound your Android mobile phone to create the alarm.\nGoogle Analytics\nThis Application uses Google Analytics to help us analyze how you use app. It helps us to improve this product.\nThanks Google Analytics we know how long you use app, what kind of device you\'re using, where are you from and a little bit more. All this is used to improve the app.\nRead more about Google Analytics\nFirebase\nWe use Firebase to store all the app information. Information like personal data and manage the e-mail login to our app.\nYou can see the entire privacy policy of firebase here.\nhttps://firebase.google.com/support/privacy/?hl=es-419\nAdvertisement\nGoogle Admob privacy policy is here: https://support.google.com/admob/answer/6128543?hl=en.\nThird party vendors, including Google, use cookies to serve ads based on a user\'s prior visits to your website.\nContact\nTo contact us please use email: wilfredmoscote@gmail.com\n\nLicenses:\n- Lottie\n- Google Fonts\n- Google Icons</string>
 </resources>

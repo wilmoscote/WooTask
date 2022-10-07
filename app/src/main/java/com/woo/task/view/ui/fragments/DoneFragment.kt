@@ -35,6 +35,7 @@ class DoneFragment : Fragment(), RecyclerViewInterface {
     lateinit var tagList: List<Tag>
     private val tasksViewModel: TasksViewModel by activityViewModels()
     private lateinit var auth: FirebaseAuth
+    private var actualPosition = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -62,7 +63,7 @@ class DoneFragment : Fragment(), RecyclerViewInterface {
                 binding.rvToDo.setItemViewCacheSize(it.size)
                 binding.rvToDo.visibility = View.VISIBLE
                 binding.viewLoading.visibility = View.GONE
-
+                binding.rvToDo.scrollToPosition(actualPosition)
                 binding.numTask.text = if (it.size in 1..1) getString(
                     R.string.task_count_0,
                     it.size.toString()
@@ -111,7 +112,7 @@ class DoneFragment : Fragment(), RecyclerViewInterface {
                                 txtAdd.text.toString(),
                                 null,
                                 date.toString(),
-                                date.toString(),
+                                "",
                                 auth.currentUser?.uid,
                                 "1",
                                 3,
@@ -167,8 +168,9 @@ class DoneFragment : Fragment(), RecyclerViewInterface {
         Log.d("TASKDEBUG", "DELETE $id")
     }
 
-    override fun updateTask(task: Task) {
+    override fun updateTask(task: Task, position: Int) {
         if (task.state == 3) tasksViewModel.updateTask(task)
+        actualPosition = position
     }
 
     override fun addTag(tag: String) {

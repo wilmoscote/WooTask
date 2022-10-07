@@ -1,6 +1,5 @@
 package com.woo.task.view.adapters
 
-import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -28,8 +27,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.woo.task.R
 import com.woo.task.databinding.CardItemBinding
 import com.woo.task.model.interfaces.RecyclerViewInterface
@@ -37,8 +34,10 @@ import com.woo.task.model.responses.TaskValues
 import com.woo.task.model.room.Tag
 import com.woo.task.model.room.Task
 import com.woo.task.model.utils.AlarmReceiver
-import com.woo.task.view.ui.activities.LoginActivity
+import com.woo.task.view.utils.AppPreferences
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -53,7 +52,7 @@ class TaskAdapter(
 
     override fun onBindViewHolder(holder: TaskAdapter.TaskViewHolder, position: Int) {
         val item = tasks[position]
-        holder.bind(item)
+        holder.bind(item, position)
     }
 
     override fun getItemCount(): Int = tasks.size
@@ -69,11 +68,12 @@ class TaskAdapter(
         var day = 0
         var month = 0
         var year = 0
+        private var hasLimitDate = false
+        private var outOfDate = false
         //private val tasksViewModel = TasksViewModel()
 
-        fun bind(task: TaskValues) {
+        fun bind(task: TaskValues, position: Int) {
             binding.layoutTool.isVisible = false
-
             binding.title.text = task.title
             /*binding.icon.setImageResource(when(task.state){
                 1 -> R.drawable.ic_pin
@@ -87,6 +87,37 @@ class TaskAdapter(
                     context!!.resources.getColor(R.color.black)
                 )
             )
+
+            hasLimitDate = when(task.finalDate){
+                "" -> false
+                else -> true
+            }
+
+            binding.btnTime.setBackgroundResource(when(hasLimitDate){
+                false -> R.drawable.ic_event
+                true -> R.drawable.ic_event_complete
+            })
+
+            if (task.state == 3) binding.btnTime.isVisible = false
+
+            if (hasLimitDate){
+                try {
+                    val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+
+                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
+
+                    val date: LocalDate = LocalDate.parse(sdf.format(Date()), formatter)
+                    val finalDate: LocalDate = LocalDate.parse(task.finalDate, formatter)
+
+                    if(date > finalDate) {
+                        binding.btnTime.setBackgroundResource(R.drawable.ic_event_uncomplete)
+                        outOfDate = true
+                    }
+                } catch (e: Exception) {
+                    Log.e("TASKDEBUG",e.message.toString())
+                }
+            }
+
 
             if (task.tags.isNotEmpty()) {
                 for (tag in task.tags) {
@@ -195,7 +226,8 @@ class TaskAdapter(
                             date.toString(),
                             "",
                             listOf<String>()
-                        )
+                        ),
+                        position
                     )
                     dialog.dismiss()
                 }
@@ -243,6 +275,8 @@ class TaskAdapter(
 
                         //MOVER A HECHO
                         context.getString(R.string.menu_option_3) -> {
+                            cancelLimitDate(task, 3)
+                            cancelAlarm(task.id!!)
                             recyclerViewInterface.moveItem(task.id!!, 3)
                         }
                     }
@@ -468,6 +502,64 @@ class TaskAdapter(
                 val txtHour = viewSheet.findViewById<Button>(R.id.txtHour)
                 val btnCancel = viewSheet.findViewById<Button>(R.id.btnCancel)
                 val btnSave = viewSheet.findViewById<Button>(R.id.btnSave)
+                val layoutWithLimitDate = viewSheet.findViewById<LinearLayout>(R.id.layoutLimitDate)
+                val layoutNoLimitDate = viewSheet.findViewById<LinearLayout>(R.id.layoutNoLimitDate)
+
+                if (hasLimitDate){
+                    try{
+                        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS",when(AppPreferences.language){
+                            0 -> Locale("en")
+                            1 -> Locale("es")
+                            2 -> Locale("pt")
+                            else -> Locale("en")
+                        })
+                        val output = SimpleDateFormat("yyyy MMMM dd HH:mm:ss",when(AppPreferences.language){
+                            0 -> Locale("en")
+                            1 -> Locale("es")
+                            2 -> Locale("pt")
+                            else -> Locale("en")
+                        })
+                        val d = sdf.parse(task.finalDate!!)
+                        val formattedTime = output.format(d!!)
+
+                        viewSheet.findViewById<TextView>(R.id.taskLimitDate).text = formattedTime.toString()
+                    }catch (e:Exception){
+                        Log.e("TASKDEBUG",e.message.toString())
+                    }
+
+                    if(outOfDate){
+                        viewSheet.findViewById<ImageView>(R.id.imgTaskStatus).setBackgroundResource(R.drawable.ic_status_incomplete)
+                        viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text = context.getString(R.string.task_status_2)
+                    }else{
+                        if(task.state == 1){
+                            viewSheet.findViewById<ImageView>(R.id.imgTaskStatus).setBackgroundResource(R.drawable.ic_status_pending)
+                            viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text = context.getString(R.string.task_status_0)
+                        }else{
+                            viewSheet.findViewById<ImageView>(R.id.imgTaskStatus).setBackgroundResource(R.drawable.ic_status_complete)
+                            viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text = context.getString(R.string.task_status_4)
+                        }
+                    }
+                    val btnCancelLimitDate = viewSheet.findViewById<Button>(R.id.btnCancelLimitDate)
+                    btnCancelLimitDate.setOnClickListener {
+                        MaterialAlertDialogBuilder(this.context)
+                            .setTitle(context.getString(R.string.cancel_limit_date_dialog_title))
+                            .setMessage(context.getString(R.string.cancel_limit_date_dialog_message))
+                            .setPositiveButton(context.resources.getString(R.string.dialog_confirm)) { _, _ ->
+                                cancelLimitDate(task, task.state!!)
+                                cancelAlarm(task.id!!)
+                                layoutWithLimitDate.isVisible = false
+                                layoutNoLimitDate.isVisible = true
+                            }
+                            .setNegativeButton(context.resources.getString(R.string.dialog_cancel)) { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .show()
+                    }
+                    layoutWithLimitDate.isVisible = true
+                }else{
+                    layoutNoLimitDate.isVisible = true
+                }
+
                 btnSave.setOnClickListener {
                     if (day != 0 && month != 0 && year != 0) {
 
@@ -480,38 +572,14 @@ class TaskAdapter(
                         calendar[Calendar.YEAR] = year
 
                         val intent = Intent(context, AlarmReceiver::class.java)
-
+                        intent.putExtra("text",task.title)
                         val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S){
-                            PendingIntent.getBroadcast(context, task.id!!, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                            PendingIntent.getBroadcast(context,task.id!!, intent, PendingIntent.FLAG_UPDATE_CURRENT)
                         }else{
                             PendingIntent.getBroadcast(context, task.id!!, intent, PendingIntent.FLAG_MUTABLE)
                         }
 
                         /*
-                        CANCELAR ALARMA
-                         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-                         val pendingIntent = PendingIntent.getService(context, requestId, intent,
-                            PendingIntent.FLAG_NO_CREATE)
-                        if (pendingIntent != null && alarmManager != null) {
-                          alarmManager.cancel(pendingIntent)
-                        }
-
-                        fun cancelAlarm(){
-                            val alarmManager = getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
-                            val intent = Intent(context, AlarmReceiver::class.java)
-                            val pendingIntent =
-                                PendingIntent.getService(
-                                    context,
-                                    requestCode,
-                                    intent,
-                                    PendingIntent.FLAG_NO_CREATE
-                                )
-                            pendingIntent?.let { _pendingIntent->
-                                alarmManager?.cancel(_pendingIntent)
-                            }
-                        }
-
-
                         HACER QUE LA ALARMA SE REPITA
                         alarmManager.setRepeating(
                             AlarmManager.RTC_WAKEUP,calendar.timeInMillis,
@@ -519,24 +587,31 @@ class TaskAdapter(
                         )*/
                         Log.d("DateDebug","Date: ${calendar.toString()}")
                         try{
-                            alarmManager?.setExactAndAllowWhileIdle(
-                                AlarmManager.RTC_WAKEUP,
-                                calendar.timeInMillis,
-                                pendingIntent
-                            );
-                            Toast.makeText(context, "Recordatorio Agregado", Toast.LENGTH_SHORT).show()
-                            Toast.makeText(
-                                context,
-                                "Fecha: $year-${month}-$day Tiempo: $hour : $minute",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }catch (e:Exception){
-                            Log.e("DateDebug",e.message.toString())
-                        }
+                            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
 
-                        dialog.dismiss()
+                            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
+
+                            val date: LocalDate = LocalDate.parse(sdf.format(Date()), formatter)
+                            val finalDate: LocalDate = LocalDate.parse(sdf.format(calendar.time), formatter)
+
+                        if(date <= finalDate) {
+                                alarmManager?.setExactAndAllowWhileIdle(
+                                    AlarmManager.RTC_WAKEUP,
+                                    calendar.timeInMillis,
+                                    pendingIntent
+                                )
+
+                                updateLimitDay(task,calendar.time)
+
+                            dialog.dismiss()
+                        }else{
+                            Toast.makeText(context, R.string.prev_date_error, Toast.LENGTH_SHORT).show()
+                        }
+                        }catch (e:Exception){
+                            Log.e("TASKDEBUG",e.message.toString())
+                        }
                     } else {
-                        Toast.makeText(context, "Fecha no Valida", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.invalid_date, Toast.LENGTH_SHORT).show()
                     }
 
                 }
@@ -561,11 +636,6 @@ class TaskAdapter(
                         day.toString()
                     }
                     //dateText.text = "$year-${mes}-$dia"
-                    Toast.makeText(
-                        context,
-                        "Fecha: $year-${mes}-$dia Tiempo: $hour : $minute",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
 
                 switchHour.setOnCheckedChangeListener { _, isChecked ->
@@ -610,6 +680,20 @@ class TaskAdapter(
             bottomSheet.layoutParams = layoutParams
         }
 
+        private fun cancelAlarm(requestCode:Int){
+            Log.d("TASKDEBUG","CANCEL ALARM TO $requestCode")
+            val intent = Intent(context, AlarmReceiver::class.java)
+            val pendingIntent =
+                PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_NO_CREATE)
+            val alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager?
+            if (pendingIntent != null) {
+                alarmManager!!.cancel(pendingIntent)
+                Log.d("TASKDEBUG","ALARM CANCELED!")
+            }else{
+                Log.d("TASKDEBUG","ALARM NOT CANCELED!")
+            }
+        }
+
         private fun changeItemColor(task: TaskValues, color: String) {
             val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
             val date = sdf.format(Date())
@@ -630,7 +714,8 @@ class TaskAdapter(
                     date.toString(),
                     "",
                     task.tags
-                )
+                ),
+                position
             )
         }
 
@@ -654,7 +739,59 @@ class TaskAdapter(
                     date.toString(),
                     "",
                     tags
-                )
+                ),
+                position
+            )
+        }
+
+        private fun updateLimitDay(task: TaskValues, limitDate:Date) {
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            val date = sdf.format(Date())
+            val finalDate = sdf.format(limitDate)
+            recyclerViewInterface.updateTask(
+                Task(
+                    task.id,
+                    task.text,
+                    task.text,
+                    null,
+                    task.initialDate,
+                    finalDate,
+                    task.userId,
+                    task.taskId,
+                    task.state,
+                    task.projectId,
+                    task.color,
+                    task.createdAt,
+                    date.toString(),
+                    "",
+                    task.tags
+                ),
+                position
+            )
+        }
+
+        private fun cancelLimitDate(task: TaskValues, state: Int) {
+            val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            val date = sdf.format(Date())
+            recyclerViewInterface.updateTask(
+                Task(
+                    task.id,
+                    task.text,
+                    task.text,
+                    null,
+                    task.initialDate,
+                    "",
+                    task.userId,
+                    task.taskId,
+                    state,
+                    task.projectId,
+                    task.color,
+                    task.createdAt,
+                    date.toString(),
+                    "",
+                    task.tags
+                ),
+                position
             )
         }
 

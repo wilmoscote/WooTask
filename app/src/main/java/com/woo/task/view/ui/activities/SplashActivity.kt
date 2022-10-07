@@ -6,14 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.room.Room
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.woo.task.R
 import com.woo.task.model.room.TaskApp
-import com.woo.task.model.room.TaskDb
 import com.woo.task.view.utils.AppPreferences
 import com.woo.task.view.utils.TypefaceUtil
 import java.util.*

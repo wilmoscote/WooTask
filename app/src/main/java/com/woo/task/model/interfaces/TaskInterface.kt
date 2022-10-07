@@ -1,6 +1,5 @@
 package com.woo.task.model.interfaces
 
-import com.squareup.okhttp.ResponseBody
 import com.woo.task.model.responses.GenericResponse
 import com.woo.task.model.responses.TaskResponse
 import retrofit2.Call

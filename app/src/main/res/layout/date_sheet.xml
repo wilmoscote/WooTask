@@ -40,9 +40,11 @@
         android:layout_margin="5dp"
         />
     <LinearLayout
+        android:id="@+id/layoutNoLimitDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +59,6 @@
             android:textColor="?attr/textAppearanceCaption"
             style="@style/Widget.MaterialComponents.TextView"
             />
-
         <DatePicker
             android:id="@+id/datePicker"
             style="@style/CustomCalendarTask"
@@ -92,6 +93,109 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 />
         </LinearLayout>
-
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layoutLimitDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/set_alarm_title"
+            android:layout_marginHorizontal="30dp"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textColor="?attr/textAppearanceCaption"
+            style="@style/Widget.MaterialComponents.TextView"
+            />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp"
+            android:layout_margin="10dp"
+            android:elevation="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/limit_date_to"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="?attr/textAppearanceCaption"
+                        style="@style/Widget.MaterialComponents.TextView"
+                        />
+                    <TextView
+                        android:id="@+id/taskLimitDate"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        tools:text="20/03/2022"
+                        android:gravity="center_horizontal"
+                        android:textSize="22sp"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="?attr/textAppearanceCaption"
+                        style="@style/Widget.MaterialComponents.TextView"
+                        />
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="@string/task_status"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="?attr/textAppearanceCaption"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    />
+                <ImageView
+                    android:id="@+id/imgTaskStatus"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_horizontal"
+                    tools:src="@drawable/ic_status_pending"
+                    android:contentDescription="@string/image_description" />
+                <TextView
+                    android:id="@+id/txtTaskStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Incompleted"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="?attr/textAppearanceCaption"
+                    style="@style/Widget.MaterialComponents.TextView"
+                    />
+            </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/btnCancelLimitDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:text="@string/cancel_limit_date"
+            android:paddingVertical="13dp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/black"
+            android:textColor="?attr/textAppearanceCaption"
+            style="?attr/materialButtonOutlinedStyle"
+            app:rippleColor="?attr/colorControlNormal"
+            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

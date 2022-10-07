@@ -50,6 +50,7 @@ android {
     dataBinding{
         enabled = true
     }
+    namespace 'com.woo.task'
 }
 ext.retrofit_version = '2.5.0'
 dependencies {
@@ -116,6 +117,7 @@ dependencies {
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
 
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+    implementation("com.google.android.play:review-ktx:2.0.0")
 }
 
 kapt {

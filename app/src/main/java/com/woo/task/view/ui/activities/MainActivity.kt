@@ -30,9 +30,9 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.woo.task.databinding.ActivityMainBinding
 import com.woo.task.BuildConfig
 import com.woo.task.R
-import com.woo.task.databinding.ActivityMainBinding
 import com.woo.task.view.adapters.ViewPagerAdapter
 import com.woo.task.view.utils.AppPreferences
 import com.woo.task.view.utils.HorizontalMarginItemDecoration
@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
             minimumFetchIntervalInSeconds = 1
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
-
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
 
         remoteConfig.fetchAndActivate()

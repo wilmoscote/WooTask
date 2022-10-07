@@ -1,8 +1,6 @@
 package com.woo.task.viewmodel
 
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,28 +8,18 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
-import com.squareup.okhttp.OkHttpClient
-import com.woo.task.model.apliclient.RetrofitService
-import com.woo.task.model.apliclient.RetrofitServiceLenient
-import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.model.interfaces.TaskInterface
 import com.woo.task.model.responses.GenericResponse
 import com.woo.task.model.responses.TaskResponse
 import com.woo.task.model.responses.TaskValues
 import com.woo.task.model.room.Tag
-import com.woo.task.model.room.TaskApp
 import com.woo.task.model.room.TaskDao
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.launch
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 import javax.inject.Inject
 import com.woo.task.model.room.Task
 import com.woo.task.model.utils.TaskModel

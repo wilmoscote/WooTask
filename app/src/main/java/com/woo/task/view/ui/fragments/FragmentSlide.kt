@@ -1,19 +1,11 @@
-package com.ipsmedigroup.mobile.view.ui.fragments.slides
+package com.woo.task.view.ui.fragments
 
-import android.graphics.Point
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.view.Display
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.woo.task.R
 import com.woo.task.databinding.FragmentSlideBinding
@@ -73,10 +65,11 @@ class FragmentSlide : Fragment() {
                 textFragment[1].text = resources.getString(R.string.slide_1_text)
                 binding.slide1.isVisible = true
                 binding.imageFragment.visibility = View.INVISIBLE
+                binding.slide0.visibility = View.INVISIBLE
             }
             else -> {
-                binding.imageFragment.isVisible = true
-
+               //binding.imageFragment.isVisible = true
+                binding.slide0.isVisible = true
                 textFragment[0].text = resources.getString(R.string.app_name)
                 textFragment[1].text = resources.getString(R.string.slide_0_text)
             }

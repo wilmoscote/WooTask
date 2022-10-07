@@ -3,7 +3,7 @@ package com.woo.task.view.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.ipsmedigroup.mobile.view.ui.fragments.slides.FragmentSlide
+import com.woo.task.view.ui.fragments.FragmentSlide
 
 class SlidePageAdapter(Fa: FragmentActivity, listener:(CharSequence)->Unit): FragmentStateAdapter(Fa) {
     private val dataFragments= mutableListOf(

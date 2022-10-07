@@ -1,6 +1,5 @@
 package com.woo.task.model.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.woo.task.model.responses.TaskValues
 

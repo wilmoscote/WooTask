@@ -1,6 +1,5 @@
 package com.woo.task.model.room
 
-import android.app.Application
 import androidx.room.Room
 import android.content.Context
 import dagger.Module
