@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -111,6 +112,7 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
+                        actualPosition = binding.rvToDo.size
                         tasksViewModel.newTask(
                             Task(
                                 null,
@@ -130,6 +132,7 @@ class ToDoFragment : Fragment(), RecyclerViewInterface {
                                 listOf<String>()
                             )
                         )
+
                         dialog.dismiss()
                     }
                 }

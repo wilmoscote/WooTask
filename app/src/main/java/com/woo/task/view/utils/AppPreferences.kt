@@ -3,7 +3,10 @@ package com.woo.task.view.utils
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.woo.task.R
+import com.woo.task.model.utils.AlarmModel
 
 
 object AppPreferences{
@@ -70,5 +73,20 @@ object AppPreferences{
         fun setString(value: String?) = value?.let { shared.edit { putString(name, value) } } ?: remove()
 
         fun remove() = shared.edit { remove(name) }
+    }
+
+    fun getAlarms(): MutableList<AlarmModel> {
+        val gson = GsonBuilder().setLenient().create()
+        val jsn: String? = shared.getString("alarms", "")
+        val alarmas = gson.fromJson(jsn, Array<AlarmModel>::class.java)?.toMutableList()
+        return alarmas ?: mutableListOf<AlarmModel>()
+    }
+
+    fun setAlarms(alarms: MutableList<AlarmModel>){
+        val editor = shared.edit()
+        val g = Gson()
+        val json = g.toJson(alarms)
+        editor.putString("alarms", json)
+        editor.apply()
     }
 }

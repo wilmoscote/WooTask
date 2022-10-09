@@ -33,6 +33,7 @@ import com.woo.task.model.interfaces.RecyclerViewInterface
 import com.woo.task.model.responses.TaskValues
 import com.woo.task.model.room.Tag
 import com.woo.task.model.room.Task
+import com.woo.task.model.utils.AlarmModel
 import com.woo.task.model.utils.AlarmReceiver
 import com.woo.task.view.utils.AppPreferences
 import java.text.SimpleDateFormat
@@ -245,6 +246,7 @@ class TaskAdapter(
                     .setMessage(task.title)
                     .setPositiveButton(context.resources.getString(R.string.dialog_confirm)) { _, _ ->
                         Log.d("TaskDebug", "Delete task $task")
+                        cancelAlarm(task.id!!)
                         recyclerViewInterface.onClickDelete(task.id!!, task.state!!)
                         //onLongClick(task.id!!.toInt())
                     }
@@ -545,6 +547,10 @@ class TaskAdapter(
                             .setTitle(context.getString(R.string.cancel_limit_date_dialog_title))
                             .setMessage(context.getString(R.string.cancel_limit_date_dialog_message))
                             .setPositiveButton(context.resources.getString(R.string.dialog_confirm)) { _, _ ->
+                                val alarmsList = AppPreferences.getAlarms()
+                                alarmsList.remove(AlarmModel(task.id!!,task.finalDate!!,task.title!!))
+                                Log.d("TASKDEBUG","Alarm deleted from Local: ${alarmsList.toString()}")
+                                AppPreferences.setAlarms(alarmsList)
                                 cancelLimitDate(task, task.state!!)
                                 cancelAlarm(task.id!!)
                                 layoutWithLimitDate.isVisible = false
@@ -576,7 +582,7 @@ class TaskAdapter(
                         val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S){
                             PendingIntent.getBroadcast(context,task.id!!, intent, PendingIntent.FLAG_UPDATE_CURRENT)
                         }else{
-                            PendingIntent.getBroadcast(context, task.id!!, intent, PendingIntent.FLAG_MUTABLE)
+                            PendingIntent.getBroadcast(context, task.id!!, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE)
                         }
 
                         /*
@@ -602,7 +608,9 @@ class TaskAdapter(
                                 )
 
                                 updateLimitDay(task,calendar.time)
-
+                                val localAlarms = AppPreferences.getAlarms()
+                                localAlarms.add(AlarmModel(task.id!!,sdf.format(calendar.time),task.title!!))
+                                AppPreferences.setAlarms(localAlarms)
                             dialog.dismiss()
                         }else{
                             Toast.makeText(context, R.string.prev_date_error, Toast.LENGTH_SHORT).show()
@@ -662,6 +670,7 @@ class TaskAdapter(
                     .setMessage(task.title)
                     .setPositiveButton(context.resources.getString(R.string.dialog_confirm)) { _, _ ->
                         Log.d("TaskDebug", "Delete task $task")
+                        cancelAlarm(task.id!!)
                         recyclerViewInterface.onClickDelete(task.id!!, task.state!!)
                         //onLongClick(task.id!!.toInt())
                     }
@@ -683,8 +692,11 @@ class TaskAdapter(
         private fun cancelAlarm(requestCode:Int){
             Log.d("TASKDEBUG","CANCEL ALARM TO $requestCode")
             val intent = Intent(context, AlarmReceiver::class.java)
-            val pendingIntent =
-                PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_NO_CREATE)
+            val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S){
+                PendingIntent.getBroadcast(context,requestCode, intent, PendingIntent.FLAG_NO_CREATE)
+            }else{
+                PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_MUTABLE)
+            }
             val alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager?
             if (pendingIntent != null) {
                 alarmManager!!.cancel(pendingIntent)

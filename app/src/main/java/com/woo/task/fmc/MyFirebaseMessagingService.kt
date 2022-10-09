@@ -24,8 +24,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         if(AppPreferences.notifications!!){
             createNotificationChannel(this)
             notifyNotification(this)
-        }else{
-            Log.d(TAG, "DONT SHOW NOTIFICATIONS!");
         }
 
         // Check if message contains a data payload.

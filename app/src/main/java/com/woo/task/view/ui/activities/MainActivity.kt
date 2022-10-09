@@ -264,7 +264,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onAdLoaded() {
-                binding.adView.isVisible = true
+                //binding.adView.isVisible = true
                 // Code to be executed when an ad finishes loading.
             }
 
