@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.icu.text.RelativeDateTimeFormatter
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
@@ -14,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.*
+import android.widget.CalendarView.OnDateChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
@@ -89,19 +91,21 @@ class TaskAdapter(
                 )
             )
 
-            hasLimitDate = when(task.finalDate){
+            hasLimitDate = when (task.finalDate) {
                 "" -> false
                 else -> true
             }
 
-            binding.btnTime.setBackgroundResource(when(hasLimitDate){
-                false -> R.drawable.ic_event
-                true -> R.drawable.ic_event_complete
-            })
+            binding.btnTime.setBackgroundResource(
+                when (hasLimitDate) {
+                    false -> R.drawable.ic_event
+                    true -> R.drawable.ic_event_complete
+                }
+            )
 
             if (task.state == 3) binding.btnTime.isVisible = false
 
-            if (hasLimitDate){
+            if (hasLimitDate) {
                 try {
                     val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
 
@@ -110,12 +114,12 @@ class TaskAdapter(
                     val date: LocalDate = LocalDate.parse(sdf.format(Date()), formatter)
                     val finalDate: LocalDate = LocalDate.parse(task.finalDate, formatter)
 
-                    if(date > finalDate) {
+                    if (date > finalDate) {
                         binding.btnTime.setBackgroundResource(R.drawable.ic_event_uncomplete)
                         outOfDate = true
                     }
                 } catch (e: Exception) {
-                    Log.e("TASKDEBUG",e.message.toString())
+                    Log.e("TASKDEBUG", e.message.toString())
                 }
             }
 
@@ -471,11 +475,11 @@ class TaskAdapter(
                 dialog.show()
             }
 
-
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) binding.btnTime.isVisible = false
             binding.btnTime.setOnClickListener {
                 val alarmManager = context.getSystemService(ALARM_SERVICE) as? AlarmManager?
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S){
-                    if(alarmManager?.canScheduleExactAlarms() == false){
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S) {
+                    if (alarmManager?.canScheduleExactAlarms() == false) {
                         val intent = Intent().apply {
                             action = Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM
                         }
@@ -507,38 +511,49 @@ class TaskAdapter(
                 val layoutWithLimitDate = viewSheet.findViewById<LinearLayout>(R.id.layoutLimitDate)
                 val layoutNoLimitDate = viewSheet.findViewById<LinearLayout>(R.id.layoutNoLimitDate)
 
-                if (hasLimitDate){
-                    try{
-                        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS",when(AppPreferences.language){
-                            0 -> Locale("en")
-                            1 -> Locale("es")
-                            2 -> Locale("pt")
-                            else -> Locale("en")
-                        })
-                        val output = SimpleDateFormat("yyyy MMMM dd HH:mm:ss",when(AppPreferences.language){
-                            0 -> Locale("en")
-                            1 -> Locale("es")
-                            2 -> Locale("pt")
-                            else -> Locale("en")
-                        })
+                if (hasLimitDate) {
+                    try {
+                        val sdf = SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss.SSS", when (AppPreferences.language) {
+                                0 -> Locale("en")
+                                1 -> Locale("es")
+                                2 -> Locale("pt")
+                                else -> Locale("en")
+                            }
+                        )
+                        val output = SimpleDateFormat(
+                            "yyyy MMMM dd HH:mm:ss", when (AppPreferences.language) {
+                                0 -> Locale("en")
+                                1 -> Locale("es")
+                                2 -> Locale("pt")
+                                else -> Locale("en")
+                            }
+                        )
                         val d = sdf.parse(task.finalDate!!)
                         val formattedTime = output.format(d!!)
 
-                        viewSheet.findViewById<TextView>(R.id.taskLimitDate).text = formattedTime.toString()
-                    }catch (e:Exception){
-                        Log.e("TASKDEBUG",e.message.toString())
+                        viewSheet.findViewById<TextView>(R.id.taskLimitDate).text =
+                            formattedTime.toString()
+                    } catch (e: Exception) {
+                        Log.e("TASKDEBUG", e.message.toString())
                     }
 
-                    if(outOfDate){
-                        viewSheet.findViewById<ImageView>(R.id.imgTaskStatus).setBackgroundResource(R.drawable.ic_status_incomplete)
-                        viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text = context.getString(R.string.task_status_2)
-                    }else{
-                        if(task.state == 1){
-                            viewSheet.findViewById<ImageView>(R.id.imgTaskStatus).setBackgroundResource(R.drawable.ic_status_pending)
-                            viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text = context.getString(R.string.task_status_0)
-                        }else{
-                            viewSheet.findViewById<ImageView>(R.id.imgTaskStatus).setBackgroundResource(R.drawable.ic_status_complete)
-                            viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text = context.getString(R.string.task_status_4)
+                    if (outOfDate) {
+                        viewSheet.findViewById<ImageView>(R.id.imgTaskStatus)
+                            .setBackgroundResource(R.drawable.ic_status_incomplete)
+                        viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text =
+                            context.getString(R.string.task_status_2)
+                    } else {
+                        if (task.state == 1) {
+                            viewSheet.findViewById<ImageView>(R.id.imgTaskStatus)
+                                .setBackgroundResource(R.drawable.ic_status_pending)
+                            viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text =
+                                context.getString(R.string.task_status_0)
+                        } else {
+                            viewSheet.findViewById<ImageView>(R.id.imgTaskStatus)
+                                .setBackgroundResource(R.drawable.ic_status_complete)
+                            viewSheet.findViewById<TextView>(R.id.txtTaskStatus).text =
+                                context.getString(R.string.task_status_4)
                         }
                     }
                     val btnCancelLimitDate = viewSheet.findViewById<Button>(R.id.btnCancelLimitDate)
@@ -548,8 +563,17 @@ class TaskAdapter(
                             .setMessage(context.getString(R.string.cancel_limit_date_dialog_message))
                             .setPositiveButton(context.resources.getString(R.string.dialog_confirm)) { _, _ ->
                                 val alarmsList = AppPreferences.getAlarms()
-                                alarmsList.remove(AlarmModel(task.id!!,task.finalDate!!,task.title!!))
-                                Log.d("TASKDEBUG","Alarm deleted from Local: ${alarmsList.toString()}")
+                                alarmsList.remove(
+                                    AlarmModel(
+                                        task.id!!,
+                                        task.finalDate!!,
+                                        task.title!!
+                                    )
+                                )
+                                Log.d(
+                                    "TASKDEBUG",
+                                    "Alarm deleted from Local: ${alarmsList.toString()}"
+                                )
                                 AppPreferences.setAlarms(alarmsList)
                                 cancelLimitDate(task, task.state!!)
                                 cancelAlarm(task.id!!)
@@ -562,7 +586,7 @@ class TaskAdapter(
                             .show()
                     }
                     layoutWithLimitDate.isVisible = true
-                }else{
+                } else {
                     layoutNoLimitDate.isVisible = true
                 }
 
@@ -578,11 +602,21 @@ class TaskAdapter(
                         calendar[Calendar.YEAR] = year
 
                         val intent = Intent(context, AlarmReceiver::class.java)
-                        intent.putExtra("text",task.title)
-                        val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S){
-                            PendingIntent.getBroadcast(context,task.id!!, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-                        }else{
-                            PendingIntent.getBroadcast(context, task.id!!, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE)
+                        intent.putExtra("text", task.title)
+                        val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                            PendingIntent.getBroadcast(
+                                context,
+                                task.id!!,
+                                intent,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                            )
+                        } else {
+                            PendingIntent.getBroadcast(
+                                context,
+                                task.id!!,
+                                intent,
+                                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+                            )
                         }
 
                         /*
@@ -591,32 +625,42 @@ class TaskAdapter(
                             AlarmManager.RTC_WAKEUP,calendar.timeInMillis,
                             AlarmManager.INTERVAL_DAY,pendingIntent
                         )*/
-                        Log.d("DateDebug","Date: ${calendar.toString()}")
-                        try{
+                        Log.d("DateDebug", "Date: ${calendar.toString()}")
+                        try {
                             val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
 
                             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
-
                             val date: LocalDate = LocalDate.parse(sdf.format(Date()), formatter)
-                            val finalDate: LocalDate = LocalDate.parse(sdf.format(calendar.time), formatter)
+                            val finalDate: LocalDate =
+                                LocalDate.parse(sdf.format(calendar.time), formatter)
 
-                        if(date <= finalDate) {
+                            if (date <= finalDate) {
                                 alarmManager?.setExactAndAllowWhileIdle(
                                     AlarmManager.RTC_WAKEUP,
                                     calendar.timeInMillis,
                                     pendingIntent
                                 )
 
-                                updateLimitDay(task,calendar.time)
+                                updateLimitDay(task, calendar.time)
                                 val localAlarms = AppPreferences.getAlarms()
-                                localAlarms.add(AlarmModel(task.id!!,sdf.format(calendar.time),task.title!!))
+                                localAlarms.add(
+                                    AlarmModel(
+                                        task.id!!,
+                                        sdf.format(calendar.time),
+                                        task.title!!
+                                    )
+                                )
                                 AppPreferences.setAlarms(localAlarms)
-                            dialog.dismiss()
-                        }else{
-                            Toast.makeText(context, R.string.prev_date_error, Toast.LENGTH_SHORT).show()
-                        }
-                        }catch (e:Exception){
-                            Log.e("TASKDEBUG",e.message.toString())
+                                dialog.dismiss()
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    R.string.prev_date_error,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } catch (e: Exception) {
+                            Log.e("TASKDEBUG", e.message.toString())
                         }
                     } else {
                         Toast.makeText(context, R.string.invalid_date, Toast.LENGTH_SHORT).show()
@@ -627,23 +671,26 @@ class TaskAdapter(
                 btnCancel.setOnClickListener {
                     dialog.dismiss()
                 }
+                try {
+                    datePicker.setOnDateChangedListener { date, _, _, _ ->
+                        day = date.dayOfMonth
+                        month = date.month
+                        year = date.year
 
-                datePicker.setOnDateChangedListener { date, _, _, _ ->
-                    day = date.dayOfMonth
-                    month = date.month
-                    year = date.year
-
-                    val mes = if (month + 1 < 10) {
-                        "0${month + 1}"
-                    } else {
-                        (month + 1).toString()
+                        val mes = if (month + 1 < 10) {
+                            "0${month + 1}"
+                        } else {
+                            (month + 1).toString()
+                        }
+                        val dia = if (day < 10) {
+                            "0$day"
+                        } else {
+                            day.toString()
+                        }
+                        //dateText.text = "$year-${mes}-$dia"
                     }
-                    val dia = if (day < 10) {
-                        "0$day"
-                    } else {
-                        day.toString()
-                    }
-                    //dateText.text = "$year-${mes}-$dia"
+                } catch (e: Exception) {
+                    Log.e("TASKDEBUG", e.message.toString())
                 }
 
                 switchHour.setOnCheckedChangeListener { _, isChecked ->
@@ -689,20 +736,30 @@ class TaskAdapter(
             bottomSheet.layoutParams = layoutParams
         }
 
-        private fun cancelAlarm(requestCode:Int){
-            Log.d("TASKDEBUG","CANCEL ALARM TO $requestCode")
+        private fun cancelAlarm(requestCode: Int) {
+            Log.d("TASKDEBUG", "CANCEL ALARM TO $requestCode")
             val intent = Intent(context, AlarmReceiver::class.java)
-            val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S){
-                PendingIntent.getBroadcast(context,requestCode, intent, PendingIntent.FLAG_NO_CREATE)
-            }else{
-                PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_MUTABLE)
+            val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                PendingIntent.getBroadcast(
+                    context,
+                    requestCode,
+                    intent,
+                    PendingIntent.FLAG_NO_CREATE
+                )
+            } else {
+                PendingIntent.getBroadcast(
+                    context,
+                    requestCode,
+                    intent,
+                    PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_MUTABLE
+                )
             }
             val alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager?
             if (pendingIntent != null) {
                 alarmManager!!.cancel(pendingIntent)
-                Log.d("TASKDEBUG","ALARM CANCELED!")
-            }else{
-                Log.d("TASKDEBUG","ALARM NOT CANCELED!")
+                Log.d("TASKDEBUG", "ALARM CANCELED!")
+            } else {
+                Log.d("TASKDEBUG", "ALARM NOT CANCELED!")
             }
         }
 
@@ -756,7 +813,7 @@ class TaskAdapter(
             )
         }
 
-        private fun updateLimitDay(task: TaskValues, limitDate:Date) {
+        private fun updateLimitDay(task: TaskValues, limitDate: Date) {
             val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
             val date = sdf.format(Date())
             val finalDate = sdf.format(limitDate)

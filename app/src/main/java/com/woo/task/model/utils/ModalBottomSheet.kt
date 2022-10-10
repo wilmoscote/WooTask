@@ -26,9 +26,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
             }else{
                 resources.configuration.locale
             }
-        }catch (e:Exception){
-            Log.e("TASKSDEBUG",e.message.toString())
-        }
 
         Log.d("SheetDebug","Current Language: $primaryLocale")
         AppPreferences.setup(context)
@@ -64,9 +61,12 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                 setLocale("pt")
                 Log.d("SheetDebug","PORTUGUESE")
             }
-            Toast.makeText(this@ModalBottomSheet.context,getString(R.string.language_changed_text),Toast.LENGTH_LONG).show()
         }
-        return view
+            return view
+        }catch (e:Exception){
+            Log.e("TASKSDEBUG",e.message.toString())
+            return view
+        }
     }
 
     private fun setLocale(language:String){
@@ -76,6 +76,12 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         configuration.locale = Locale(language)
         resources.updateConfiguration(configuration,metrics)
         onConfigurationChanged(configuration)
+        try{
+            Toast.makeText(context,R.string.language_changed_text,Toast.LENGTH_LONG).show()
+        }catch (e:Exception){
+            Log.e("TASKDEBUG",e.message.toString())
+        }
+
     }
     companion object {
         const val TAG = "ModalBottomSheet"

@@ -36,10 +36,6 @@
             android:icon="@drawable/ic_settings"
             android:title="@string/configuration" />
         <item
-            android:id="@+id/ads"
-            android:icon="@drawable/ic_block"
-            android:title="@string/remove_ads" />
-        <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_logout"
             android:title="@string/logout_title" />

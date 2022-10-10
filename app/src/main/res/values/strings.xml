@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v</string>
-    <string name="love_message">Hecha con \u2665 por Woo Bless.</string>
+    <string name="love_message">Hecha con \\u2665 por WMSoftware.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">GUARDAR</string>
     <string name="image_description">WooTask Image</string>
@@ -63,6 +63,10 @@
     <!-- Titulos de Botones del Navigation Drawer -->
     <string name="home">Inicio</string>
     <string name="configuration">Configuración</string>
+    <string name="remove_ads">Remover anuncios</string>
+    <string name="purcharse_restored">Compra restaurada</string>
+    <string name="purcharse_status_unknown">La compra se está procesando.</string>
+    <string name="purcharse_status_pending">La compra está pendiente, complete la transacción.</string>
     <string name="help">Ayuda</string>
     <string name="share_app">Comparte la app</string>
     <!-- Texto para Actividad de Configuración -->
@@ -121,6 +125,8 @@
     <string name="slide_3_title">Comienza ahora</string>
     <string name="slide_3_text">Vamos a crear tu primera tarea!</string>
     <string name="invalid_date">Fecha no válida</string>
+    <string name="purcharse_error">Ha ocurrido un error durante el proceso de compra.</string>
+    <string name="purcharse_success">Compra realizada con éxito.</string>
     <string name="privacy_policy_title" translatable="false">WOO TASK PRIVACY POLICY</string>
     <string name="privacy_policy" translatable="false">This privacy policy governs your use of the software application Woo Task for Android mobile devices that was created by WMSoftware.\nWhat information we collect?\nWoo Task application does not collect personal information like name, surname, age, date of birth, etc.\nWe use Google supplied APP performance tracking information to improve Application. This application only makes use of the sound your Android mobile phone to create the alarm.\nGoogle Analytics\nThis Application uses Google Analytics to help us analyze how you use app. It helps us to improve this product.\nThanks Google Analytics we know how long you use app, what kind of device you\'re using, where are you from and a little bit more. All this is used to improve the app.\nRead more about Google Analytics\nFirebase\nWe use Firebase to store all the app information. Information like personal data and manage the e-mail login to our app.\nYou can see the entire privacy policy of firebase here.\nhttps://firebase.google.com/support/privacy/?hl=es-419\nAdvertisement\nGoogle Admob privacy policy is here: https://support.google.com/admob/answer/6128543?hl=en.\nThird party vendors, including Google, use cookies to serve ads based on a user\'s prior visits to your website.\nContact\nTo contact us please use email: wilfredmoscote@gmail.com\n\n-Acknowledgements\nWe use these libraries to make WooTask:\n- Lottie\n- Google Fonts\n- Google Icons\n- Hilt\n- Shimmer\n- Glide\n- OkHttp3\n- DotsIndicator\n- Room\n- ColorPicker\n</string>
 </resources>

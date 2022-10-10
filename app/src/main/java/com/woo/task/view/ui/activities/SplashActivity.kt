@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
@@ -26,23 +28,24 @@ class SplashActivity : AppCompatActivity() {
         screenSplash.setKeepOnScreenCondition{true}
         //Obtengo las preferencias del usuario.
         AppPreferences.setup(this)
-
         MobileAds.initialize(this)
-
-        val typeface = when(AppPreferences.font){
-            0 -> resources.getFont(R.font.nunito)
-            1 -> resources.getFont(R.font.newsreader)
-            2 -> resources.getFont(R.font.lora)
-            3 -> resources.getFont(R.font.poppins)
-            4 -> resources.getFont(R.font.roboto)
-            5 -> resources.getFont(R.font.abeezee)
-            6 -> resources.getFont(R.font.courgette)
-            7 -> resources.getFont(R.font.handlee)
-            8 -> resources.getFont(R.font.playball)
-            else -> resources.getFont(R.font.nunito)
+        try{
+            val typeface = when(AppPreferences.font){
+                0 -> ResourcesCompat.getFont(this,R.font.nunito)
+                1 -> ResourcesCompat.getFont(this,R.font.newsreader)
+                2 -> ResourcesCompat.getFont(this,R.font.lora)
+                3 -> ResourcesCompat.getFont(this,R.font.poppins)
+                4 -> ResourcesCompat.getFont(this,R.font.roboto)
+                5 -> ResourcesCompat.getFont(this,R.font.abeezee)
+                6 -> ResourcesCompat.getFont(this,R.font.courgette)
+                7 -> ResourcesCompat.getFont(this,R.font.handlee)
+                8 -> ResourcesCompat.getFont(this,R.font.playball)
+                else -> ResourcesCompat.getFont(this,R.font.nunito)
+            }
+            TypefaceUtil.overrideFont(applicationContext, "SERIF", typeface!!)
+        }catch (e:Exception){
+            Log.e("TASKDEBUG",e.message.toString())
         }
-
-        TypefaceUtil.overrideFont(applicationContext, "SERIF", typeface)
 
         //Base de datos.
         TaskApp.provideRoom(this)

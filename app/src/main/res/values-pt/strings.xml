@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v</string>
-    <string name="love_message">Feita com \u2665 por Woo Bless.</string>
+    <string name="love_message">Feita com \\u2665 por WMSoftware.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">SALVAR</string>
     <string name="image_description">WooTask Imagen</string>
@@ -106,4 +106,10 @@
     <string name="task_status_2">Não Completo</string>
     <string name="task_status_4">Em Progresso</string>
     <string name="prev_date_error">Você não pode selecionar uma data antes de hoje.</string>
+    <string name="remove_ads">Remover Anúncios</string>
+    <string name="purcharse_restored">Compra reformada</string>
+    <string name="purcharse_status_unknown">A compra está sendo processada</string>
+    <string name="purcharse_status_pending">" A compra está pendente, conclua a transação."</string>
+    <string name="purcharse_error">Ocorreu um erro durante o processo de compra.</string>
+    <string name="purcharse_success">Compra realizada com sucesso.</string>
 </resources>

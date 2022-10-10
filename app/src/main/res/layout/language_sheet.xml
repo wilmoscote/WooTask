@@ -25,7 +25,6 @@
             android:id="@+id/languageRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             >
             <RadioButton
                 android:id="@+id/language_0"

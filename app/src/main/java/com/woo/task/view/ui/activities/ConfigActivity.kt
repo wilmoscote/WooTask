@@ -143,8 +143,13 @@ class ConfigActivity : AppCompatActivity() {
                     //setDefaultNightMode(MODE_NIGHT_YES)
                     AppPreferences.font = 8
                 }
-                Toast.makeText(this,getString(R.string.language_changed_text),
-                    Toast.LENGTH_LONG).show()
+                try{
+                    Toast.makeText(this,getString(R.string.language_changed_text),
+                        Toast.LENGTH_LONG).show()
+                }catch (e:Exception){
+                    Log.e("TASKDEBUG",e.message.toString())
+                }
+
             }
             dialog.setCancelable(true)
             dialog.setContentView(viewSheet)

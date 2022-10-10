@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -17,10 +18,12 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.android.billingclient.api.*
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.common.collect.ImmutableList
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
@@ -33,6 +36,7 @@ import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.woo.task.databinding.ActivityMainBinding
 import com.woo.task.BuildConfig
 import com.woo.task.R
+import com.woo.task.model.utils.Security
 import com.woo.task.view.adapters.ViewPagerAdapter
 import com.woo.task.view.utils.AppPreferences
 import com.woo.task.view.utils.HorizontalMarginItemDecoration
@@ -41,15 +45,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.IOException
 import kotlin.math.abs
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
     val TAG = "TASKDEBUG"
     lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private val tasksViewModel: TasksViewModel by viewModels()
     lateinit var toggle: ActionBarDrawerToggle
+    lateinit var billingClient: BillingClient
+    lateinit var planProductDetails: MutableList<ProductDetails>
     private val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +66,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         AppPreferences.setup(this)
 
-        initAds()
+        if(AppPreferences.ads!!){
+            binding.navView.menu.clear()
+            binding.navView.inflateMenu(R.menu.nav_menu)
+            initAds()
+        }else{
+            binding.navView.menu.clear()
+            binding.navView.inflateMenu(R.menu.nav_menu_plus)
+        }
+        initBilling()
+
 
         val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
         val configSettings = remoteConfigSettings {
@@ -72,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val appVersion = Firebase.remoteConfig.getDouble("appversion")
                     Log.d(TAG,appVersion.toString())
-                    if (appVersion.toInt() != BuildConfig.VERSION_CODE){
+                    if (appVersion.toInt() > BuildConfig.VERSION_CODE){
                        forceUpdate()
                     }
                 }
@@ -154,6 +171,15 @@ class MainActivity : AppCompatActivity() {
                         startActivity(Intent(this@MainActivity,SlideActivity::class.java))
                         finish()
                         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_in_right)
+                    }
+
+                    R.id.ads -> {
+                        try {
+                            launchPurchaseFlow(planProductDetails[0])
+                            Log.d(TAG, planProductDetails[0].toString())
+                        } catch (e: Exception) {
+                            Log.d(TAG, e.message.toString())
+                        }
                     }
 
                     R.id.logout -> {
@@ -264,7 +290,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onAdLoaded() {
-                //binding.adView.isVisible = true
+                binding.adView.isVisible = true
                 // Code to be executed when an ad finishes loading.
             }
 
@@ -308,4 +334,192 @@ class MainActivity : AppCompatActivity() {
         if(AppPreferences.bgColor!! != 0)  binding.mainLayout.setBackgroundColor(AppPreferences.bgColor!!)
     }
 
+    private fun initBilling(){
+
+        billingClient = BillingClient.newBuilder(this)
+            .setListener(this)
+            .enablePendingPurchases()
+            .build()
+
+        billingClient.startConnection(object : BillingClientStateListener {
+            override fun onBillingSetupFinished(billingResult: BillingResult) {
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    // The BillingClient is ready. You can query purchases here.
+                    Log.d(TAG, "Conected to Google!")
+                    showProducts()
+                    CoroutineScope(Dispatchers.IO).launch{checkUserPurcharses()}
+                }
+            }
+
+            override fun onBillingServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+
+                //binding.vpPlanes.isVisible = false
+                //binding.btnBuy.isVisible = false
+                //binding.error.isVisible = true
+                Log.d(TAG, "Error to connect to Google!")
+            }
+        })
+    }
+
+    fun showProducts() {
+        val queryProductDetailsParams =
+            QueryProductDetailsParams.newBuilder()
+                .setProductList(
+                    ImmutableList.of(
+                        QueryProductDetailsParams.Product.newBuilder()
+                            .setProductId("remove_ads")
+                            .setProductType(BillingClient.ProductType.INAPP)
+                            .build()
+                    )
+                )
+                .build()
+
+        billingClient.queryProductDetailsAsync(queryProductDetailsParams) { billingResult,
+                                                                            productDetailsList ->
+            // check billingResult
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                planProductDetails = productDetailsList.reversed().toMutableList()
+                Log.d(TAG, productDetailsList.toString())
+                Log.d(TAG, "R: $planProductDetails")
+                /*for (productDetails in productDetailsList) {
+
+                    if (productDetails.productId == "silver_plan_medicall") {
+                        val subDetails = productDetails.subscriptionOfferDetails!!
+                        Log.d(TAG, subDetails[0].offerToken)
+                        Log.d(TAG,subDetails[0].pricingPhases.pricingPhaseList[0]
+                            .formattedPrice.toString() + " Per Month")
+                        Log.d(TAG, subDetails[0].pricingPhases.toString())
+                    }
+                }*/
+            }
+
+        }
+    }
+
+    private fun launchPurchaseFlow(productDetails: ProductDetails) {
+        val offerToken = productDetails.subscriptionOfferDetails?.get(0)?.offerToken
+
+        val productDetailsParamsList =
+            listOf(
+                BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(productDetails)
+                    //.setOfferToken(offerToken.toString())
+                    .build()
+            )
+        val billingFlowParams =
+            BillingFlowParams.newBuilder()
+                .setProductDetailsParamsList(productDetailsParamsList)
+                .build()
+
+        // Launch the billing flow
+        val billingResult = billingClient.launchBillingFlow(this, billingFlowParams)
+    }
+
+    override fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {
+        Log.d(TAG, "Handling purcharse")
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+            for (purchase in purchases) {
+                CoroutineScope(Dispatchers.IO).launch { handlePurchase(purchase) }
+            }
+        }
+    }
+
+    private suspend fun handlePurchase(purchase: Purchase) {
+        // Purchase retrieved from BillingClient#queryPurchasesAsync or your PurchasesUpdatedListener.
+        //if item is purchased
+        if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
+            Log.d(TAG, "Purcharsed")
+            if (!verifyValidSignature(purchase.originalJson, purchase.signature)) {
+                // Invalid purchase
+                // show error to user
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        applicationContext,
+                        R.string.purcharse_error,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                Log.d(TAG, "Error invalid purcharse")
+                //skip current iteration only because other items in purchase list must be checked if present
+                return
+            }
+            // else purchase is valid
+            //if item is purchased and not  Acknowledged
+            if (!purchase.isAcknowledged) {
+                val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
+                    .setPurchaseToken(purchase.purchaseToken)
+                    .build()
+                billingClient.acknowledgePurchase(acknowledgePurchaseParams
+                ) { billingResult ->
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        //if purchase is acknowledged
+                        //then saved value in preference
+                        AppPreferences.ads = false
+                        binding.adView.isVisible = false
+
+                        Toast.makeText(applicationContext, R.string.purcharse_success, Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "Item purcharsed")
+                    }
+                }
+            } else {
+                // Grant entitlement to the user on item purchase
+                if (!AppPreferences.ads!!) {
+                    AppPreferences.ads = false
+                    binding.adView.isVisible = false
+                    Toast.makeText(applicationContext, R.string.purcharse_success, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Item purcharsed")
+                }
+            }
+        }
+        else if (purchase.purchaseState == Purchase.PurchaseState.PENDING) {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(
+                    applicationContext,
+                    R.string.purcharse_status_pending,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            Log.d(TAG, "Purcharse pending")
+        }
+        else if (purchase.purchaseState == Purchase.PurchaseState.UNSPECIFIED_STATE) {
+            //mark purchase false in case of UNSPECIFIED_STATE
+            withContext(Dispatchers.Main) {
+                Toast.makeText(applicationContext, R.string.purcharse_status_unknown, Toast.LENGTH_SHORT)
+                    .show()
+            }
+            Log.d(TAG, "Purcharse status unknown")
+        }
+    }
+
+    private fun verifyValidSignature(signedData: String, signature: String): Boolean {
+        return try {
+            val base64Key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAigQNbwTdh29b6LbQDzu8LzWZz0HaL9DC+HTeY7/1tEAUsLynAZQB1ujCOArOVUixQFPI99bhOKD27W8eCSq1BTlqpMYPjNRAkt450TvS3Cdgs8ScFxKic75/zw5/PdRxWjfJG/pJPfH/RyjsFrG+uupN3VVjfiho0CkUaePkAXugn0DdGfnwaluRQOe6VwWErVK0Nk78EBdcVJpy1IfOOW/X5ZV5b5Mf6rcYdugQwR7+riOOotnKO66/zqV/VBPlJaK3C2jdaTro8hbHDtyS97taO7LoLQnvr6lg2FG1FCRFP/rRjVmkK9cVGcy+HxzKAjZMNolYIru68WL9v7CJIQIDAQAB"
+            Security.verifyPurchase(base64Key, signedData, signature)
+        } catch (e: IOException) {
+            false
+        }
+    }
+
+
+    private suspend fun checkUserPurcharses(){
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.INAPP)
+
+        // uses queryPurchasesAsync Kotlin extension function
+        val purchasesResult = billingClient.queryPurchasesAsync(params.build())
+
+        for (purcharse in purchasesResult.purchasesList){
+            Log.d(TAG,"History: ${purcharse.toString()}")
+            if (purcharse.products[0].toString() == "remove_ads" && AppPreferences.ads!!){
+                withContext(Dispatchers.Main){
+                    Toast.makeText(this@MainActivity,R.string.purcharse_restored,Toast.LENGTH_LONG).show()
+                }
+                AppPreferences.ads = false
+                binding.adView.visibility = View.GONE
+                Log.d(TAG,"Purcharse restored.")
+            }
+        }
+    }
 }
