@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v</string>
-    <string name="love_message">Hecha con \\u2665 por WMSoftware.</string>
+    <string name="love_message">Hecha con \u2665 por WMSoftware.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">GUARDAR</string>
+    <string name="btn_filter">FILTRAR</string>
     <string name="image_description">WooTask Image</string>
     <string name="new_task_hint">Describa los detalles de la tarea …</string>
     <string name="title_list_todo">Lista de Hacer</string>
@@ -95,6 +96,9 @@
     <string name="font_option_8" translatable="false">Playball</string>
     <string name="name">Nombre</string>
     <string name="max_tags_by_task">Sólo se permiten 3 etiquetas en una Tarea.</string>
+    <string name="max_3_items">Sólo puedes seleccionar 3 etiquetas.</string>
+    <string name="filter_title">Filtrar por:</string>
+    <string name="filter_text">Filtro</string>
     <string name="task_tags_title">Etiquetas de la Tarea:</string>
     <string name="my_tags">Mis Etiquetas:</string>
     <string name="task_without_tags">Esta tarea no tiene ninguna etiqueta.</string>

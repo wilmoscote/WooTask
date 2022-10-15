@@ -35,8 +35,8 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
-
+            android:value="ca-app-pub-1892256007304751~3354144540" />
+        <!-- ca-app-pub-3940256099942544~3347511713 -->
         <activity
             android:name=".view.ui.activities.SlideActivity"
             android:exported="false" />

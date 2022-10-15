@@ -61,6 +61,22 @@
                 android:textColor="?attr/textAppearanceCaption"
                 android:background="@drawable/shimmer_back"
                 android:textSize="18sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="24dp"
+                android:layout_margin="4dp"
+                android:textColor="?attr/textAppearanceCaption"
+                android:background="@drawable/shimmer_back"
+                android:textSize="18sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="24dp"
+                android:layout_margin="4dp"
+                android:textColor="?attr/textAppearanceCaption"
+                android:background="@drawable/shimmer_back"
+                android:textSize="18sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

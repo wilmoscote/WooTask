@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v</string>
-    <string name="love_message">Made with \\u2665 by WMSoftware.</string>
+    <string name="love_message">Made with \u2665 by WMSoftware.</string>
     <string name="btnCancel">CANCEL</string>
     <string name="btnSave">SAVE</string>
     <string name="image_description">WooTask Image</string>
@@ -89,7 +89,7 @@
     <string name="task_tags_title">Task Tags:</string>
     <string name="my_tags">My Tags:</string>
     <string name="task_without_tags">This task has no tag.</string>
-    <string name="no_tags">" You haven't created a tag yet."</string>
+    <string name="no_tags">You haven\'t created a tag yet.</string>
     <string name="max_tags_by_task">Only 3 tags are allowed in a Task.</string>
     <string name="delete_tag_title">Delete Tag</string>
     <string name="delete_tag_message">Are you sure do you want to delete this tag?</string>
@@ -112,4 +112,8 @@
     <string name="purcharse_status_pending">The purchase is pending, complete the transaction.</string>
     <string name="purcharse_error">An error has occurred during the purchase process.</string>
     <string name="purcharse_success">Purchase completed successfully.</string>
+    <string name="max_3_items">You can only select 3 tags.</string>
+    <string name="filter_title">Filter by:</string>
+    <string name="filter_text">Filter</string>
+    <string name="btn_filter">FILTER</string>
 </resources>

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Woo Task</string>
     <string name="version_info">Woo Task v</string>
-    <string name="love_message">Feita com \\u2665 por WMSoftware.</string>
+    <string name="love_message">Feita com \u2665 por WMSoftware.</string>
     <string name="btnCancel">CANCELAR</string>
     <string name="btnSave">SALVAR</string>
     <string name="image_description">WooTask Imagen</string>
@@ -112,4 +112,8 @@
     <string name="purcharse_status_pending">" A compra está pendente, conclua a transação."</string>
     <string name="purcharse_error">Ocorreu um erro durante o processo de compra.</string>
     <string name="purcharse_success">Compra realizada com sucesso.</string>
+    <string name="max_3_items">Você só pode selecionar 3 tags.</string>
+    <string name="filter_title">Filtrar por:</string>
+    <string name="filter_text">Filtro</string>
+    <string name="btn_filter">FILTRAR</string>
 </resources>

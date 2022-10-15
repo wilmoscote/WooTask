@@ -513,9 +513,6 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
         for (purcharse in purchasesResult.purchasesList){
             Log.d(TAG,"History: ${purcharse.toString()}")
             if (purcharse.products[0].toString() == "remove_ads" && AppPreferences.ads!!){
-                withContext(Dispatchers.Main){
-                    Toast.makeText(this@MainActivity,R.string.purcharse_restored,Toast.LENGTH_LONG).show()
-                }
                 AppPreferences.ads = false
                 binding.adView.visibility = View.GONE
                 Log.d(TAG,"Purcharse restored.")

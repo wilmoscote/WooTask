@@ -10,12 +10,14 @@ import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.woo.task.R
 import com.woo.task.view.ui.activities.SplashActivity
 import com.woo.task.view.utils.AppPreferences
 import com.woo.task.viewmodel.TasksViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -28,8 +30,6 @@ class AlarmReceiver: BroadcastReceiver() {
         const val NOTIFICATION_ID = 2626
         const val NOTIFICATION_CHANNEL_ID = "2625"
     }
-
-    lateinit var tasksViewModel: TasksViewModel
 
     override fun onReceive(context: Context, intent: Intent) {
         AppPreferences.setup(context)
@@ -67,11 +67,31 @@ class AlarmReceiver: BroadcastReceiver() {
                 )
             }
         }else{
+            val id = intent.getIntExtra("id",0)
             val text = intent.getStringExtra("text") ?: context.getString(R.string.alarm_notification_title)
+            val finalDate = intent.getStringExtra("date")
+            Log.d(
+                "TASKDEBUG",
+                "Alarm received: $id - $text - $finalDate"
+            )
+            val alarmsList = AppPreferences.getAlarms()
+            alarmsList.remove(
+                AlarmModel(
+                    id,
+                    finalDate!!,
+                    text
+                )
+            )
+            Log.d(
+                "TASKDEBUG",
+                "Alarm deleted from Local: ${alarmsList.toString()}"
+            )
+            AppPreferences.setAlarms(alarmsList)
+
             createNotificationChannel(context)
             notifyNotification(context,text)
-        }
 
+        }
     }
 
     private fun createNotificationChannel(context: Context) {
@@ -119,7 +139,7 @@ class AlarmReceiver: BroadcastReceiver() {
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentIntent(contentPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-            notify(NOTIFICATION_ID, build.build())
+            notify(text.hashCode(), build.build())
         }
     }
 }

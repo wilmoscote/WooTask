@@ -45,7 +45,7 @@ import java.util.*
 
 
 class TaskAdapter(
-    private val tasks: List<TaskValues>, val recyclerViewInterface: RecyclerViewInterface
+    private var tasks: List<TaskValues>, val recyclerViewInterface: RecyclerViewInterface
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskAdapter.TaskViewHolder {
@@ -59,6 +59,11 @@ class TaskAdapter(
     }
 
     override fun getItemCount(): Int = tasks.size
+
+    fun updateTasks(tasks: List<TaskValues>){
+        this.tasks = tasks
+        notifyDataSetChanged()
+    }
 
     inner class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = CardItemBinding.bind(view)
@@ -122,7 +127,6 @@ class TaskAdapter(
                     Log.e("TASKDEBUG", e.message.toString())
                 }
             }
-
 
             if (task.tags.isNotEmpty()) {
                 for (tag in task.tags) {
@@ -600,9 +604,11 @@ class TaskAdapter(
                         calendar[Calendar.MONTH] = month
                         calendar[Calendar.DAY_OF_MONTH] = day
                         calendar[Calendar.YEAR] = year
-
+                        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
                         val intent = Intent(context, AlarmReceiver::class.java)
+                        intent.putExtra("id",task.id)
                         intent.putExtra("text", task.title)
+                        intent.putExtra("date",sdf.format(calendar.time))
                         val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                             PendingIntent.getBroadcast(
                                 context,
