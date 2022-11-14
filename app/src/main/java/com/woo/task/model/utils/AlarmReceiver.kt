@@ -69,7 +69,7 @@ class AlarmReceiver: BroadcastReceiver() {
         }else{
             val id = intent.getIntExtra("id",0)
             val text = intent.getStringExtra("text") ?: context.getString(R.string.alarm_notification_title)
-            val finalDate = intent.getStringExtra("date")
+            val finalDate = intent.getStringExtra("date") ?: ""
             Log.d(
                 "TASKDEBUG",
                 "Alarm received: $id - $text - $finalDate"
@@ -78,7 +78,7 @@ class AlarmReceiver: BroadcastReceiver() {
             alarmsList.remove(
                 AlarmModel(
                     id,
-                    finalDate!!,
+                    finalDate,
                     text
                 )
             )
