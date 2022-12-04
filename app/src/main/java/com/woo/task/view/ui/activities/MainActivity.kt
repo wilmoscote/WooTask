@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +41,7 @@ import com.woo.task.model.utils.Security
 import com.woo.task.view.adapters.ViewPagerAdapter
 import com.woo.task.view.utils.AppPreferences
 import com.woo.task.view.utils.HorizontalMarginItemDecoration
+import com.woo.task.view.utils.TypefaceUtil
 import com.woo.task.viewmodel.TasksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -332,6 +334,23 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
     override fun onResume() {
         super.onResume()
         if(AppPreferences.bgColor!! != 0)  binding.mainLayout.setBackgroundColor(AppPreferences.bgColor!!)
+        try{
+            val typeface = when(AppPreferences.font){
+                0 -> ResourcesCompat.getFont(this,R.font.nunito)
+                1 -> ResourcesCompat.getFont(this,R.font.newsreader)
+                2 -> ResourcesCompat.getFont(this,R.font.lora)
+                3 -> ResourcesCompat.getFont(this,R.font.poppins)
+                4 -> ResourcesCompat.getFont(this,R.font.roboto)
+                5 -> ResourcesCompat.getFont(this,R.font.abeezee)
+                6 -> ResourcesCompat.getFont(this,R.font.courgette)
+                7 -> ResourcesCompat.getFont(this,R.font.handlee)
+                8 -> ResourcesCompat.getFont(this,R.font.playball)
+                else -> ResourcesCompat.getFont(this,R.font.nunito)
+            }
+            TypefaceUtil.overrideFont(applicationContext, "SERIF", typeface!!)
+        }catch (e:Exception){
+            Log.e("TASKDEBUG",e.message.toString())
+        }
     }
 
     private fun initBilling(){
