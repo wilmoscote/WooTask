@@ -175,7 +175,7 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
                         chip.isClickable = true
                         if(activeFilter != "0" && chip.text == activeFilter) {
                             chip.isChecked = true
-                            Log.d("TASKDEBUG", "checking chip active")
+                            //Log.d("TASKDEBUG", "checking chip active")
                         }
                         /*chip.setOnCloseIconClickListener {
                             MaterialAlertDialogBuilder(this@ToDoFragment.requireContext())
@@ -202,7 +202,7 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
                     if (tagGroup.checkedChipIds.size > 0) {
                         val chipSelected = viewSheet.findViewById<Chip>(tagGroup.checkedChipId).text.toString()
                         activeFilter = chipSelected
-                        Log.d("TASKDEBUG", "TAG CHECKED! $chipSelected ID: ${tagGroup.checkedChipId} - ACTIVE: $activeFilter")
+                        //Log.d("TASKDEBUG", "TAG CHECKED! $chipSelected ID: ${tagGroup.checkedChipId} - ACTIVE: $activeFilter")
                         // updateTags(task, tagsSelected)
                         val taskFiltered =
                             todoTasks.filter { etiqueta -> etiqueta.tags.contains(chipSelected) }
@@ -244,7 +244,7 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
     }
 
     fun deleteItem(id: Int) {
-        Log.d("TaskDebug", "Delete send to ViewModel")
+        //Log.d("TaskDebug", "Delete send to ViewModel")
 //        tasksViewModel.removeTask(id)
     }
 
@@ -254,12 +254,12 @@ class DoingFragment : Fragment(), RecyclerViewInterface {
 
     override fun moveItem(id: Int?, state: Int) {
         tasksViewModel.moveTask(id ?: 0, state)
-        Log.d("TASKDEBUG", "MOVER $id TO $state")
+        //Log.d("TASKDEBUG", "MOVER $id TO $state")
     }
 
     override fun onClickDelete(id: Int, state: Int) {
         tasksViewModel.removeTask(id, state)
-        Log.d("TASKDEBUG", "DELETE $id")
+        //Log.d("TASKDEBUG", "DELETE $id")
     }
 
     override fun updateTask(task: Task, position:Int) {

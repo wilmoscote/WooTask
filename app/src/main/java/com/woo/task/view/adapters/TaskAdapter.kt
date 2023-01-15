@@ -124,7 +124,7 @@ class TaskAdapter(
                         outOfDate = true
                     }
                 } catch (e: Exception) {
-                    Log.e("TASKDEBUG", e.message.toString())
+                    //Log.e("TASKDEBUG", e.message.toString())
                 }
             }
 
@@ -192,7 +192,7 @@ class TaskAdapter(
 
             binding.taskBody.setOnFocusChangeListener { _, b ->
                 binding.layoutTool.isVisible = b
-                Log.d("ToolsDebug", b.toString())
+                //Log.d("ToolsDebug", b.toString())
             }
 
             binding.btnEdit.setOnClickListener {
@@ -253,7 +253,7 @@ class TaskAdapter(
                     .setTitle(context.resources.getString(R.string.title_delete_dialog))
                     .setMessage(task.title)
                     .setPositiveButton(context.resources.getString(R.string.dialog_confirm)) { _, _ ->
-                        Log.d("TaskDebug", "Delete task $task")
+                        //Log.d("TaskDebug", "Delete task $task")
                         cancelAlarm(task.id!!)
                         recyclerViewInterface.onClickDelete(task.id!!, task.state!!)
                         //onLongClick(task.id!!.toInt())
@@ -319,7 +319,7 @@ class TaskAdapter(
                 val notTag = viewSheet.findViewById<TextView>(R.id.noTags)
                 val notTagGeneral = viewSheet.findViewById<TextView>(R.id.noTagsGeneral)
 
-                Log.d("TASKDEBUG", "TAGS: ${task.tags.toString()}")
+                //Log.d("TASKDEBUG", "TAGS: ${task.tags.toString()}")
                 if (task.tags.isNotEmpty()) {
                     for (tag in task.tags) {
                         val chip = Chip(context)
@@ -392,7 +392,7 @@ class TaskAdapter(
                         tagGroup.checkedChipIds.forEach {
                             val chipSelected = viewSheet.findViewById<Chip>(it).text.toString()
                             tagsSelected.add(chipSelected)
-                            Log.d("TASKDEBUG", "TAG CHECKED! $chipSelected")
+                            //Log.d("TASKDEBUG", "TAG CHECKED! $chipSelected")
                             updateTags(task, tagsSelected)
                         }
                         dialog.dismiss()
@@ -400,12 +400,12 @@ class TaskAdapter(
                         taskTagGroup.checkedChipIds.forEach {
                             val chipSelected = viewSheet.findViewById<Chip>(it).text.toString()
                             tagsSelected.add(chipSelected)
-                            Log.d("TASKDEBUG", "TAG CHECKED! $chipSelected")
+                            //Log.d("TASKDEBUG", "TAG CHECKED! $chipSelected")
                             updateTags(task, tagsSelected)
                         }
                         dialog.dismiss()
                     }
-                    Log.d("TASKDEBUG", "TAG CHECKED! $tagsSelected")
+                    //Log.d("TASKDEBUG", "TAG CHECKED! $tagsSelected")
                 }
 
                 btnAdd.setOnClickListener {
@@ -539,7 +539,7 @@ class TaskAdapter(
                         viewSheet.findViewById<TextView>(R.id.taskLimitDate).text =
                             formattedTime.toString()
                     } catch (e: Exception) {
-                        Log.e("TASKDEBUG", e.message.toString())
+                        //Log.e("TASKDEBUG", e.message.toString())
                     }
 
                     if (outOfDate) {
@@ -574,10 +574,7 @@ class TaskAdapter(
                                         task.title!!
                                     )
                                 )
-                                Log.d(
-                                    "TASKDEBUG",
-                                    "Alarm deleted from Local: ${alarmsList.toString()}"
-                                )
+                                //Log.d("TASKDEBUG","Alarm deleted from Local: ${alarmsList.toString()}")
                                 AppPreferences.setAlarms(alarmsList)
                                 cancelLimitDate(task, task.state!!)
                                 cancelAlarm(task.id!!)
@@ -595,7 +592,7 @@ class TaskAdapter(
                 }
 
                 btnSave.setOnClickListener {
-                    if (day != 0 && month != 0 && year != 0) {
+                    if (day != 0 && year != 0) {
 
                         calendar[Calendar.HOUR_OF_DAY] = hour
                         calendar[Calendar.MINUTE] = minute
@@ -631,7 +628,7 @@ class TaskAdapter(
                             AlarmManager.RTC_WAKEUP,calendar.timeInMillis,
                             AlarmManager.INTERVAL_DAY,pendingIntent
                         )*/
-                        Log.d("DateDebug", "Date: ${calendar.toString()}")
+                        //Log.d("DateDebug", "Date: ${calendar.toString()}")
                         try {
                             val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
 
@@ -666,7 +663,7 @@ class TaskAdapter(
                                 ).show()
                             }
                         } catch (e: Exception) {
-                            Log.e("TASKDEBUG", e.message.toString())
+                            //Log.e("TASKDEBUG", e.message.toString())
                         }
                     } else {
                         Toast.makeText(context, R.string.invalid_date, Toast.LENGTH_SHORT).show()
@@ -696,7 +693,7 @@ class TaskAdapter(
                         //dateText.text = "$year-${mes}-$dia"
                     }
                 } catch (e: Exception) {
-                    Log.e("TASKDEBUG", e.message.toString())
+                    //Log.e("TASKDEBUG", e.message.toString())
                 }
 
                 switchHour.setOnCheckedChangeListener { _, isChecked ->
@@ -722,7 +719,7 @@ class TaskAdapter(
                     .setTitle(context.resources.getString(R.string.title_delete_dialog))
                     .setMessage(task.title)
                     .setPositiveButton(context.resources.getString(R.string.dialog_confirm)) { _, _ ->
-                        Log.d("TaskDebug", "Delete task $task")
+                        //Log.d("TaskDebug", "Delete task $task")
                         cancelAlarm(task.id!!)
                         recyclerViewInterface.onClickDelete(task.id!!, task.state!!)
                         //onLongClick(task.id!!.toInt())
@@ -743,7 +740,7 @@ class TaskAdapter(
         }
 
         private fun cancelAlarm(requestCode: Int) {
-            Log.d("TASKDEBUG", "CANCEL ALARM TO $requestCode")
+            //Log.d("TASKDEBUG", "CANCEL ALARM TO $requestCode")
             val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
                 PendingIntent.getBroadcast(
@@ -763,9 +760,9 @@ class TaskAdapter(
             val alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager?
             if (pendingIntent != null) {
                 alarmManager!!.cancel(pendingIntent)
-                Log.d("TASKDEBUG", "ALARM CANCELED!")
+                //Log.d("TASKDEBUG", "ALARM CANCELED!")
             } else {
-                Log.d("TASKDEBUG", "ALARM NOT CANCELED!")
+                //Log.d("TASKDEBUG", "ALARM NOT CANCELED!")
             }
         }
 

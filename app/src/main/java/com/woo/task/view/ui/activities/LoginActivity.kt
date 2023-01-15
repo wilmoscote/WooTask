@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                                 bundle.putString(FirebaseAnalytics.Param.METHOD, "LOGIN_NORMAL")
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
                                 binding.pgBar.visibility = View.INVISIBLE
-                                Log.d(TAG, "signInEmail:success")
+                                //Log.d(TAG, "signInEmail:success")
                                 //val user = auth.currentUser
                                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                 overridePendingTransition(
@@ -103,14 +103,14 @@ class LoginActivity : AppCompatActivity() {
                             .addOnCompleteListener { task ->
                                 binding.pgBar.visibility = View.INVISIBLE
                                 if (task.isSuccessful) {
-                                    Log.d(TAG, "Email sent.")
+                                    //Log.d(TAG, "Email sent.")
                                     Toast.makeText(
                                         this@LoginActivity,
                                         getString(R.string.forgot_email_sent),
                                         Toast.LENGTH_LONG
                                     ).show()
                                 } else {
-                                    Log.d(TAG, "Email sent ERROR.")
+                                    //Log.d(TAG, "Email sent ERROR.")
                                     Toast.makeText(
                                         this@LoginActivity,
                                         getString(R.string.forgot_email_error),
@@ -124,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
                     dialog.dismiss()
                 }
                 .show()
-            Log.d(TAG, "Recuperar pass")
+            //Log.d(TAG, "Recuperar pass")
         }
 
         binding.btnGoogle.setOnClickListener {
@@ -154,7 +154,7 @@ class LoginActivity : AppCompatActivity() {
                                     bundle.putString(FirebaseAnalytics.Param.METHOD, "LOGIN_NOSESSION")
                                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
                                     binding.pgBar.visibility = View.INVISIBLE
-                                    Log.d(TAG, "signInAnonymously:success")
+                                    //Log.d(TAG, "signInAnonymously:success")
                                     //val user = auth.currentUser
                                     startActivity(
                                         Intent(
@@ -221,7 +221,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } catch (e: ApiException) {
                     binding.pgBar.visibility = View.INVISIBLE
-                    Log.d("GOOGLEDEBUG", "ERROR: ${e.message}")
+                    //Log.d("GOOGLEDEBUG", "ERROR: ${e.message}")
                 }
             }
         }

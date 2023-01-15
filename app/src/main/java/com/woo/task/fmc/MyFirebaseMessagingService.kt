@@ -18,7 +18,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         val NOTIFICATION_ID = 100
         val NOTIFICATION_CHANNEL_ID = "1001"
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d(TAG, "From: " + remoteMessage.from);
+        //Log.d(TAG, "From: " + remoteMessage.from);
         AppPreferences.setup(this)
 
         if(AppPreferences.notifications!!){
@@ -28,19 +28,19 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.data);
+            //Log.d(TAG, "Message data payload: " + remoteMessage.data);
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.notification != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.notification!!.body);
+            //Log.d(TAG, "Message Notification Body: " + remoteMessage.notification!!.body);
         }
 
     }
 
     override fun onNewToken(token: String) {
 
-        Log.d(TAG, "Refreshed token: $token")
+        //Log.d(TAG, "Refreshed token: $token")
     }
 
     private fun createNotificationChannel(context: Context) {

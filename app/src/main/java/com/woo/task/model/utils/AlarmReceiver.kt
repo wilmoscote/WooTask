@@ -37,7 +37,7 @@ class AlarmReceiver: BroadcastReceiver() {
 
 
         if ((Intent.ACTION_BOOT_COMPLETED) == intent.action){
-            Log.d("TASKDEBUG","RESTORING ALARMS!")
+            //Log.d("TASKDEBUG","RESTORING ALARMS!")
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager?
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S){
                 if(alarmManager?.canScheduleExactAlarms() == false){
@@ -52,7 +52,7 @@ class AlarmReceiver: BroadcastReceiver() {
                 val d = sdf.parse(alarm.alarmDate)
                 val calendar = Calendar.getInstance()
                 calendar.time = d!!
-                Log.d("TASKDEBUG","Date: ${calendar.time}")
+                //Log.d("TASKDEBUG","Date: ${calendar.time}")
                 val intent3 = Intent(context, AlarmReceiver::class.java)
                 intent3.putExtra("text",alarm.alarmText)
                 val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S){
@@ -70,10 +70,7 @@ class AlarmReceiver: BroadcastReceiver() {
             val id = intent.getIntExtra("id",0)
             val text = intent.getStringExtra("text") ?: context.getString(R.string.alarm_notification_title)
             val finalDate = intent.getStringExtra("date") ?: ""
-            Log.d(
-                "TASKDEBUG",
-                "Alarm received: $id - $text - $finalDate"
-            )
+            //Log.d("TASKDEBUG","Alarm received: $id - $text - $finalDate")
             val alarmsList = AppPreferences.getAlarms()
             alarmsList.remove(
                 AlarmModel(
@@ -82,10 +79,7 @@ class AlarmReceiver: BroadcastReceiver() {
                     text
                 )
             )
-            Log.d(
-                "TASKDEBUG",
-                "Alarm deleted from Local: ${alarmsList.toString()}"
-            )
+            //Log.d("TASKDEBUG", "Alarm deleted from Local: ${alarmsList.toString()}")
             AppPreferences.setAlarms(alarmsList)
 
             createNotificationChannel(context)

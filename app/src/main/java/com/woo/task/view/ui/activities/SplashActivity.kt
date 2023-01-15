@@ -44,7 +44,7 @@ class SplashActivity : AppCompatActivity() {
             }
             TypefaceUtil.overrideFont(applicationContext, "SERIF", typeface!!)
         }catch (e:Exception){
-            Log.e("TASKDEBUG",e.message.toString())
+            //Log.e("TASKDEBUG",e.message.toString())
         }
 
         //Base de datos.

@@ -34,10 +34,7 @@ object TypefaceUtil {
                 defaultFontTypefaceField.isAccessible = true
                 defaultFontTypefaceField.set(null, customFontTypeface)
             } catch (e: Exception) {
-                Log.e(
-                    TypefaceUtil::class.java.simpleName,
-                    "Can not set custom font jaja instead of $defaultFontNameToOverride"
-                )
+                //Log.e(TypefaceUtil::class.java.simpleName,"Can not set custom font jaja instead of $defaultFontNameToOverride")
             }
         }
     }

@@ -52,7 +52,7 @@ class RegisterActivity : AppCompatActivity() {
                                 bundle.putString(FirebaseAnalytics.Param.METHOD, "REGISTER_NORMAL")
                                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
                                 binding.pgBar.visibility = View.INVISIBLE
-                                Log.d(TAG, "CreateUser:success")
+                                //Log.d(TAG, "CreateUser:success")
                                 //val user = auth.currentUser
                                 startActivity(Intent(this@RegisterActivity,MainActivity::class.java))
                                 finishAffinity()

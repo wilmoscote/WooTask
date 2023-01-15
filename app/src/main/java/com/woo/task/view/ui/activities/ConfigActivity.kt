@@ -147,7 +147,7 @@ class ConfigActivity : AppCompatActivity() {
                     Toast.makeText(this,getString(R.string.language_changed_text),
                         Toast.LENGTH_LONG).show()
                 }catch (e:Exception){
-                    Log.e("TASKDEBUG",e.message.toString())
+                    //Log.e("TASKDEBUG",e.message.toString())
                 }
 
             }
@@ -195,7 +195,7 @@ class ConfigActivity : AppCompatActivity() {
                     override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
                         binding.txtCurrentColor.setBackgroundColor(color)
                         AppPreferences.bgColor = color
-                        Log.d("ColorDebug","ColorS Selected: ${AppPreferences.bgColor!!}")
+                        //Log.d("ColorDebug","ColorS Selected: ${AppPreferences.bgColor!!}")
                     }
 
                 })

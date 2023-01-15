@@ -28,7 +28,7 @@ class TaskViewHolder (view: View): RecyclerView.ViewHolder(view){
                 .setTitle(context.resources.getString(R.string.title_delete_dialog))
                 .setMessage(task.title)
                 .setPositiveButton(context.resources.getString(R.string.dialog_confirm)){_,_->
-                    Log.d("TaskDebug","Delete task ${task.id}")
+                    //Log.d("TaskDebug","Delete task ${task.id}")
                     //onLongClick(task.id!!.toInt())
                 }
                 .setNegativeButton(context.resources.getString(R.string.dialog_cancel)){dialog,_->

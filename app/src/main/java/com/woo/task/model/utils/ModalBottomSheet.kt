@@ -27,7 +27,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                 resources.configuration.locale
             }
 
-        Log.d("SheetDebug","Current Language: $primaryLocale")
+        //Log.d("SheetDebug","Current Language: $primaryLocale")
         AppPreferences.setup(context)
         val view = inflater.inflate(R.layout.language_sheet, container, false)
         val radioGroup = view.findViewById<RadioGroup>(R.id.languageRadioGroup)
@@ -44,27 +44,27 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
         radioGroup.setOnCheckedChangeListener { _, _ ->
 
-            Log.d("SheetDebug","LANGUAGE CHANGED!")
+            //Log.d("SheetDebug","LANGUAGE CHANGED!")
             if(language1.isChecked) {
                 //setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
                 AppPreferences.language = 0
                 setLocale("en")
-                Log.d("SheetDebug","ENGLISH")
+                //Log.d("SheetDebug","ENGLISH")
             }else if (language2.isChecked){
                 //setDefaultNightMode(MODE_NIGHT_NO)
                 AppPreferences.language = 1
                 setLocale("es")
-                Log.d("SheetDebug","SPANISH")
+                //Log.d("SheetDebug","SPANISH")
             }else if(language3.isChecked){
                 //setDefaultNightMode(MODE_NIGHT_YES)
                 AppPreferences.language = 2
                 setLocale("pt")
-                Log.d("SheetDebug","PORTUGUESE")
+                //Log.d("SheetDebug","PORTUGUESE")
             }
         }
             return view
         }catch (e:Exception){
-            Log.e("TASKSDEBUG",e.message.toString())
+            //Log.e("TASKSDEBUG",e.message.toString())
             return view
         }
     }
@@ -79,7 +79,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         try{
             Toast.makeText(context,R.string.language_changed_text,Toast.LENGTH_LONG).show()
         }catch (e:Exception){
-            Log.e("TASKDEBUG",e.message.toString())
+            //Log.e("TASKDEBUG",e.message.toString())
         }
 
     }

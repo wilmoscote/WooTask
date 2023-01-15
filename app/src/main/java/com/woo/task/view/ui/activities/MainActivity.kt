@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val appVersion = Firebase.remoteConfig.getDouble("appversion")
-                    Log.d(TAG,appVersion.toString())
+                    //Log.d(TAG,appVersion.toString())
                     if (appVersion.toInt() > BuildConfig.VERSION_CODE){
                        forceUpdate()
                     }
@@ -108,16 +108,16 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
 
             // Log and toast
             AppPreferences.msg_token_fmt = token
-            Log.d(TAG, AppPreferences.msg_token_fmt.toString())
+            //Log.d(TAG, AppPreferences.msg_token_fmt.toString())
             //Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
         auth = Firebase.auth
         if (auth.currentUser == null){
             newUserLogin()
-            Log.d(TAG,"NO SESSION")
+            //Log.d(TAG,"NO SESSION")
         }else{
-            Log.d(TAG,"GOT SESSION")
+            //Log.d(TAG,"GOT SESSION")
         }
 
         val hView = binding.navView.getHeaderView(0)
@@ -178,9 +178,9 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                     R.id.ads -> {
                         try {
                             launchPurchaseFlow(planProductDetails[0])
-                            Log.d(TAG, planProductDetails[0].toString())
+                            //Log.d(TAG, planProductDetails[0].toString())
                         } catch (e: Exception) {
-                            Log.d(TAG, e.message.toString())
+                            //Log.d(TAG, e.message.toString())
                         }
                     }
 
@@ -320,7 +320,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                         bundle.putString(FirebaseAnalytics.Param.METHOD, "NEW_USER_LOGIN")
                         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
                         // binding.pgBar.visibility = View.INVISIBLE
-                        Log.d(TAG, "signInAnonymously:success")
+                        //Log.d(TAG, "signInAnonymously:success")
                         //val user = auth.currentUser
                         //finish()
                     } else {
@@ -349,7 +349,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
             }
             TypefaceUtil.overrideFont(applicationContext, "SERIF", typeface!!)
         }catch (e:Exception){
-            Log.e("TASKDEBUG",e.message.toString())
+            //Log.e("TASKDEBUG",e.message.toString())
         }
     }
 
@@ -364,7 +364,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     // The BillingClient is ready. You can query purchases here.
-                    Log.d(TAG, "Conected to Google!")
+                    //Log.d(TAG, "Conected to Google!")
                     showProducts()
                     CoroutineScope(Dispatchers.IO).launch{checkUserPurcharses()}
                 }
@@ -377,7 +377,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                 //binding.vpPlanes.isVisible = false
                 //binding.btnBuy.isVisible = false
                 //binding.error.isVisible = true
-                Log.d(TAG, "Error to connect to Google!")
+                //Log.d(TAG, "Error to connect to Google!")
             }
         })
     }
@@ -400,16 +400,16 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
             // check billingResult
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                 planProductDetails = productDetailsList.reversed().toMutableList()
-                Log.d(TAG, productDetailsList.toString())
-                Log.d(TAG, "R: $planProductDetails")
+                //Log.d(TAG, productDetailsList.toString())
+                //Log.d(TAG, "R: $planProductDetails")
                 /*for (productDetails in productDetailsList) {
 
                     if (productDetails.productId == "silver_plan_medicall") {
                         val subDetails = productDetails.subscriptionOfferDetails!!
-                        Log.d(TAG, subDetails[0].offerToken)
-                        Log.d(TAG,subDetails[0].pricingPhases.pricingPhaseList[0]
+                        //Log.d(TAG, subDetails[0].offerToken)
+                        //Log.d(TAG,subDetails[0].pricingPhases.pricingPhaseList[0]
                             .formattedPrice.toString() + " Per Month")
-                        Log.d(TAG, subDetails[0].pricingPhases.toString())
+                        //Log.d(TAG, subDetails[0].pricingPhases.toString())
                     }
                 }*/
             }
@@ -437,7 +437,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
     }
 
     override fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {
-        Log.d(TAG, "Handling purcharse")
+        //Log.d(TAG, "Handling purcharse")
         if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
             for (purchase in purchases) {
                 CoroutineScope(Dispatchers.IO).launch { handlePurchase(purchase) }
@@ -449,7 +449,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
         // Purchase retrieved from BillingClient#queryPurchasesAsync or your PurchasesUpdatedListener.
         //if item is purchased
         if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-            Log.d(TAG, "Purcharsed")
+            //Log.d(TAG, "Purcharsed")
             if (!verifyValidSignature(purchase.originalJson, purchase.signature)) {
                 // Invalid purchase
                 // show error to user
@@ -460,7 +460,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                Log.d(TAG, "Error invalid purcharse")
+                //Log.d(TAG, "Error invalid purcharse")
                 //skip current iteration only because other items in purchase list must be checked if present
                 return
             }
@@ -479,7 +479,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                         binding.adView.isVisible = false
 
                         Toast.makeText(applicationContext, R.string.purcharse_success, Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "Item purcharsed")
+                        //Log.d(TAG, "Item purcharsed")
                     }
                 }
             } else {
@@ -488,7 +488,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                     AppPreferences.ads = false
                     binding.adView.isVisible = false
                     Toast.makeText(applicationContext, R.string.purcharse_success, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, "Item purcharsed")
+                    //Log.d(TAG, "Item purcharsed")
                 }
             }
         }
@@ -500,7 +500,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            Log.d(TAG, "Purcharse pending")
+            //Log.d(TAG, "Purcharse pending")
         }
         else if (purchase.purchaseState == Purchase.PurchaseState.UNSPECIFIED_STATE) {
             //mark purchase false in case of UNSPECIFIED_STATE
@@ -508,7 +508,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                 Toast.makeText(applicationContext, R.string.purcharse_status_unknown, Toast.LENGTH_SHORT)
                     .show()
             }
-            Log.d(TAG, "Purcharse status unknown")
+            //Log.d(TAG, "Purcharse status unknown")
         }
     }
 
@@ -530,11 +530,11 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
         val purchasesResult = billingClient.queryPurchasesAsync(params.build())
 
         for (purcharse in purchasesResult.purchasesList){
-            Log.d(TAG,"History: ${purcharse.toString()}")
+            //Log.d(TAG,"History: ${purcharse.toString()}")
             if (purcharse.products[0].toString() == "remove_ads" && AppPreferences.ads!!){
                 AppPreferences.ads = false
                 binding.adView.visibility = View.GONE
-                Log.d(TAG,"Purcharse restored.")
+                //Log.d(TAG,"Purcharse restored.")
             }
         }
     }

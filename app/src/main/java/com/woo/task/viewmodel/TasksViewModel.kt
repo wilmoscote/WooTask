@@ -45,7 +45,7 @@ class TasksViewModel @Inject constructor(
     // ----------------------------- FUNCIONES LOCALES EN ROOM -------------------------------------//
     fun onCreate() {
         viewModelScope.launch {
-            //Log.d("TASKDEBUG", "All Tasks: ${taskDao.getAll()}")
+            ////Log.d("TASKDEBUG", "All Tasks: ${taskDao.getAll()}")
             withContext(Dispatchers.IO) {
                 todoTasks.postValue(taskDao.getTodoTasks())
                 doingTasks.postValue(taskDao.getDoingTasks())
@@ -65,7 +65,7 @@ class TasksViewModel @Inject constructor(
     fun newTask(task: Task) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Log.d("TASKDEBUG", "TASK! ${task.state}")
+                //Log.d("TASKDEBUG", "TASK! ${task.state}")
                 taskDao.newTask(task)
                 when(task.state){
                     1 -> todoTasks.postValue(taskDao.getTodoTasks())
@@ -73,7 +73,7 @@ class TasksViewModel @Inject constructor(
                     3 -> doneTasks.postValue(taskDao.getDoneTasks())
                 }
             }
-            Log.d("TASKDEBUG", "ADD TASK! ")
+            //Log.d("TASKDEBUG", "ADD TASK! ")
         }
     }
 
@@ -87,7 +87,7 @@ class TasksViewModel @Inject constructor(
                     3 -> doneTasks.postValue(taskDao.getDoneTasks())
                 }
             }
-            Log.d("TASKDEBUG", "Task Updated! ")
+            //Log.d("TASKDEBUG", "Task Updated! ")
         }
     }
 
@@ -97,7 +97,7 @@ class TasksViewModel @Inject constructor(
                 taskDao.addTag(Tag(null,tag))
                 getTags()
             }
-            Log.d("TASKDEBUG", "Task Updated! ")
+            //Log.d("TASKDEBUG", "Task Updated! ")
         }
     }
 
@@ -107,7 +107,7 @@ class TasksViewModel @Inject constructor(
                 taskDao.removeTag(id)
                 getTags()
             }
-            Log.d("TASKDEBUG", "Task Updated! ")
+            //Log.d("TASKDEBUG", "Task Updated! ")
         }
     }
 
@@ -116,7 +116,7 @@ class TasksViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 tags.postValue(taskDao.getTags())
             }
-            Log.d("TASKDEBUG", "Tags Fetched!")
+            //Log.d("TASKDEBUG", "Tags Fetched!")
         }
     }
 
@@ -125,7 +125,7 @@ class TasksViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 editTask.postValue(taskDao.getById(id!!))
             }
-            Log.d("TASKDEBUG", "Task by Id! $editTask")
+            //Log.d("TASKDEBUG", "Task by Id! $editTask")
         }
     }
 
@@ -135,14 +135,14 @@ class TasksViewModel @Inject constructor(
                 taskDao.deleteTask(id)
                 when(state){
                     1 -> {
-                        Log.d("TASKDEBUG", "OBTAINING TODO TASK!")
+                        //Log.d("TASKDEBUG", "OBTAINING TODO TASK!")
                         todoTasks.postValue(taskDao.getTodoTasks())
                     }
                     2 -> doingTasks.postValue(taskDao.getDoingTasks())
                     3 -> doneTasks.postValue(taskDao.getDoneTasks())
                 }
             }
-            Log.d("TASKDEBUG", "Deleted Task Id! $id")
+            //Log.d("TASKDEBUG", "Deleted Task Id! $id")
             //onCreate()
         }
     }
@@ -152,7 +152,7 @@ class TasksViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 taskDao.moveTask(id, state)
             }
-            Log.d("TASKDEBUG", "Moved Task Id! $id")
+            //Log.d("TASKDEBUG", "Moved Task Id! $id")
             onCreate()
         }
     }
@@ -171,12 +171,12 @@ class TasksViewModel @Inject constructor(
                         ) {
                             if (response.isSuccessful) {
                                 //todoTasks.postValue(response.body()!!.data)
-                                Log.d("TASKDEBUG", "TODO: ${response.body()!!}")
+                                //Log.d("TASKDEBUG", "TODO: ${response.body()!!}")
                             }
                         }
 
                         override fun onFailure(call: Call<TaskResponse>, t: Throwable) {
-                            Log.d("TASKDEBUG", t.message.toString())
+                            //Log.d("TASKDEBUG", t.message.toString())
                         }
                     })
             }
@@ -194,13 +194,13 @@ class TasksViewModel @Inject constructor(
                             response: Response<GenericResponse>
                         ) {
                             if (response.isSuccessful) {
-                                Log.d("TaskDebug", "Deleted from server")
+                                //Log.d("TaskDebug", "Deleted from server")
                             }
-                            Log.d("TaskDebug", response.body()!!.toString())
+                            //Log.d("TaskDebug", response.body()!!.toString())
                         }
 
                         override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                            Log.d("TaskDebug", t.message.toString())
+                            //Log.d("TaskDebug", t.message.toString())
                         }
                     })
             }
@@ -218,12 +218,12 @@ class TasksViewModel @Inject constructor(
                         ) {
                             if (response.isSuccessful) {
                                 //doingTasks.postValue(response.body()?.data)
-                                Log.d("TASKDEBUG", "DOING: ${response.body()!!}")
+                                //Log.d("TASKDEBUG", "DOING: ${response.body()!!}")
                             }
                         }
 
                         override fun onFailure(call: Call<TaskResponse>, t: Throwable) {
-                            Log.d("TASKDEBUG", t.message.toString())
+                            //Log.d("TASKDEBUG", t.message.toString())
                         }
                     })
             }
@@ -241,12 +241,12 @@ class TasksViewModel @Inject constructor(
                         ) {
                             if (response.isSuccessful) {
                                 //doneTasks.postValue(response.body()?.data)
-                                Log.d("TASKDEBUG", "DONE: ${response.body()!!}")
+                                //Log.d("TASKDEBUG", "DONE: ${response.body()!!}")
                             }
                         }
 
                         override fun onFailure(call: Call<TaskResponse>, t: Throwable) {
-                            Log.d("TASKDEBUG", t.message.toString())
+                            //Log.d("TASKDEBUG", t.message.toString())
                         }
 
                     })
@@ -264,13 +264,13 @@ class TasksViewModel @Inject constructor(
                             response: Response<GenericResponse>
                         ) {
                             if (response.isSuccessful) {
-                                Log.d("TaskDebug", "Tarea Agregada correctamente.")
+                                //Log.d("TaskDebug", "Tarea Agregada correctamente.")
                             }
                         }
 
                         override fun onFailure(call: Call<GenericResponse>, t: Throwable) {
-                            Log.d("TASKDEBUG", "Error: ${t.message}")
-                            Log.d("TASKDEBUG", "Error al agregar tarea")
+                            //Log.d("TASKDEBUG", "Error: ${t.message}")
+                            //Log.d("TASKDEBUG", "Error al agregar tarea")
                         }
                     })
             }
@@ -285,10 +285,10 @@ class TasksViewModel @Inject constructor(
                 db.collection("Task").document(user).get()
                     .addOnSuccessListener { tasks ->
                         if (tasks.exists()) {
-                            Log.d(TAGF, "Document exists $tasks")
+                            //Log.d(TAGF, "Document exists $tasks")
                             getCloudTasks()
                         } else {
-                            Log.d(TAGF, "Document doesn't exists $tasks")
+                            //Log.d(TAGF, "Document doesn't exists $tasks")
                             createTaskCloud()
                         }
                     }
@@ -299,15 +299,15 @@ class TasksViewModel @Inject constructor(
     private fun getCloudTasks() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                Log.d(TAGF, "Fetching Data")
+                //Log.d(TAGF, "Fetching Data")
                 val taskRef = db.collection("Task").document(user)
                 taskRef.collection("tasks").orderBy("createdAt", Query.Direction.ASCENDING).get()
                     .addOnSuccessListener { tasks ->
                         val taskList = tasks.toObjects(TaskModel::class.java)
-                        Log.d(TAGF, "TASKS FETCHED: $taskList")
+                        //Log.d(TAGF, "TASKS FETCHED: $taskList")
                     }
                     .addOnFailureListener {
-                        Log.d(TAGF, "FAIL! ${it.message.toString()}")
+                        //Log.d(TAGF, "FAIL! ${it.message.toString()}")
                     }
             }
         }
@@ -323,7 +323,7 @@ class TasksViewModel @Inject constructor(
                 )
                 val taskRef = db.collection("Task").document(user)
                 taskRef.collection("tasks").document().set(task)
-                Log.d(TAGF, "New Task Cloud Created!")
+                //Log.d(TAGF, "New Task Cloud Created!")
             }
         }
     }
