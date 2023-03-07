@@ -53,6 +53,7 @@ class AlarmReceiver: BroadcastReceiver() {
                 val calendar = Calendar.getInstance()
                 calendar.time = d!!
                 //Log.d("TASKDEBUG","Date: ${calendar.time}")
+                if(calendar.after(Calendar.getInstance())){
                 val intent3 = Intent(context, AlarmReceiver::class.java)
                 intent3.putExtra("text",alarm.alarmText)
                 val pendingIntent = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S){
@@ -60,11 +61,20 @@ class AlarmReceiver: BroadcastReceiver() {
                 }else{
                     PendingIntent.getBroadcast(context, alarm.alarmCode, intent3, PendingIntent.FLAG_MUTABLE)
                 }
-                alarmManager?.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    pendingIntent
-                )
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        alarmManager?.setExactAndAllowWhileIdle(
+                            AlarmManager.RTC_WAKEUP,
+                            calendar.timeInMillis,
+                            pendingIntent
+                        )
+                    } else{
+                        alarmManager?.set(
+                            AlarmManager.RTC_WAKEUP,
+                            calendar.timeInMillis,
+                            pendingIntent
+                        )
+                    }
+                }
             }
         }else{
             val id = intent.getIntExtra("id",0)
@@ -81,6 +91,20 @@ class AlarmReceiver: BroadcastReceiver() {
             )
             //Log.d("TASKDEBUG", "Alarm deleted from Local: ${alarmsList.toString()}")
             AppPreferences.setAlarms(alarmsList)
+            try {
+                val alarmMgr = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val alarmIntent = Intent(context, AlarmReceiver::class.java)
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    intent?.getIntExtra("id", 0) ?: 0,
+                    alarmIntent,
+                    PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+                )
+                alarmMgr.cancel(pendingIntent)
+            } catch (e:Exception){
+                //
+            }
+
 
             createNotificationChannel(context)
             notifyNotification(context,text)

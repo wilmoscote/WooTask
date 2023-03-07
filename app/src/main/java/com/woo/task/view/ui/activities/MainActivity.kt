@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                //Log.w(TAG, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
 
@@ -325,7 +325,7 @@ class MainActivity : AppCompatActivity(), PurchasesUpdatedListener {
                         //finish()
                     } else {
                         //binding.pgBar.visibility = View.INVISIBLE
-                        Log.w(TAG, "signInAnonymously:failure", task.exception)
+                        //Log.w(TAG, "signInAnonymously:failure", task.exception)
                     }
                 }
         }
